@@ -2,8 +2,7 @@ import { View, Text } from 'react-native'
 import React,{useContext} from 'react';
 import { Appbar,Avatar } from 'react-native-paper';
 import { MyContext } from '../Context/Context';
-
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function AppBar() {
     const context = useContext(MyContext);
@@ -12,13 +11,16 @@ export default function AppBar() {
   return (
     <View>
     <Appbar.Header>
-    
-    
-    <Appbar.Action icon={"menu"} onPress={() => {}} />
-    <Appbar.Content title={sayfa}titleStyle={{flex:1,textAlign:'center'}} />
-    
-    <Appbar.Action icon={() => <Avatar.Image size={24} label="" />}  />
+      {sayfa === 'Sign In' ? (
+        <Appbar.Content title={sayfa} titleStyle={{ flex: 1, textAlign: 'center' }} />
+      ) : (
+        <>
+          <Appbar.Action icon={() => <Icon name="globe" size={24} />} onPress={() => {}} />
+          <Appbar.Content title={sayfa} titleStyle={{ flex: 1, textAlign: 'center' }} />
+          <Appbar.Action icon={() => <Avatar.Image size={24} label="" />} />
+        </>
+      )}
     </Appbar.Header>
-    </View>
+  </View>
   )
 }
