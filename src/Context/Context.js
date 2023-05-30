@@ -9,6 +9,12 @@ export const MyContextProvider = ({ children }) => {
   const [sayfa, setSayfa] = useState('');
   const [password, setPassword] = useState('');
   const [Language, setLanguage] = useState('');
+  const [userinfo, setUserinfo] = useState('');
+
+
+  const updateUserinfo = (newUserinfo) => {
+    setUserinfo(newUserinfo);
+  };
   const updateLanguage= (newLanguage) => {
     setLanguage(newLanguage);
   };
@@ -49,6 +55,10 @@ export const MyContextProvider = ({ children }) => {
       updatePassword,
       Language,
       setLanguage,
+      userinfo,
+      updateUserinfo,
+
+
       }}>
       {children}
     </MyContext.Provider>

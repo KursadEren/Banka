@@ -13,7 +13,9 @@ const SignIn = ({navigation}) => {
    
   useEffect(() => {
     // Sayfa açıldığında bir kez çalışacak işlemler
+    
     updateSayfa("Sign In"); // Örnek olarak sayfa değerini güncelliyoruz
+    
   }, []);
 
 
