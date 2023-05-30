@@ -4,8 +4,10 @@ import SignUp from './src/Screen/SignUp';
 import  { MyContextProvider } from './src/Context/Context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import DraverNavigator from './src/Screen/HomeScreen';
-import Hesap from './src/Screen/Hesap';
+import { PaperProvider } from 'react-native-paper';
+
+
+
 
 const Stack = createNativeStackNavigator();
 const BetweenNavigator = () =>{
@@ -39,9 +41,9 @@ const BetweenNavigator = () =>{
         cardStyleInterpolator: transitionAnimation,
       }}>
         <Stack.Screen name="Sign In" component={SignIn} />
-        <Stack.Screen name="DraverNavigator" component={DraverNavigator} />
+       
         <Stack.Screen name="Sign Up" component={SignUp} />
-        <Stack.Screen name="Hesap" component={Hesap} />
+       
 
       </Stack.Navigator>
       
@@ -52,9 +54,9 @@ export default function App() {
   
   return (
     <MyContextProvider >
-      
+       <PaperProvider>
           <BetweenNavigator/>
-       
+          </PaperProvider>
     </MyContextProvider>
     
   );
