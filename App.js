@@ -5,7 +5,7 @@ import  { MyContextProvider } from './src/Context/Context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { PaperProvider } from 'react-native-paper';
-
+import DraverNavigator from './src/Screen/HomeScreen';
 
 
 
@@ -42,6 +42,7 @@ const BetweenNavigator = () =>{
       }}>
         <Stack.Screen name="Sign In" component={SignIn} />
         <Stack.Screen name="Sign Up" component={SignUp} />
+        <Stack.Screen name="DraverNavigator" component={DraverNavigator} />
        
 
       </Stack.Navigator>
