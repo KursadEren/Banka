@@ -3,8 +3,6 @@ import React,{useContext,useState} from 'react';
 import { Appbar,Avatar,Switch,Snackbar,Subheading   } from 'react-native-paper';
 import { MyContext } from '../Context/Context';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import DraverNavigator from '../Screen/HomeScreen';
-import App from '../../App';
 import { DrawerActions } from '@react-navigation/native';
 
 const AppBar = ({navigation}) => {
@@ -34,6 +32,7 @@ const AppBar = ({navigation}) => {
     <Appbar.Header>
       {sayfa === 'Sign In' ? (
         <Appbar.Content title={sayfa} titleStyle={{ flex: 1, textAlign: 'center' }} />
+        
       ) : (
         <>
         <Appbar.Action icon="menu" onPress={handleMenuToggle} />
@@ -42,7 +41,7 @@ const AppBar = ({navigation}) => {
           
           <Appbar.Content title={sayfa} titleStyle={{ flex: 1, textAlign: 'center',marginHorizontal:"10%" }} />
           <Switch value={switchValue} onValueChange={handleSwitchToggle} />
-          <Appbar.Action icon={() => <Avatar.Image size={24} label="" />} />
+          <Appbar.Action icon={() => <Avatar.Image size={24} label="a" />} />
         </>
       )}
     </Appbar.Header>
