@@ -41,7 +41,6 @@ const BetweenNavigator = () =>{
         cardStyleInterpolator: transitionAnimation,
       }}>
         <Stack.Screen name="Sign In" component={SignIn} />
-       
         <Stack.Screen name="Sign Up" component={SignUp} />
        
 

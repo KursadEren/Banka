@@ -6,9 +6,16 @@ export const MyContextProvider = ({ children }) => {
   const [theme, setTheme] = useState('light');
   const [fullname, setFullname] = useState('');
   const [email, setEmail] = useState('');
-
-
+  const [sayfa, setSayfa] = useState('');
+  const [password, setPassword] = useState('');
   
+  const updatePassword = (newPassword) => {
+    setPassword(newPassword);
+  };
+
+  const updateSayfa = (newSayfa) => {
+    setSayfa(newSayfa);
+  };
   const updateTheme = (newTheme) => {
     setTheme(newTheme);
   };
@@ -31,6 +38,10 @@ export const MyContextProvider = ({ children }) => {
       updateFullname,
       email,
       updateEmail, 
+      sayfa,
+      updateSayfa,
+      password,
+      updatePassword,
       }}>
       {children}
     </MyContext.Provider>
