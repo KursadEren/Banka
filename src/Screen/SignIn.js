@@ -5,38 +5,24 @@ import { MyContext } from '../Context/Context';
 import TextInputC from '../Component/TextInput';
 import Buttonx from '../Component/Button';
 const SignIn = ({navigation}) => {
-    const context = useContext(MyContext);
-  const {  email, updateEmail } = context;
-  const [password, setPassword] = useState('');
-    const handleLogin = () => {
-     
-        // Expo Constants paketinden IP adresinizi alın.
-        const { manifest } = Constants;
-        const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-          axios.post(`${apiAddress}/users/login`,{email,password} )
-          .then((response) => { 
-            if (response.status === 200) {
-               
-              navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
-                console.log(response.data.message);
-              } else {
-                // İstek başarısız oldu, hata mesajını gösterin
-                console.error(response.data.message);
-              }
-            })
-            .catch(error => {
-              // HTTP isteği hata verdi, hata mesajını gösterin
-              console.error(error);
-            });
-            
-      }
     
+    const context = useContext(MyContext);
+  const {sayfa, updateSayfa ,  email, updateEmail,password,
+    updatePassword} = context;
+  
+   
+  useEffect(() => {
+    // Sayfa açıldığında bir kez çalışacak işlemler
+    updateSayfa("Sign In"); // Örnek olarak sayfa değerini güncelliyoruz
+  }, []);
+
 
 
   return (
     <View>
         <View style={style.con}>
             <View style={style.appBarr}>
+                <AppBar/>
                <Text style={{textAlign:'center',marginTop:"10%",fontSize:20,}}> Hoşgeldiniz </Text>
             </View>
             <View style={style.Body}>
