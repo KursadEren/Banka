@@ -4,12 +4,14 @@ import { Button } from 'react-native-paper'
 import { MyContext } from '../Context/Context'
 import Constants from 'expo-constants';
 import axios from 'axios';
+import DraverNavigator from '../Screen/HomeScreen';
 const Buttonx = ({label,navigation}) => {
     const context = useContext(MyContext);
     const {sayfa, updateSayfa ,  email, updateEmail,password,
       updatePassword} = context;
     const handleLogin = ()=>{
-        
+        console.log(email)
+        console.log(password)
         if(label == "Sign In"){
             
      
@@ -20,7 +22,7 @@ const Buttonx = ({label,navigation}) => {
                   .then((response) => { 
                     if (response.status === 200) {
                        
-                      navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
+                       navigation.navigate('DraverNavigator',{screen: 'HomeScreen'});
                         console.log(response.data.message);
                       } else {
                         // İstek başarısız oldu, hata mesajını gösterin
