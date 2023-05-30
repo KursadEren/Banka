@@ -5,7 +5,7 @@ import  { MyContextProvider } from './src/Context/Context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { PaperProvider } from 'react-native-paper';
-
+import DraverNavigator from './src/Screen/HomeScreen';
 
 
 
