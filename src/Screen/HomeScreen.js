@@ -1,18 +1,13 @@
-import { View, Text, Alert, BackHandler,StyleSheet } from 'react-native';
-
 import React, { useContext, useEffect } from 'react';
-
+import { View, Text, Alert, BackHandler, StyleSheet } from 'react-native';
 import AppBar from '../Component/AppBar';
 import { MyContext } from '../Context/Context';
-
+import ExpandableScreen from '../Component/ExpandableScreen';
 import MyFlatList from '../Component/FlatList';
-
 
 const HomeScreen = ({ navigation }) => {
   const context = useContext(MyContext);
   const { sayfa, updateSayfa, email, updateEmail, password, updatePassword, fullname, updateFullname, userinfo, updateUserinfo } = context;
-
- 
 
   useEffect(() => {
     const backAction = () => {
@@ -29,39 +24,43 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   const handleExit = () => {
-    updateSayfa("Sign In");
+    updateSayfa('Sign In');
     navigation.goBack();
   };
 
-  return (
-    <View>
-      <AppBar navigation={navigation} />
-      <View>
-      <View style={style.listItemContainer}>
-  
-  <View style={{backgroundColor:'#e2e2e2',margin:10,borderRadius:10}}>
-    <Text style={{fontSize:20}}> Hesaplarınız </Text>
-  </View>
-  <MyFlatList/>
+  const handleExpand = () => {
+    // Burada yapılacak işlemler
+  };
 
-  </View>
-        
+  const handleCollapse = () => {
+    // Burada yapılacak işlemler
+  };
+
+  return (
+    <View style={{ flex: 1 }}>
+      <AppBar navigation={navigation} />
+      <View style={{ flex: 1 }}>
+        <View style={styles.listItemContainer}>
+          <View style={{ backgroundColor: '#e2e2e2', margin: 10, borderRadius: 10 }}>
+            <Text style={{ fontSize: 20 }}> Hesaplarınız </Text>
+          </View>
+          
+          <MyFlatList />
+        </View>
+        <ExpandableScreen onExpand={handleExpand} onCollapse={handleCollapse} />
       </View>
     </View>
   );
 };
 
-const style = StyleSheet.create({
-  listItemContainer:{
-    marginTop:'10%',
-    marginHorizontal:"10%",
-    flexDirection:'column',
-    justifyContent:'center',
-    alignItems:'center',
-    
-    
-  }
-    
-})
+const styles = StyleSheet.create({
+  listItemContainer: {
+    marginTop: '10%',
+    marginHorizontal: '10%',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default HomeScreen;
