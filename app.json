@@ -15,12 +15,26 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "expo": {
+          "packagerOpts": {
+            "port": 19001
+          }
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "config": {
+        "expo": {
+          "packagerOpts": {
+            "port": 19000
+          }
+        }
       }
     },
     "web": {
