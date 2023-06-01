@@ -1,60 +1,66 @@
-import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, Dimensions, Animated, PanResponder } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { View, Text, StyleSheet, Dimensions, Animated, PanResponder, TouchableOpacity } from 'react-native';
 
 const ExpandableScreen = ({ onExpand, onCollapse }) => {
   const [expanded, setExpanded] = useState(false);
-  const animation = new Animated.Value(expanded ? 1 : 0);
+  const animation = useRef(new Animated.Value(expanded ? 1 : 0)).current;
   const screenHeight = Dimensions.get('window').height;
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponderCapture: (event, gestureState) => {
+        return true;
+      },
       onPanResponderMove: (event, gestureState) => {
-        if (gestureState.dy < -50) {
+        const { dy } = gestureState;
+        const gesturePercentage = dy / screenHeight;
+        if (gesturePercentage < -0.2) {
           setExpanded(true);
-        } else if (gestureState.dy > 50) {
+        } else if (gesturePercentage > 0.2) {
           setExpanded(false);
         }
       },
-      onPanResponderRelease: () => {},
+      onPanResponderRelease: () => {
+        animateExpand();
+      },
     })
   ).current;
 
-  const animateExpand = () => {
+  useEffect(() => {
     Animated.timing(animation, {
-      toValue: expanded ? 0 : 1,
+      toValue: expanded ? 1 : 0,
       duration: 300,
       useNativeDriver: false,
     }).start();
-  };
-  const handleExpand = () => {
-    setExpanded(!expanded);
-    if (!expanded) {
-      onExpand();
-      
-    } else {
-      onCollapse();
-      
-    }
-    animateExpand();
-  };
-  
+  }, [expanded]);
 
   const animatedStyle = {
     height: animation.interpolate({
       inputRange: [0, 1],
       outputRange: ['50%', '100%'],
+      extrapolate: 'clamp',
     }),
+  };
+
+  const animateExpand = () => {
+    Animated.timing(animation, {
+      toValue: expanded ? 1 : 0,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
   };
 
   return (
     <Animated.View style={[styles.container, animatedStyle]}>
       <View style={styles.lineContainer}>
-        <View style={styles.line} onPress={handleExpand}{...panResponder.panHandlers} />
+        <TouchableOpacity activeOpacity={1} onPress={animateExpand}>
+          <View style={styles.line} {...panResponder.panHandlers} />
+        </TouchableOpacity>
       </View>
       <View style={styles.expandedContent}>
-        <Text style={styles.expandedText}>Expanded Content</Text>
-        <Text style={styles.expandedText}>Expanded Content</Text>
-        {/* Diğer expandedText öğeleri */}
+        <Text style={styles.expandedText}>Genişletilmiş İçerik</Text>
+        <Text style={styles.expandedText}>Genişletilmiş İçerik</Text>
+        {/* Diğer genişletilmiş içerik öğeleri */}
       </View>
     </Animated.View>
   );
@@ -79,7 +85,7 @@ const styles = StyleSheet.create({
   },
   line: {
     width: 100,
-    height: 10,
+    height: 20,
     backgroundColor: 'gray',
   },
   expandedContent: {
