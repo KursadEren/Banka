@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, Dimensions, Animated, PanResponder, TouchableOpacity } from 'react-native';
+import WatchList from './WatchList';
+
 
 const ExpandableScreen = ({ onExpand, onCollapse }) => {
   const [expanded, setExpanded] = useState(false);
@@ -58,9 +60,9 @@ const ExpandableScreen = ({ onExpand, onCollapse }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.expandedContent}>
-        <Text style={styles.expandedText}>Genişletilmiş İçerik</Text>
-        <Text style={styles.expandedText}>Genişletilmiş İçerik</Text>
-        {/* Diğer genişletilmiş içerik öğeleri */}
+       <View>
+       <WatchList/>
+       </View>
       </View>
     </Animated.View>
   );
