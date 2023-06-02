@@ -1,7 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, Dimensions, Animated, PanResponder, TouchableOpacity } from 'react-native';
-import WatchList from './WatchList';
-
 
 const ExpandableScreen = ({ onExpand, onCollapse }) => {
   const [expanded, setExpanded] = useState(false);
@@ -11,9 +9,11 @@ const ExpandableScreen = ({ onExpand, onCollapse }) => {
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponderCapture: (event, gestureState) => {
+        // Increase sensitivity by returning true for all movements
         return true;
       },
       onPanResponderMove: (event, gestureState) => {
+        // Calculate the percentage of screen height covered by the gesture
         const { dy } = gestureState;
         const gesturePercentage = dy / screenHeight;
         if (gesturePercentage < -0.2) {
@@ -45,24 +45,21 @@ const ExpandableScreen = ({ onExpand, onCollapse }) => {
   };
 
   const animateExpand = () => {
-    Animated.timing(animation, {
-      toValue: expanded ? 1 : 0,
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
+    setExpanded(animation._value === 0 ? false : true);
   };
 
   return (
     <Animated.View style={[styles.container, animatedStyle]}>
       <View style={styles.lineContainer}>
+        {/* Wrap the line in a TouchableOpacity for touch effect */}
         <TouchableOpacity activeOpacity={1} onPress={animateExpand}>
           <View style={styles.line} {...panResponder.panHandlers} />
         </TouchableOpacity>
       </View>
       <View style={styles.expandedContent}>
-       <View>
-       <WatchList/>
-       </View>
+        <Text style={styles.expandedText}>Expanded Content</Text>
+        <Text style={styles.expandedText}>Expanded Content</Text>
+        {/* Diğer expandedText öğeleri */}
       </View>
     </Animated.View>
   );
