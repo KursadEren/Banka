@@ -10,18 +10,27 @@ const HomeScreen = ({ navigation }) => {
   const { sayfa, updateSayfa, email, updateEmail, password, updatePassword, fullname, updateFullname, userinfo, updateUserinfo } = context;
 
   useEffect(() => {
+    updateSayfa("HomeScreen");
     const backAction = () => {
+      
+      
+      if(sayfa === "HomeScreen")
+      {
       Alert.alert('Çıkış yapmak istiyor musunuz?', '', [
         { text: 'Hayır', style: 'cancel' },
         { text: 'Evet', onPress: handleExit },
       ]);
       return true;
+    }
+      return false;
     };
 
     const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
 
     return () => backHandler.remove();
   }, []);
+
+ 
 
   const handleExit = () => {
     updateSayfa('Sign In');
@@ -45,7 +54,7 @@ const HomeScreen = ({ navigation }) => {
             <Text style={{ fontSize: 20 }}> Hesaplarınız </Text>
           </View>
           
-          <MyFlatList />
+          <MyFlatList navigation={navigation} />
         </View>
         <ExpandableScreen onExpand={handleExpand} onCollapse={handleCollapse} />
       </View>

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, Dimensions, Animated, PanResponder, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Animated, PanResponder, TouchableOpacity, ScrollView } from 'react-native';
+import WatchList from "./WatchList"
 
 const ExpandableScreen = ({ onExpand, onCollapse }) => {
   const [expanded, setExpanded] = useState(false);
@@ -13,12 +14,19 @@ const ExpandableScreen = ({ onExpand, onCollapse }) => {
         return true;
       },
       onPanResponderMove: (event, gestureState) => {
-        // Calculate the percentage of screen height covered by the gesture
         const { dy } = gestureState;
         const gesturePercentage = dy / screenHeight;
-        if (gesturePercentage < -0.2) {
+
+        if (gesturePercentage < -0.000002) {
           setExpanded(true);
-        } else if (gesturePercentage > 0.2) {
+        } else if (gesturePercentage > 0.000002) {
+          setExpanded(false);
+        }
+
+        // Ekrana göre yukarı veya aşağı kaydırmak için ekranın yüzde 10'unu geçmesini kontrol et
+        if (dy < -screenHeight * 0.1) {
+          setExpanded(true);
+        } else if (dy > screenHeight * 0.1) {
           setExpanded(false);
         }
       },
@@ -31,7 +39,7 @@ const ExpandableScreen = ({ onExpand, onCollapse }) => {
   useEffect(() => {
     Animated.timing(animation, {
       toValue: expanded ? 1 : 0,
-      duration: 300,
+      duration: 200,
       useNativeDriver: false,
     }).start();
   }, [expanded]);
@@ -56,11 +64,14 @@ const ExpandableScreen = ({ onExpand, onCollapse }) => {
           <View style={styles.line} {...panResponder.panHandlers} />
         </TouchableOpacity>
       </View>
-      <View style={styles.expandedContent}>
-        <Text style={styles.expandedText}>Expanded Content</Text>
-        <Text style={styles.expandedText}>Expanded Content</Text>
-        {/* Diğer expandedText öğeleri */}
-      </View>
+      
+        <View style={styles.expandedContent}>
+        <ScrollView style={{flex:1,width:"100%"}}>
+            <WatchList style={{ width: '100%' }} />
+       
+            </ScrollView>
+        </View>
+      
     </Animated.View>
   );
 };
@@ -88,9 +99,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'gray',
   },
   expandedContent: {
-    flexGrow: 1,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor:"#e2e2e2",
+    width:"100%"
+   
   },
   expandedText: {
     fontSize: 18,

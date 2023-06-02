@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { PaperProvider } from 'react-native-paper';
 import DraverNavigator from './src/Component/DraverNavigator';
-
+import HesapEkle from './src/Screen/HesapEkle';
 
 
 const Stack = createNativeStackNavigator();
@@ -43,6 +43,7 @@ const BetweenNavigator = () =>{
         <Stack.Screen name="Sign In" component={SignIn} />
         <Stack.Screen name="Sign Up" component={SignUp} />
         <Stack.Screen name="DraverNavigator" component={DraverNavigator} />
+        <Stack.Screen name="HesapEkle" component={HesapEkle} />
        
 
       </Stack.Navigator>

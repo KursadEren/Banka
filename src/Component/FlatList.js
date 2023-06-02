@@ -3,8 +3,9 @@ import { View, FlatList, Text, StyleSheet, TouchableOpacity, Dimensions } from '
 import { MyContext } from '../Context/Context';
 import Constants from 'expo-constants';
 import axios from 'axios';
+import Buttonx from './Button';
 
-const MyFlatList = () => {
+const MyFlatList = ({navigation}) => {
   const [userInfo, setUserInfo] = useState([]);
   const [name, setName] = useState(' ');
   const flatListRef = useRef(null);
@@ -79,6 +80,9 @@ const MyFlatList = () => {
             style={[styles.paginationDot, index === currentIndex && styles.paginationDotActive]}
           />
         ))}
+        <View style={{marginLeft:"20%"}}>
+         <Buttonx label="+" navigation={navigation}/>
+         </View>
       </View>
     </View>
   );
