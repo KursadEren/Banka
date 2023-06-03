@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, Dimensions, Animated, PanResponder, TouchableOpacity, ScrollView } from 'react-native';
-import WatchList from "../Screen/WatchList"
+import SeeWatchList from './SeeWatchList';
+
 
 const ExpandableScreen = ({ onExpand, onCollapse }) => {
   const [expanded, setExpanded] = useState(false);
@@ -67,7 +68,7 @@ const ExpandableScreen = ({ onExpand, onCollapse }) => {
       
         <View style={styles.expandedContent}>
         <ScrollView style={{flex:1,width:"100%"}}>
-           
+           <SeeWatchList/>
        
             </ScrollView>
         </View>

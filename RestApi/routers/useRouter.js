@@ -3,15 +3,7 @@ import postgresClient from '../config/db.js';
 
 
 
-function generateExchangeRate() {
-    const min = 4.0; // minimum exchange rate
-    const max = 10.0; // maximum exchange rate
-  
-    // Generate a random exchange rate between min and max
-    const exchangeRate = (Math.random() * (max - min)) + min;
-  
-    return exchangeRate;
-  }
+
 
 const router = express.Router();
 
@@ -71,11 +63,34 @@ router.post('/users/:email',async (req,res) =>{
 })
 
 router.get('/doviz', (req, res) => {
-    const exchangeRate = generateExchangeRate();
-    const response = { usd_try: exchangeRate }; // Convert the exchange rate to an object with a property name
+    const exchangeRates = generateExchangeRates();
+    const response = {
+      usd_try: exchangeRates.usd_try,
+      euro_try: exchangeRates.euro_try,
+      gbp_try: exchangeRates.gbp_try,
+      chf_try: exchangeRates.chf_try
+    };
     res.json(response);
   });
-
+  
+  function generateExchangeRates() {
+    const exchangeRates = {
+      usd_try: generateExchangeRate(),
+      euro_try: generateExchangeRate(),
+      gbp_try: generateExchangeRate(),
+      chf_try: generateExchangeRate()
+    };
+    return exchangeRates;
+  }
+  
+  function generateExchangeRate() {
+    // Burada döviz kuru üretimi için istediğiniz yöntemi veya API'yi kullanabilirsiniz.
+    // Örneğin, rastgele bir döviz kuru üretmek için Math.random() kullanabilirsiniz.
+    // Aşağıdaki örnekte, döviz kurları 1 ile 10 arasında rastgele değerler alır:
+    const rate = (Math.random() * 9) + 1;
+    return rate.toFixed(2);
+  }
+  
 
 //Authenticate user
 

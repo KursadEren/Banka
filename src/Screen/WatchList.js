@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { MyContext } from '../Context/Context';
 
 const currencies = [
   { id: 'usd', name: 'Amerikan Doları' },
@@ -8,7 +9,12 @@ const currencies = [
   { id: 'chf', name: 'İsviçre Frangı' },
 ];
 
+
 const WatchList = () => {
+  const context = useContext(MyContext);
+  const {sayfa, updateSayfa } = context;
+
+
   const [selectedCurrencies, setSelectedCurrencies] = useState([]);
 
   const toggleSelection = (currencyId) => {
@@ -46,6 +52,7 @@ const WatchList = () => {
           </TouchableOpacity>
         </View>
       ))}
+      <Text>{sayfa}</Text>
     </View>
   );
 };

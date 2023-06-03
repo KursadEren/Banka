@@ -1,27 +1,10 @@
-import React, { useEffect, useContext } from 'react';
-import { BackHandler } from 'react-native';
-import { MyContext } from '../Context/Context';
-import { View,Text } from 'react-native';
+import { View, Text } from 'react-native'
+import React from 'react'
 
-export default function HesapEkle({ navigation }) {
-  const context = useContext(MyContext);
-  const {sayfa, updateSayfa } = context;
-
-  useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
-
-    return () => backHandler.remove();
-  }, []);
-
-  const handleBackPress = () => {
-    updateSayfa('HomeScreen'); // sayfa değerini "HomeScreen" olarak güncelle
-    navigation.navigate('HomeScreen'); // HomeScreen'e geri dön
-    return true; // geri tuşuna bastığında işlemin devam etmesini engelle
-  };
-
+export default function HesapEkle() {
   return (
     <View>
-      <Text style={{ marginTop: 350 }}>{sayfa}</Text>
+      <Text>HesapEkle</Text>
     </View>
-  );
+  )
 }
