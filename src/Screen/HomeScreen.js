@@ -10,19 +10,20 @@ const HomeScreen = ({ navigation }) => {
   const { sayfa, updateSayfa, email, updateEmail, password, updatePassword, fullname, updateFullname, userinfo, updateUserinfo } = context;
 
   useEffect(() => {
-    updateSayfa("HomeScreen");
+    
     const backAction = () => {
       
       
-      if(sayfa === "HomeScreen")
-      {
+     
       Alert.alert('Çıkış yapmak istiyor musunuz?', '', [
         { text: 'Hayır', style: 'cancel' },
         { text: 'Evet', onPress: handleExit },
       ]);
       return true;
-    }
-      return false;
+    
+      
+    
+      
     };
 
     const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);

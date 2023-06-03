@@ -73,7 +73,11 @@ const MyFlatList = ({navigation}) => {
         onScroll={handleScroll}
         onMomentumScrollEnd={handleScrollEnd}
       />
+      
       <View style={styles.pagination}>
+      <View style={{marginRight:"20%"}}>
+         <Buttonx label="+" navigation={navigation}/> 
+         </View>
         {userInfo.map((_, index) => (
           <View
             key={index}

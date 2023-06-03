@@ -5,6 +5,7 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 import Profile from '../Screen/Profile';
+import WatchList from "../Screen/WatchList";
 
 const Drawer = createDrawerNavigator();
 
@@ -26,6 +27,7 @@ const DraverNavigator = () => {
     >
       <Drawer.Screen name="HomeScreen" component={HomeScreen} />
       <Drawer.Screen name="Profile" component={Profile} />
+      <Drawer.Screen name="WatchList" component={WatchList} />
     </Drawer.Navigator>
   );
 };
