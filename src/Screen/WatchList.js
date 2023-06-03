@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, BackHandler } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MyContext } from '../Context/Context';
 
 const currencies = [
@@ -9,13 +10,50 @@ const currencies = [
   { id: 'chf', name: 'İsviçre Frangı' },
 ];
 
-
-const WatchList = () => {
+const WatchList = ({ navigation }) => {
   const context = useContext(MyContext);
-  const {sayfa, updateSayfa } = context;
-
-
+  const { sayfa, updateSayfa } = context;
   const [selectedCurrencies, setSelectedCurrencies] = useState([]);
+
+  useEffect(() => {
+    const backAction = () => {
+      navigation.navigate('HomeScreen');
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+
+    return () => backHandler.remove();
+  }, []);
+
+  useEffect(() => {
+    // AsyncStorage'den seçili öğeleri al
+    const getSelectedCurrencies = async () => {
+      try {
+        const savedSelectedCurrencies = await AsyncStorage.getItem('selectedCurrencies');
+        if (savedSelectedCurrencies !== null) {
+          setSelectedCurrencies(JSON.parse(savedSelectedCurrencies));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getSelectedCurrencies();
+  }, []);
+
+  useEffect(() => {
+    // Seçili öğeleri AsyncStorage'e kaydet
+    const saveSelectedCurrencies = async () => {
+      try {
+        await AsyncStorage.setItem('selectedCurrencies', JSON.stringify(selectedCurrencies));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    saveSelectedCurrencies();
+  }, [selectedCurrencies]);
 
   const toggleSelection = (currencyId) => {
     const isSelected = selectedCurrencies.includes(currencyId);

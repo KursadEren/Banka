@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import axios from 'axios';
 import Constants from 'expo-constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SeeWatchList = () => {
   const [exchangeRates, setExchangeRates] = useState({});
+  const [selectedCurrencies, setSelectedCurrencies] = useState([]);
 
   useEffect(() => {
     fetchExchangeRates();
-
+    getSelectedCurrencies();
     const interval = setInterval(() => {
       fetchExchangeRates();
     }, 1000);
@@ -18,6 +20,17 @@ const SeeWatchList = () => {
     };
   }, []);
 
+  const getSelectedCurrencies = async () => {
+    try {
+      const savedSelectedCurrencies = await AsyncStorage.getItem('selectedCurrencies');
+      if (savedSelectedCurrencies !== null) {
+        setSelectedCurrencies(JSON.parse(savedSelectedCurrencies));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const fetchExchangeRates = () => {
     const { manifest } = Constants;
     const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
@@ -26,6 +39,7 @@ const SeeWatchList = () => {
       .then((response) => {
         if (response.status === 200) {
           setExchangeRates(response.data);
+          getSelectedCurrencies(); // Kurlar güncellendiğinde seçili kurları kontrol et
         } else {
           console.error(response.data.message);
         }
@@ -37,31 +51,34 @@ const SeeWatchList = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.row}>
-        <Text style={styles.headerCell}>Döviz</Text>
-        <Text style={styles.headerCell}>Alış</Text>
-        <Text style={styles.headerCell}>Satış</Text>
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.cell}>USD/TRY</Text>
-        <Text style={styles.cell}>{exchangeRates.usd_try}</Text>
-        <Text style={styles.cell}>{(1 / exchangeRates.usd_try).toFixed(2)}</Text>
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.cell}>EURO/TRY</Text>
-        <Text style={styles.cell}>{exchangeRates.euro_try}</Text>
-        <Text style={styles.cell}>{(1 / exchangeRates.euro_try).toFixed(2)}</Text>
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.cell}>GBP/TRY</Text>
-        <Text style={styles.cell}>{exchangeRates.gbp_try}</Text>
-        <Text style={styles.cell}>{(1 / exchangeRates.gbp_try).toFixed(2)}</Text>
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.cell}>CHF/TRY</Text>
-        <Text style={styles.cell}>{exchangeRates.chf_try}</Text>
-        <Text style={styles.cell}>{(1 / exchangeRates.chf_try).toFixed(2)}</Text>
-      </View>
+      {selectedCurrencies.includes('usd') && (
+        <View style={styles.row}>
+          <Text style={styles.cell}>USD/TRY</Text>
+          <Text style={styles.cell}>{exchangeRates.usd_try}</Text>
+          <Text style={styles.cell}>{(1 / exchangeRates.usd_try).toFixed(2)}</Text>
+        </View>
+      )}
+      {selectedCurrencies.includes('eur') && (
+        <View style={styles.row}>
+          <Text style={styles.cell}>EURO/TRY</Text>
+          <Text style={styles.cell}>{exchangeRates.euro_try}</Text>
+          <Text style={styles.cell}>{(1 / exchangeRates.euro_try).toFixed(2)}</Text>
+        </View>
+      )}
+      {selectedCurrencies.includes('gbp') && (
+        <View style={styles.row}>
+          <Text style={styles.cell}>GBP/TRY</Text>
+          <Text style={styles.cell}>{exchangeRates.gbp_try}</Text>
+          <Text style={styles.cell}>{(1 / exchangeRates.gbp_try).toFixed(2)}</Text>
+        </View>
+      )}
+      {selectedCurrencies.includes('chf') && (
+        <View style={styles.row}>
+          <Text style={styles.cell}>CHF/TRY</Text>
+          <Text style={styles.cell}>{exchangeRates.chf_try}</Text>
+          <Text style={styles.cell}>{(1 / exchangeRates.chf_try).toFixed(2)}</Text>
+        </View>
+      )}
     </View>
   );
 };
