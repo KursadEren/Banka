@@ -36,6 +36,7 @@ const Buttonx = ({ label, navigation }) => {
     } else if (label === 'Sign Up') {
       navigation.navigate('Sign Up');
     } else if (label === '+') {
+      updateSayfa("HesapEkle");
       navigation.navigate('HesapEkle');
     }
   };
