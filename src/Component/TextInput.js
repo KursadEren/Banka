@@ -4,7 +4,7 @@ import { MyContext } from '../Context/Context';
 
 const TextInputC = ({ label }) => {
   const context = useContext(MyContext);
-  const { email, updateEmail,updatePassword,password } = context;
+  const {tcno, updateTcno, email, updateEmail,updatePassword,password } = context;
   const [text, setText] = useState("");
   const [isFocused, setIsFocused] = useState(false);
 
@@ -18,8 +18,8 @@ const TextInputC = ({ label }) => {
 
   const handleTextChange = (text) => {
     setText(text);
-  if (label === "E-mail") {
-    updateEmail(text);
+  if (label === "TC No") {
+    updateTcno(text);
   } else if (label === "Password") {
     updatePassword(text);
   }

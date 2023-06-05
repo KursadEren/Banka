@@ -11,13 +11,16 @@ const MyFlatList = ({navigation}) => {
   const flatListRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const context = useContext(MyContext);
+  const {tcno,updateTcno, sayfa, updateSayfa, email, updateEmail, password, updatePassword, fullname, updateFullname, userinfo, updateUserinfo } = context;
+  
   useEffect(() => {
     updateSayfa('HomeScreen');
     const { manifest } = Constants;
     const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
 
     axios
-      .get(`${apiAddress}/users/hesap/${email}`)
+      .get(`${apiAddress}/users/hesap/${tcno}`)
       .then((response) => {
         if (response.status === 200) {
           setName(response.data[1].fullname);
@@ -32,8 +35,7 @@ const MyFlatList = ({navigation}) => {
       });
   }, []);
 
-  const context = useContext(MyContext);
-  const { sayfa, updateSayfa, email, updateEmail, password, updatePassword, fullname, updateFullname, userinfo, updateUserinfo } = context;
+  
 
   const Item = ({ title, hesapno }) => {
     return (

@@ -19,16 +19,58 @@ router.get('/',async (req,res) =>{
         return res.status(400).json({message: error.message})
     }
 })
+// doviz Combobx veri
+router.get('/doviztipi',async (req,res) =>{
+    try{
+        const text = "SELECT d.dovizadi \
+        FROM doviz d\
+        LEFT JOIN usershesap h ON d.doviztipiid = h.doviztipiid\
+        WHERE h.usersid IS NULL\
+        "
+        
+        const {rows} = await postgresClient.query(text)
+        return res.status(200).json(rows)
+        
+    } catch (error){
+        console.log('error occured', error.message)
+        return res.status(400).json({message: error.message})
+    }
+})
+//şube combobox
+router.get('/sube',async (req,res) =>{
+    try{
+        const text = "select subeadi from sube"
+         const {rows} = await postgresClient.query(text)
+        return res.status(200).json(rows)
+        
+    } catch (error){
+        console.log('error occured', error.message)
+        return res.status(400).json({message: error.message})
+    }
+})
+//hesaptur combobox
+router.get('/hesaptur',async (req,res) =>{
+    try{
+        const text = "SELECT * FROM hesaptur "
+        
+        const {rows} = await postgresClient.query(text)
+        return res.status(200).json(rows)
+        
+    } catch (error){
+        console.log('error occured', error.message)
+        return res.status(400).json({message: error.message})
+    }
+})
 // banka flatlist hesap 
-router.get('/hesap/:email', async (req,res) => {
+router.get('/hesap/:tcno', async (req,res) => {
     try {
-        const { email } = req.params;
+        const { tcno } = req.params;
         const text ="select h.usershesapid as id,h.hesapno,h.hesapbakiye,  u.userid, u.fullname, u.telno, t.hesapadi \
         from users u \
         INNER JOIN usershesap h on u.userid = h.usersid \
         INNER JOIN hesaptur t on t.hesapturid = h.hesapturid\
-        WHERE email = $1"; 
-                       const value = [email]
+        WHERE tcno = $1"; 
+                       const value = [tcno]
         const {rows} = await postgresClient.query(text,value)
         return res.status(200).json(rows)
     } catch (error) {
@@ -96,8 +138,8 @@ router.get('/doviz', (req, res) => {
 
 router.post('/login', async (req,res) =>{
     try {
-        const text = "SELECT * FROM users Where email = $1 AND password = $2 "
-        const values = [req.body.email, req.body.password]
+        const text = "SELECT * FROM users Where tcno = $1 AND password = $2 "
+        const values = [req.body.tcno, req.body.password]
         const {rows} = await postgresClient.query(text,values)
         if(!rows.length)
         {
