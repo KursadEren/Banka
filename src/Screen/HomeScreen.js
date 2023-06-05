@@ -4,12 +4,31 @@ import AppBar from '../Component/AppBar';
 import { MyContext } from '../Context/Context';
 import ExpandableScreen from '../Component/ExpandableScreen';
 import MyFlatList from '../Component/FlatList';
-
+import Constants from 'expo-constants';
+import axios from 'axios';
 const HomeScreen = ({ navigation }) => {
   const context = useContext(MyContext);
-  const { sayfa, updateSayfa, email, updateEmail, password, updatePassword, fullname, updateFullname, userinfo, updateUserinfo } = context;
+  const {tcno,  updateSayfa,  updateUserinfo } = context;
 
   useEffect(() => {
+    const { manifest } = Constants;
+    const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+
+    axios
+      .get(`${apiAddress}/users/hesap/${tcno}`)
+      .then((response) => {
+        if (response.status === 200) {
+          updateUserinfo(response.data);
+          
+        } else {
+          console.error(response.data.message);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    
     const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
 
     return () => backHandler.remove();

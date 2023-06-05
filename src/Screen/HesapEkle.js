@@ -3,12 +3,23 @@ import { View, StyleSheet, BackHandler, Text, Button, TextInput, Dimensions } fr
 
 import { MyContext } from '../Context/Context';
 import ComboBox from '../Component/Combobox';
+import TextInputC from '../Component/TextInput';
+import Buttonx from '../Component/Button';
 
 const HesapEkle = ({ navigation }) => {
-  const [selectedOption, setSelectedOption] = useState('');
-  const [options, setOptions] = useState([]);
+  
+ 
   const context = useContext(MyContext);
-  const { sayfa, updateSayfa } = context;
+  const {selectedOptiondoviz,  selectedOptionhesap, selectedOptionsube, sayfa, updateSayfa,updateSelectedIBAN } = context;
+ 
+  function generateRandomNumber() {
+    const min = Math.pow(10, 15); // Minimum değer: 10^15
+    const max = Math.pow(10, 16) - 1; // Maksimum değer: 10^16 - 1
+  
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+  
+  
 
   useEffect(() => {
     const backAction = () => {
@@ -21,10 +32,22 @@ const HesapEkle = ({ navigation }) => {
 
     return () => backHandler.remove();
   }, []);
+  const kartnumarasi  = generateRandomNumber();
+
+  const ulkekodu = "TR";
+  const bankakodu = "1232"
+  const IBAN = ulkekodu + bankakodu + kartnumarasi;
+  
+  console.log(IBAN);
+
 
   const [step, setStep] = useState(1);
+  
   const handleNextStep = () => {
+    if(selectedOptiondoviz !=null && selectedOptionhesap !=null && selectedOptionsube !=null)
     setStep(step + 1);
+    else
+    console.log("hata")
   };
 
   const handlePrevStep = () => {
@@ -50,13 +73,13 @@ const HesapEkle = ({ navigation }) => {
       case 2:
         return (
           <View style={styles.stepContainer}>
-            <Text style={styles.stepText}>E-posta Adresiniz:</Text>
-            <TextInput style={styles.input} />
-            <Text style={styles.stepText}>Telefon Numaranız:</Text>
-            <TextInput style={styles.input} />
+            <Text style={styles.stepText}>TC numaranız:</Text>
+            <TextInputC label="TC No"  style={styles.input} />
+            <Text style={styles.stepText}>Parolanız:</Text>
+            <TextInputC   label="password" style={styles.input}/>
             <View style={styles.buttonContainer}>
-              <Button title="Geri" onPress={handlePrevStep} />
-              <Button title="Devam Et" onPress={handleNextStep} />
+              <Button  title="Geri" onPress={handlePrevStep} />
+              <Buttonx label="Hesap Ekle" navigation={navigation}/>
             </View>
           </View>
         );
@@ -66,7 +89,7 @@ const HesapEkle = ({ navigation }) => {
             <Text style={styles.stepText}>Kayıt Tamamlandı!</Text>
             <View style={styles.buttonContainer}>
               <Button title="Geri" onPress={handlePrevStep} />
-              <Button title="Kayıt Ol" onPress={handleRegistration} />
+              
             </View>
           </View>
         );
@@ -101,8 +124,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonContainer: {
+    marginTop:"10%",
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
   },
 });
 

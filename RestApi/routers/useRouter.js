@@ -22,7 +22,7 @@ router.get('/',async (req,res) =>{
 // doviz Combobx veri
 router.get('/doviztipi',async (req,res) =>{
     try{
-        const text = "SELECT d.dovizadi \
+        const text = "SELECT d.dovizadi,d.doviztipiid \
         FROM doviz d\
         LEFT JOIN usershesap h ON d.doviztipiid = h.doviztipiid\
         WHERE h.usersid IS NULL\
@@ -39,7 +39,7 @@ router.get('/doviztipi',async (req,res) =>{
 //şube combobox
 router.get('/sube',async (req,res) =>{
     try{
-        const text = "select subeadi from sube"
+        const text = "select subeid, subeadi from sube"
          const {rows} = await postgresClient.query(text)
         return res.status(200).json(rows)
         
@@ -65,10 +65,11 @@ router.get('/hesaptur',async (req,res) =>{
 router.get('/hesap/:tcno', async (req,res) => {
     try {
         const { tcno } = req.params;
-        const text ="select h.usershesapid as id,h.hesapno,h.hesapbakiye,  u.userid, u.fullname, u.telno, t.hesapadi \
+        const text ="select h.usershesapid as id,h.hesapno,h.hesapbakiye,u.tcno,s.subeadi  ,u.userid, u.fullname, u.telno, t.hesapturadi \
         from users u \
         INNER JOIN usershesap h on u.userid = h.usersid \
         INNER JOIN hesaptur t on t.hesapturid = h.hesapturid\
+        INNER JOIN sube s on s.subeid = h.subeid\
         WHERE tcno = $1"; 
                        const value = [tcno]
         const {rows} = await postgresClient.query(text,value)
