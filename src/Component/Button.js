@@ -9,23 +9,27 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Buttonx = ({ label, navigation }) => {
   const context = useContext(MyContext);
-  const { sayfa, updateSayfa, email, updateEmail, password, updatePassword } = context;
+  const {tcno, updateTcno, sayfa, updateSayfa, email, updateEmail, password, updatePassword } = context;
 
   const handleLogin = () => {
-    console.log(email);
-    console.log(password);
+   
     if (label === 'Sign In') {
       // Expo Constants paketinden IP adresinizi alın.
       const { manifest } = Constants;
       const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
       axios
-        .post(`${apiAddress}/users/login`, { email, password })
+        .post(`${apiAddress}/users/login`, { tcno, password })
         .then((response) => {
+          
           if (response.status === 200) {
+            
+            
+            
             navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
-            console.log(response.data.message);
+            
           } else {
             // İstek başarısız oldu, hata mesajını gösterin
+            console.log("hey")
             console.error(response.data.message);
           }
         })

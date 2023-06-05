@@ -29,7 +29,7 @@ const SignIn = ({navigation}) => {
             </View>
             <View style={style.Body}>
                 <View style={style.TextInput}>
-                <TextInputC label="E-mail"/>
+                <TextInputC label="TC No"/>
                 </View>
                 <View style={style.TextInput}>
                 <TextInputC label="Password"/>
@@ -38,7 +38,12 @@ const SignIn = ({navigation}) => {
                 <Buttonx label="Sign In" navigation={navigation}/>
                 <Buttonx label="Sign Up" navigation={navigation}/>
                </View>
-               
+               <View style={style.or}>
+  <View style={{borderBottomWidth: 1, flex: 1,position: 'relative', top: -7}} ></View>
+  <Text style={{marginHorizontal: 5}}> Or </Text>
+  <View style={{borderBottomWidth: 1, flex: 1,position: 'relative', top: -7}} ></View>
+</View>
+
 
                
                 
@@ -57,7 +62,8 @@ const style = StyleSheet.create({
     container:{flex:1,flexDirection:'row'},
     appBarr:{marginVertical:'5%'},
     Body:{marginVertical:'5%',marginHorizontal:'10%'},
-    ButonContainer:{flexDirection:'row',justifyContent:'space-around'},
-    TextInput:{marginVertical:'5%'}
+    ButonContainer:{flexDirection:'row',justifyContent:'space-around',marginTop:"20%"},
+    TextInput:{marginVertical:'8%'},
+    or:{flexDirection:"row",marginTop:20}
 })
 export default SignIn

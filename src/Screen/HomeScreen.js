@@ -10,34 +10,29 @@ const HomeScreen = ({ navigation }) => {
   const { sayfa, updateSayfa, email, updateEmail, password, updatePassword, fullname, updateFullname, userinfo, updateUserinfo } = context;
 
   useEffect(() => {
-    
-    const backAction = () => {
-      
-      
-     
-      Alert.alert('Çıkış yapmak istiyor musunuz?', '', [
-        { text: 'Hayır', style: 'cancel' },
-        { text: 'Evet', onPress: handleExit },
-      ]);
-      return true;
-    
-      
-    
-      
-    };
-
     const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
 
     return () => backHandler.remove();
   }, []);
 
- 
+  const backAction = () => {
+    Alert.alert('Çıkış yapmak istiyor musunuz?', '', [
+      { text: 'Hayır', style: 'cancel' },
+      { text: 'Evet', onPress: handleExit },
+    ]);
+
+    return true; // Geri tuşu olayını durdur
+  };
 
   const handleExit = () => {
+    BackHandler.removeEventListener('hardwareBackPress', backAction); // Geri tuşu olayını kaldır
+
     updateSayfa('Sign In');
     navigation.goBack();
   };
+ 
 
+  
   const handleExpand = () => {
     // Burada yapılacak işlemler
   };

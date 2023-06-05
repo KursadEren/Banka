@@ -10,8 +10,11 @@ export const MyContextProvider = ({ children }) => {
   const [password, setPassword] = useState('');
   const [Language, setLanguage] = useState('');
   const [userinfo, setUserinfo] = useState('');
+  const [tcno,setTcno] = useState('');
 
-
+  const updateTcno = (newTcno) => {
+    setTcno(newTcno);
+  };
   const updateUserinfo = (newUserinfo) => {
     setUserinfo(newUserinfo);
   };
@@ -57,6 +60,8 @@ export const MyContextProvider = ({ children }) => {
       setLanguage,
       userinfo,
       updateUserinfo,
+      tcno,
+      updateTcno,
 
 
       }}>
