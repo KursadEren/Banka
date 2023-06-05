@@ -13,7 +13,7 @@ const Buttonx = ({ label, navigation }) => {
 
   const handleLogin = () => {
    
-    if (label === 'Sign In') {
+    if (label === 'Sign In' || label === "Hesap Ekle") {
       // Expo Constants paketinden IP adresinizi alın.
       const { manifest } = Constants;
       const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
@@ -22,14 +22,12 @@ const Buttonx = ({ label, navigation }) => {
         .then((response) => {
           
           if (response.status === 200) {
-            
-            
-            
+
             navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
             
           } else {
             // İstek başarısız oldu, hata mesajını gösterin
-            console.log("hey")
+           
             console.error(response.data.message);
           }
         })
@@ -44,19 +42,32 @@ const Buttonx = ({ label, navigation }) => {
       navigation.navigate('HesapEkle');
     }
   };
+  let content;
+  if(label === 'Sign In')
+  {
+    
+  }
 
   return (
     <View style={styles.container}>
-      {label === 'Sign In' || label === 'Sign Up' ? (
+      {label === 'Sign In' ? (
         <Button icon="send" mode="contained" onPress={() => handleLogin()} style={styles.button}>
-          {label}
+          {"Giriş"}
         </Button>
-      ) : (
+      ) : label === 'Sign Up' ?(
+       <Button icon="send" mode="contained" onPress={() => handleLogin()} style={styles.button}>
+        {"Kayıt"}
+        </Button>
+    ) : label === '+' ? (
         <TouchableOpacity onPress={() => handleLogin()}>
         <View style={{borderWidth:1,padding:10,borderRadius:1000,paddingRight:15,paddingLeft:15,backgroundColor:"#4CAF50"}}>
          <Text style={{fontSize:15}}>{label}</Text>
           </View>
           </TouchableOpacity>
+      ):(
+        <Button icon="send" mode="contained" onPress={() => handleLogin()} style={styles.button}>
+        {"Hesap Ekle"}
+      </Button>
       )}
     </View>
   );

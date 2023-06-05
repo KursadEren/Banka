@@ -39,14 +39,11 @@ const SignIn = ({navigation}) => {
                 <Buttonx label="Sign Up" navigation={navigation}/>
                </View>
                <View style={style.or}>
-  <View style={{borderBottomWidth: 1, flex: 1,position: 'relative', top: -7}} ></View>
-  <Text style={{marginHorizontal: 5}}> Or </Text>
-  <View style={{borderBottomWidth: 1, flex: 1,position: 'relative', top: -7}} ></View>
-</View>
-
-
-               
-                
+                <View style={{borderBottomWidth: 1, flex: 1,position: 'relative', top: -7}} ></View>
+                <Text style={{marginHorizontal: 5}}> Or </Text>
+                <View style={{borderBottomWidth: 1, flex: 1,position: 'relative', top: -7}} ></View>
+               </View>
+   
             </View>
             <View style={style.ButonContainer}>
                 
