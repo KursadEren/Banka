@@ -8,46 +8,56 @@ import Buttonx from '../Component/Button';
 
 const HesapEkle = ({ navigation }) => {
   
- 
-  const context = useContext(MyContext);
-  const {selectedOptiondoviz,  selectedOptionhesap, selectedOptionsube, sayfa, updateSayfa,updateSelectedIBAN } = context;
- 
   function generateRandomNumber() {
     const min = Math.pow(10, 15); // Minimum değer: 10^15
     const max = Math.pow(10, 16) - 1; // Maksimum değer: 10^16 - 1
   
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-  
-  
-
-  useEffect(() => {
-    const backAction = () => {
-      updateSayfa("HomeScreen");
-      navigation.navigate('HomeScreen');
-      return true;
-    };
-
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
-
-    return () => backHandler.remove();
-  }, []);
   const kartnumarasi  = generateRandomNumber();
 
   const ulkekodu = "TR";
   const bankakodu = "1232"
   const IBAN = ulkekodu + bankakodu + kartnumarasi;
+  const context = useContext(MyContext);
+  const {selectedOptiondoviz,  selectedOptionhesap, selectedOptionsube, sayfa, updateSayfa,updateSelectedIBAN } = context;
+ 
   
-  console.log(IBAN);
+  
+
+  useEffect(() => {
+
+    const backAction = () => {
+      updateSayfa("HomeScreen");
+      navigation.navigate('HomeScreen');
+      return true;
+    };
+    const kartnumarasi = generateRandomNumber();
+    const ulkekodu = "TR";
+    const bankakodu = "1232";
+    const IBAN = ulkekodu + bankakodu + kartnumarasi;
+    updateSelectedIBAN(IBAN);
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+
+    return () => backHandler.remove();
+  }, []);
+  
+  
+
 
 
   const [step, setStep] = useState(1);
   
   const handleNextStep = () => {
-    if(selectedOptiondoviz !=null && selectedOptionhesap !=null && selectedOptionsube !=null)
-    setStep(step + 1);
-    else
-    console.log("hata")
+    if (
+      selectedOptiondoviz !== null &&
+      selectedOptionhesap !== null &&
+      selectedOptionsube !== null
+    ) {
+      setStep(step + 1);
+    } else {
+      console.log("Hata: Geçerli değerleri seçiniz.");
+    }
   };
 
   const handlePrevStep = () => {

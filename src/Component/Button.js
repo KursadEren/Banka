@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Button } from 'react-native-paper';
 import { MyContext } from '../Context/Context';
 import Constants from 'expo-constants';
@@ -9,12 +9,19 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Buttonx = ({ label, navigation }) => {
   const context = useContext(MyContext);
-  const {tcno, updateTcno, sayfa, updateSayfa, email, updateEmail, password, updatePassword } = context;
+  const {tcno, updateSayfa,  password, userinfo,selectedOptiondoviz,selectedOptionsube,selectedOptionhesap,selectedIBAN } = context;
+
+ 
+    
+    
+
 
   const handleLogin = () => {
+
+    
    
-    if (label === 'Sign In' || label === "Hesap Ekle") {
-      // Expo Constants paketinden IP adresinizi alın.
+    if (label === 'Sign In' ) {
+      // giriş kontrol
       const { manifest } = Constants;
       const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
       axios
@@ -22,6 +29,7 @@ const Buttonx = ({ label, navigation }) => {
         .then((response) => {
           
           if (response.status === 200) {
+            
 
             navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
             
@@ -35,18 +43,73 @@ const Buttonx = ({ label, navigation }) => {
           // HTTP isteği hata verdi, hata mesajını gösterin
           console.error(error);
         });
-    } else if (label === 'Sign Up') {
+    }else if (label === "Hesap Ekle")
+    {
+      const { manifest } = Constants;
+      const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+      // kontrol
+      axios
+        .post(`${apiAddress}/users/login`, { tcno, password })
+        .then((response) => {
+          
+          if (response.status === 200) {
+            const hesapbakiye = "0";
+            console.log(hesapbakiye);
+            const usersid = userinfo[0].userid;
+            
+            
+            // ekleme yapma
+     axios
+        .post(`${apiAddress}/users/dovizhesap`, {
+          usersid,
+          selectedOptionhesap,
+          hesapbakiye,
+          selectedOptionsube,
+          selectedOptiondoviz,
+          selectedIBAN,
+        })   .then((response) => {
+          
+          if (response.status === 201) {
+            
+            updateSayfa("HomeScreen");
+
+            navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
+            
+          } else {
+            // İstek başarısız oldu, hata mesajını gösterin
+           console.log("hey")
+            console.error(response.data.message);
+          }
+        })
+        .catch((error) => {
+          // HTTP isteği hata verdi, hata mesajını gösterin
+          console.error(error);
+        });
+        
+            
+           
+            
+            
+          } else {
+            // İstek başarısız oldu, hata mesajını gösterin
+           
+            console.error(response.data.message);
+          }
+        })
+        .catch((error) => {
+          // HTTP isteği hata verdi, hata mesajını gösterin
+          console.error(error);
+        });
+        
+    } 
+    else if (label === 'Sign Up') {
       navigation.navigate('Sign Up');
     } else if (label === '+') {
       updateSayfa("HesapEkle");
       navigation.navigate('HesapEkle');
     }
   };
-  let content;
-  if(label === 'Sign In')
-  {
-    
-  }
+  
 
   return (
     <View style={styles.container}>

@@ -104,6 +104,20 @@ router.post('/users/:email',async (req,res) =>{
         return res.status(400).json({message: error.message})
     }
 })
+// hesap ekle ekleme
+router.post('/dovizhesap',async (req,res) =>{
+    try{
+        const text = " Insert into usershesap (usersid,hesapturid,hesapbakiye,subeid,doviztipiid,iban) VALUES($1,$2,$3,$4,$5,$6)  "
+        const values = [req.body.usersid,req.body.selectedOptionhesap,  req.body.hesapbakiye, req.body.selectedOptionsube ,req.body.selectedOptiondoviz, req.body.selectedIBAN]
+        const {rows} = await postgresClient.query(text,values)
+        return res.status(201).json({createdUser: rows[0] })
+        
+    } catch (error){
+        
+        console.log('error occured', error.message)
+        return res.status(400).json({message: error.message})
+    }
+})
 
 router.get('/doviz', (req, res) => {
     const exchangeRates = generateExchangeRates();
