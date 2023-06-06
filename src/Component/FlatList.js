@@ -23,7 +23,8 @@ const MyFlatList = ({navigation}) => {
       .get(`${apiAddress}/users/hesap/${tcno}`)
       .then((response) => {
         if (response.status === 200) {
-          setName(response.data[1].fullname);
+          console.log(userinfo);
+          setName(response.data[0].fullname);
           setUserInfo(response.data);
           console.log(userinfo);
         } else {

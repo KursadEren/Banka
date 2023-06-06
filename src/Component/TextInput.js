@@ -4,7 +4,7 @@ import { MyContext } from '../Context/Context';
 
 const TextInputC = ({ label }) => {
   const context = useContext(MyContext);
-  const {tcno, updateTcno, email, updateEmail,updatePassword,password } = context;
+  const {updatesetDogumtarih,tcno, updateTcno, email, updateEmail,updatePassword,password,telno,updatesetTelno,   fullname,updateFullname, } = context;
   const [text, setText] = useState("");
   const [isFocused, setIsFocused] = useState(false);
 
@@ -22,7 +22,21 @@ const TextInputC = ({ label }) => {
     updateTcno(text);
   } else if (label === "Password") {
     updatePassword(text);
-  }
+  }else if(label === "email")
+   {
+    updateEmail(text);
+   }else if(label === "telno")
+   {
+    updatesetTelno(text);
+   }
+   else if(label ==="fullname")
+   {
+    updateFullname(text);
+   }
+   else if(label === "dogumtarih")
+   {
+    updatesetDogumtarih(text);
+   }
   };
 
   return (
