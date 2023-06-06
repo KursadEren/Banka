@@ -7,9 +7,10 @@ import axios from 'axios';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
-const Buttonx = ({ label, navigation }) => {
+const Buttonx = ({label2, label, navigation }) => {
   const context = useContext(MyContext);
-  const {tcno, updateSayfa,  password, userinfo,selectedOptiondoviz,selectedOptionsube,selectedOptionhesap,selectedIBAN } = context;
+  const {dogumtarih,tcno, updateSayfa,  password, userinfo,selectedOptiondoviz,selectedOptionsube,selectedOptionhesap,selectedIBAN,updateTcno, email, updateEmail,updatePassword,telno,updatesetTelno,   fullname,updateFullname, } = context;
+  
 
  
     
@@ -86,11 +87,7 @@ const Buttonx = ({ label, navigation }) => {
           console.error(error);
         });
         
-            
-           
-            
-            
-        
+
           } else {
             // İstek başarısız oldu, hata mesajını gösterin
            
@@ -108,6 +105,31 @@ const Buttonx = ({ label, navigation }) => {
     } else if (label === '+') {
       updateSayfa("HesapEkle");
       navigation.navigate('HesapEkle');
+    } else if (label2 === 'Sign Up')
+    {
+      
+      const { manifest } = Constants;
+      const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+      axios
+        .post(`${apiAddress}/users/users/${tcno}`, { fullname,telno,dogumtarih, tcno, password,email })
+        .then((response) => {
+          
+          if (response.status === 201) {
+            
+            console.log("hey")
+            navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
+            
+          } else {
+            // İstek başarısız oldu, hata mesajını gösterin
+            
+            console.error(response.data.message);
+          }
+        })
+        .catch((error) => {
+          // HTTP isteği hata verdi, hata mesajını gösterin
+          console.error(error);
+        });
+
     }
   };
   
@@ -118,7 +140,7 @@ const Buttonx = ({ label, navigation }) => {
         <Button icon="send" mode="contained" onPress={() => handleLogin()} style={styles.button}>
           {"Giriş"}
         </Button>
-      ) : label === 'Sign Up' ?(
+      ) : label === 'Sign Up' || label2 === 'Sign Up' ?(
        <Button icon="send" mode="contained" onPress={() => handleLogin()} style={styles.button}>
         {"Kayıt"}
         </Button>
@@ -128,7 +150,7 @@ const Buttonx = ({ label, navigation }) => {
          <Text style={{fontSize:15}}>{label}</Text>
           </View>
           </TouchableOpacity>
-      ):(
+      ): (
         <Button icon="send" mode="contained" onPress={() => handleLogin()} style={styles.button}>
         {"Hesap Ekle"}
       </Button>

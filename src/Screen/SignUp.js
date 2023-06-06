@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import TextInputC from '../Component/TextInput';
+import Buttonx from '../Component/Button';
 
-const SignUp = () => {
+const SignUp = ( {navigation} ) => {
   const [step, setStep] = useState(1);
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
@@ -32,17 +34,11 @@ const SignUp = () => {
         return (
           <View style={styles.stepContainer}>
             <Text style={styles.stepText}>Adınız:</Text>
-            <TextInput
-              style={styles.input}
-              value={name}
-              onChangeText={setName}
-            />
-            <Text style={styles.stepText}>Soyadınız:</Text>
-            <TextInput
-              style={styles.input}
-              value={surname}
-              onChangeText={setSurname}
-            />
+            <TextInputC label="TC No"/>
+            <Text style={styles.stepText}>TC NO:</Text>
+            <TextInputC label="Password"/>
+            <Text style={styles.stepText}>TC NO:</Text>
+            <TextInputC label="fullname"/>
             <Button title="Devam Et" onPress={handleNextStep} />
           </View>
         );
@@ -50,30 +46,15 @@ const SignUp = () => {
         return (
           <View style={styles.stepContainer}>
             <Text style={styles.stepText}>E-posta Adresiniz:</Text>
-            <TextInput
-              style={styles.input}
-              value={email}
-              onChangeText={setEmail}
-            />
+            <TextInputC label="email"/>
             <Text style={styles.stepText}>Telefon Numaranız:</Text>
-            <TextInput
-              style={styles.input}
-              value={phone}
-              onChangeText={setPhone}
-            />
+            <TextInputC label="telno"/>
+            <Text style={styles.stepText}>Telefon Numaranız:</Text>
+            <TextInputC label="dogumtarih"/>
             <View style={styles.buttonContainer}>
+            
               <Button title="Geri" onPress={handlePrevStep} />
-              <Button title="Devam Et" onPress={handleNextStep} />
-            </View>
-          </View>
-        );
-      case 3:
-        return (
-          <View style={styles.stepContainer}>
-            <Text style={styles.stepText}>Kayıt Tamamlandı!</Text>
-            <View style={styles.buttonContainer}>
-              <Button title="Geri" onPress={handlePrevStep} />
-              <Button title="Kayıt Ol" onPress={handleRegistration} />
+              <Buttonx label2="Sign Up" label="" navigation={navigation} />
             </View>
           </View>
         );

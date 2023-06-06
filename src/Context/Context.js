@@ -13,6 +13,8 @@ export const MyContextProvider = ({ children }) => {
   const [tcno,setTcno] = useState('');
   const [hesapturadi,setHesapturadi] = useState('');
   const [hesapbakiye,setHesapbakiye] = useState('');
+  const [telno, setTelno] = useState('');
+  const [dogumtarih, setDogumtarih] = useState('');
 
    //hesap ekle SAYFASI
    const [selectedOptiondoviz, setSelectedOptiondoviz] = useState('');
@@ -24,6 +26,12 @@ export const MyContextProvider = ({ children }) => {
    const[checkpassword,setCheckpassword] = useState();
    const[checkpassword2,setCheckpassword2] = useState();
 
+   const updatesetDogumtarih = (newdogumtarih ) => {
+    setDogumtarih(newdogumtarih );
+  };
+   const updatesetTelno = (newTelno ) => {
+    setTelno(newTelno );
+  };
    const updateCheckpassword = (newCheckpassword ) => {
     setCheckpassword(newCheckpassword );
   };
@@ -110,7 +118,10 @@ export const MyContextProvider = ({ children }) => {
       //iban
       selectedIBAN,
       updateSelectedIBAN,
-
+      updatesetTelno,
+      telno,
+      dogumtarih,
+      updatesetDogumtarih
       }}>
       {children}
     </MyContext.Provider>

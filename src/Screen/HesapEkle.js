@@ -93,16 +93,7 @@ const HesapEkle = ({ navigation }) => {
             </View>
           </View>
         );
-      case 3:
-        return (
-          <View style={styles.stepContainer}>
-            <Text style={styles.stepText}>Kayıt Tamamlandı!</Text>
-            <View style={styles.buttonContainer}>
-              <Button title="Geri" onPress={handlePrevStep} />
-              
-            </View>
-          </View>
-        );
+     
       default:
         return null;
     }

@@ -83,24 +83,24 @@ router.get('/hesap/:tcno', async (req,res) => {
 // CREATE USERS
 
 
-router.post('/users/:email',async (req,res) =>{
+router.post('/users/:tcno',async (req,res) =>{
     try{
-        const email  = req.params.email
-        const emailCheckQuery = 'SELECT * FROM users WHERE email = $1';
-        const emailCheckValues = [email];
+        
+        const emailCheckQuery = 'SELECT * FROM users WHERE tcno = $1';
+        const emailCheckValues = [ req.params.tcno];
         const result = await postgresClient.query(emailCheckQuery, emailCheckValues);
         if(result.rows.length>0)
         {
-            return res.status(400).json({ error: 'A user with the same email already exists' });
+            return res.status(400).json({ error: 'A user with the same tcno already exists' });
         }
 
-        const text = "INSERT INTO users (fullname,username,telno,dogumtarih,tcno,password,email,userhesapid) VALUES($1,$2,$3,$4,$5,$6,$7,$8)  "
-        const values = [req.body.fullname,req.body.username, req.body.telno, req.body.dogumtarih, req.body.tcno ,req.body.password, req.body.email, req.body.userhesapid || 5]
+        const text = "INSERT INTO users (fullname,telno,dogumtarih,tcno,password,email) VALUES($1,$2,$3,$4,$5,$6)  "
+        const values = [req.body.fullname, req.body.telno, req.body.dogumtarih, req.body.tcno ,req.body.password, req.body.email]
         const {rows} = await postgresClient.query(text,values)
         return res.status(201).json({createdUser: rows[0] })
         
     } catch (error){
-        console.log('error occured', error.message)
+        console.log('errorasdasd occured', error.message)
         return res.status(400).json({message: error.message})
     }
 })
