@@ -25,7 +25,7 @@ const MyFlatList = ({navigation}) => {
         if (response.status === 200) {
           setName(response.data[1].fullname);
           setUserInfo(response.data);
-          console.log(response.data);
+          console.log(userinfo);
         } else {
           console.error(response.data.message);
         }
@@ -37,11 +37,12 @@ const MyFlatList = ({navigation}) => {
 
   
 
-  const Item = ({ title, hesapno }) => {
+  const Item = ({ title, hesapno,subeadi}) => {
     return (
       <View style={styles.itemContainer}>
         <Text style={styles.itemTitle}>{title}</Text>
         <Text style={styles.itemSubtitle}>{hesapno}</Text>
+        <Text style={styles.itemSubtitle}>{subeadi}</Text>
       </View>
     );
   };
@@ -69,7 +70,7 @@ const MyFlatList = ({navigation}) => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity style={styles.touchableOpacityContainer}>
-            <Item title={item.hesapadi} hesapno={item.hesapno} />
+            <Item title={item.fullname} subeadi={item.subeadi} hesapno={item.hesapno} />
           </TouchableOpacity>
         )}
         onScroll={handleScroll}
