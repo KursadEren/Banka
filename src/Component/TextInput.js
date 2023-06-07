@@ -1,10 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { TextInput } from 'react-native-paper';
-import { MyContext } from '../Context/Context';
 
-const TextInputC = ({ label }) => {
-  const context = useContext(MyContext);
-  const {updatesetDogumtarih,tcno, updateTcno, email, updateEmail,updatePassword,password,telno,updatesetTelno,   fullname,updateFullname, } = context;
+const TextInputC = ({ label, onChangeText }) => {
   const [text, setText] = useState("");
   const [isFocused, setIsFocused] = useState(false);
 
@@ -18,25 +15,7 @@ const TextInputC = ({ label }) => {
 
   const handleTextChange = (text) => {
     setText(text);
-  if (label === "TC No") {
-    updateTcno(text);
-  } else if (label === "Password") {
-    updatePassword(text);
-  }else if(label === "email")
-   {
-    updateEmail(text);
-   }else if(label === "telno")
-   {
-    updatesetTelno(text);
-   }
-   else if(label ==="fullname")
-   {
-    updateFullname(text);
-   }
-   else if(label === "dogumtarih")
-   {
-    updatesetDogumtarih(text);
-   }
+    onChangeText(text);
   };
 
   return (

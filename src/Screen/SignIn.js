@@ -4,11 +4,11 @@ import AppBar from '../Component/AppBar'
 import { MyContext } from '../Context/Context';
 import TextInputC from '../Component/TextInput';
 import Buttonx from '../Component/Button';
+import { onChange } from 'react-native-reanimated';
 const SignIn = ({navigation}) => {
     
     const context = useContext(MyContext);
-  const {sayfa, updateSayfa ,  email, updateEmail,password,
-    updatePassword} = context;
+    const {dogumtarih,tcno, updateSayfa,  password, userinfo,selectedOptiondoviz,selectedOptionsube,selectedOptionhesap,selectedIBAN,updateTcno, email, updateEmail,updatePassword,telno,updatesetTelno,   fullname,updateFullname, } = context;
   
    
   useEffect(() => {
@@ -17,8 +17,7 @@ const SignIn = ({navigation}) => {
     updateSayfa("Sign In"); // Örnek olarak sayfa değerini güncelliyoruz
     
   }, []);
-
-
+  
 
   return (
     <View>
@@ -29,14 +28,14 @@ const SignIn = ({navigation}) => {
             </View>
             <View style={style.Body}>
                 <View style={style.TextInput}>
-                <TextInputC label="TC No"/>
+                <TextInputC onChangeText={updateTcno} label="TC No"/>
                 </View>
                 <View style={style.TextInput}>
-                <TextInputC label="Password"/>
+                <TextInputC onChangeText={updatePassword} label="Password"/>
                 </View>
                 <View style={style.ButonContainer}>
                 <Buttonx label="Sign In" navigation={navigation}/>
-                <Buttonx label="Sign Up" navigation={navigation}/>
+                <Buttonx label="Sign Up"  navigation={navigation}/>
                </View>
                <View style={style.or}>
                 <View style={{borderBottomWidth: 1, flex: 1,position: 'relative', top: -7}} ></View>
