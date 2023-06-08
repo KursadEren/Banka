@@ -62,6 +62,8 @@ const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
   );
 };
 
+
+
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
