@@ -47,17 +47,7 @@ const HesapEkle = ({ navigation }) => {
 
   const [step, setStep] = useState(1);
   
-  const handleNextStep = () => {
-    if (
-      selectedOptiondoviz !== null &&
-      selectedOptionhesap !== null &&
-      selectedOptionsube !== null
-    ) {
-      setStep(step + 1);
-    } else {
-      console.log("Hata: Geçerli değerleri seçiniz.");
-    }
-  };
+  
 
   const OnChangeButton = (text) =>{
       if(text === 'Hesap Ekle')
@@ -114,9 +104,25 @@ const HesapEkle = ({ navigation }) => {
             // HTTP isteği hata verdi, hata mesajını gösterin
             console.error(error);
           });
+      }else if(text ==='Geri'){
+        handlePrevStep();
+      }
+      else if(text ==='Devam Et'){
+        handleNextStep();
       }
   }
 
+  const handleNextStep = () => {
+    if (
+      selectedOptiondoviz !== null &&
+      selectedOptionhesap !== null &&
+      selectedOptionsube !== null
+    ) {
+      setStep(step + 1);
+    } else {
+      console.log("Hata: Geçerli değerleri seçiniz.");
+    }
+  };
   const handlePrevStep = () => {
     setStep(step - 1);
   };
@@ -133,7 +139,7 @@ const HesapEkle = ({ navigation }) => {
             <Text style={styles.stepText}>Şube Seçin:</Text>
             <ComboBox label="sube"/>
             <View style={styles.buttonContainer}>
-              <Button title="Devam Et" onPress={handleNextStep} />
+              <Buttonx label="Devam Et"  OnChangeButton={OnChangeButton} onPress={handleNextStep} />
             </View>
           </View>
         );
@@ -145,7 +151,7 @@ const HesapEkle = ({ navigation }) => {
             <Text style={styles.stepText}>Parolanız:</Text>
             <TextInputC   label="password" style={styles.input}/>
             <View style={styles.buttonContainer}>
-              <Button  title="Geri" onPress={handlePrevStep} />
+              <Buttonx  label="Geri" OnChangeButton={OnChangeButton}  onPress={handlePrevStep} />
               <Buttonx label="Hesap Ekle" OnChangeButton={OnChangeButton} navigation={navigation}/>
             </View>
           </View>
