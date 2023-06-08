@@ -5,7 +5,7 @@ import Constants from 'expo-constants';
 import axios from 'axios';
 import Buttonx from './Button';
 
-const MyFlatList = ({navigation}) => {
+const MyFlatList = ({navigation,OnChangeButton}) => {
   const [userInfo, setUserInfo] = useState([]);
   const [name, setName] = useState(' ');
   const flatListRef = useRef(null);
@@ -89,7 +89,7 @@ const MyFlatList = ({navigation}) => {
           />
         ))}
         <View style={{marginLeft:"20%"}}>
-         <Buttonx label="+" navigation={navigation}/>
+         <Buttonx label="+" OnChangeButton={OnChangeButton} navigation={navigation}/>
          </View>
       </View>
     </View>
