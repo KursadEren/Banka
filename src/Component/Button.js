@@ -17,7 +17,10 @@ const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
     
 
 
- 
+
+    
+   
+  
   const  HandleButton = (text) =>{
       OnChangeButton(text);
   } 
@@ -42,9 +45,17 @@ const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
         <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
         {"Kayıt"}
         </Button>
-      ): (
+      ): label === 'Hesap Ekle'? (
         <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
         {"Hesap Ekle"}
+      </Button>
+      ): label === 'Devam Et'?(
+        <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
+        {"Devam Et"}
+      </Button>
+      ):(
+        <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
+        {"Geri"}
       </Button>
       )}
     </View>
