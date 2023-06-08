@@ -6,7 +6,7 @@ import {
 } from '@react-navigation/drawer';
 import Profile from '../Screen/Profile';
 import WatchList from "../Screen/WatchList";
-
+import Islem from '../Screen/islem'
 const Drawer = createDrawerNavigator();
 
 function CustomDrawerContent(props) {
@@ -28,6 +28,7 @@ const DraverNavigator = () => {
       <Drawer.Screen name="HomeScreen" component={HomeScreen} />
       <Drawer.Screen name="Profile" component={Profile} />
       <Drawer.Screen name="WatchList" component={WatchList} />
+      <Drawer.Screen name="islem" component={Islem} />
     </Drawer.Navigator>
   );
 };

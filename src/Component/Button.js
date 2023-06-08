@@ -2,8 +2,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import React, { useContext, useEffect } from 'react';
 import { Button } from 'react-native-paper';
 import { MyContext } from '../Context/Context';
-import Constants from 'expo-constants';
-import axios from 'axios';
+
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
@@ -11,15 +10,6 @@ const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
   const context = useContext(MyContext);
   const {dogumtarih,tcno, updateSayfa,  password, userinfo,selectedOptiondoviz,selectedOptionsube,selectedOptionhesap,selectedIBAN,updateTcno, email, updateEmail,updatePassword,telno,updatesetTelno,   fullname,updateFullname, } = context;
   
-
- 
-    
-    
-
-
-
-    
-   
   
   const  HandleButton = (text) =>{
       OnChangeButton(text);
@@ -52,6 +42,11 @@ const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
       ): label === 'Devam Et'?(
         <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
         {"Devam Et"}
+      </Button>
+      ):label === 'Çevir'?
+      (
+        <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
+        {label}
       </Button>
       ):(
         <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
