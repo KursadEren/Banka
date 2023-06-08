@@ -43,6 +43,17 @@ const HomeScreen = ({ navigation }) => {
     return true; // Geri tuşu olayını durdur
   };
 
+  const OnChangeButton = (text) =>{
+      if(text==='HesapEkle'){
+        updateSayfa("HesapEkle");
+        navigation.navigate('HesapEkle');
+      }
+      if(text === '+'){
+        updateSayfa("HesapEkle");
+      navigation.navigate('HesapEkle');
+      }
+  }
+
   const handleExit = () => {
     BackHandler.removeEventListener('hardwareBackPress', backAction); // Geri tuşu olayını kaldır
 
@@ -69,7 +80,7 @@ const HomeScreen = ({ navigation }) => {
             <Text style={{ fontSize: 20 }}> Hesaplarınız </Text>
           </View>
           
-          <MyFlatList navigation={navigation} />
+          <MyFlatList OnChangeButton={OnChangeButton} navigation={navigation} />
         </View>
         <ExpandableScreen onExpand={handleExpand} onCollapse={handleCollapse} />
       </View>

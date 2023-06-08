@@ -1,10 +1,11 @@
-import { View, Text,StyleSheet } from 'react-native'
+import { View, Text,StyleSheet, Alert } from 'react-native'
 import React,{useContext,useEffect,useState} from 'react'
 import AppBar from '../Component/AppBar'
 import { MyContext } from '../Context/Context';
 import TextInputC from '../Component/TextInput';
 import Buttonx from '../Component/Button';
-import { onChange } from 'react-native-reanimated';
+import Constants from 'expo-constants'
+import axios from 'axios';
 const SignIn = ({navigation}) => {
     
     const context = useContext(MyContext);
@@ -17,7 +18,38 @@ const SignIn = ({navigation}) => {
     updateSayfa("Sign In"); // Örnek olarak sayfa değerini güncelliyoruz
     
   }, []);
-  
+  const OnChangeButton = (text) =>{
+    if(text ==='Sign In')
+    {
+    const { manifest } = Constants;
+      const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+      axios
+        .post(`${apiAddress}/users/login`, { tcno, password })
+        .then((response) => {
+          
+          if (response.status === 200) {
+            
+
+            navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
+            
+          } else {
+            // İstek başarısız oldu, hata mesajını gösterin
+           
+            console.error(response.data.message);
+          }
+        })
+        .catch((error) => {
+          // HTTP isteği hata verdi, hata mesajını gösterin
+          console.error(error);
+        });
+      }else if(text ==='Sign Up')
+      {
+        navigation.navigate('Sign Up');
+      }
+      else {
+        Alert.alert('hata');
+      }
+  }
 
   return (
     <View>
@@ -34,8 +66,8 @@ const SignIn = ({navigation}) => {
                 <TextInputC onChangeText={updatePassword} label="Password"/>
                 </View>
                 <View style={style.ButonContainer}>
-                <Buttonx label="Sign In" navigation={navigation}/>
-                <Buttonx label="Sign Up"  navigation={navigation}/>
+                <Buttonx label="Sign In" OnChangeButton={OnChangeButton} navigation={navigation}/>
+                <Buttonx label="Sign Up" OnChangeButton={OnChangeButton} navigation={navigation}/>
                </View>
                <View style={style.or}>
                 <View style={{borderBottomWidth: 1, flex: 1,position: 'relative', top: -7}} ></View>

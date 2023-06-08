@@ -45,7 +45,6 @@ const HesapEkle = ({ navigation }) => {
   
 
 
-
   const [step, setStep] = useState(1);
   
   const handleNextStep = () => {
@@ -59,6 +58,64 @@ const HesapEkle = ({ navigation }) => {
       console.log("Hata: Geçerli değerleri seçiniz.");
     }
   };
+
+  const OnChangeButton = (text) =>{
+      if(text === 'Hesap Ekle')
+      {
+        const { manifest } = Constants;
+        const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+        // kontrol
+        axios
+          .post(`${apiAddress}/users/login`, { tcno, password })
+          .then((response) => {
+            
+            if (response.status === 200) {
+              const hesapbakiye = "0";
+              console.log(hesapbakiye);
+              const usersid = userinfo[0].userid;
+              
+              
+              // ekleme yapma
+       axios
+          .post(`${apiAddress}/users/dovizhesap`, {
+            usersid,
+            selectedOptionhesap,
+            hesapbakiye,
+            selectedOptionsube,
+            selectedOptiondoviz,
+            selectedIBAN,
+          })   .then((response) => {
+            
+            if (response.status === 201) {
+              
+              updateSayfa("HomeScreen");
+  
+              navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
+              
+            } else {
+              // İstek başarısız oldu, hata mesajını gösterin
+             console.log("hey")
+              console.error(response.data.message);
+            }
+          })
+          .catch((error) => {
+            // HTTP isteği hata verdi, hata mesajını gösterin
+            console.error(error);
+          });
+          
+  
+            } else {
+              // İstek başarısız oldu, hata mesajını gösterin
+             
+              console.error(response.data.message);
+            }
+          })
+          .catch((error) => {
+            // HTTP isteği hata verdi, hata mesajını gösterin
+            console.error(error);
+          });
+      }
+  }
 
   const handlePrevStep = () => {
     setStep(step - 1);
@@ -89,7 +146,7 @@ const HesapEkle = ({ navigation }) => {
             <TextInputC   label="password" style={styles.input}/>
             <View style={styles.buttonContainer}>
               <Button  title="Geri" onPress={handlePrevStep} />
-              <Buttonx label="Hesap Ekle" navigation={navigation}/>
+              <Buttonx label="Hesap Ekle" OnChangeButton={OnChangeButton} navigation={navigation}/>
             </View>
           </View>
         );

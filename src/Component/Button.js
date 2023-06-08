@@ -7,7 +7,7 @@ import axios from 'axios';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
-const Buttonx = ({label2, label, navigation }) => {
+const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
   const context = useContext(MyContext);
   const {dogumtarih,tcno, updateSayfa,  password, userinfo,selectedOptiondoviz,selectedOptionsube,selectedOptionhesap,selectedIBAN,updateTcno, email, updateEmail,updatePassword,telno,updatesetTelno,   fullname,updateFullname, } = context;
   
@@ -17,141 +17,33 @@ const Buttonx = ({label2, label, navigation }) => {
     
 
 
-  const handleLogin = () => {
-
-    
-   
-    if (label === 'Sign In' ) {
-      // giriş kontrol
-      const { manifest } = Constants;
-      const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-      axios
-        .post(`${apiAddress}/users/login`, { tcno, password })
-        .then((response) => {
-          
-          if (response.status === 200) {
-            
-
-            navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
-            
-          } else {
-            // İstek başarısız oldu, hata mesajını gösterin
-           
-            console.error(response.data.message);
-          }
-        })
-        .catch((error) => {
-          // HTTP isteği hata verdi, hata mesajını gösterin
-          console.error(error);
-        });
-    }else if (label === "Hesap Ekle")
-    {
-      const { manifest } = Constants;
-      const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-      // kontrol
-      axios
-        .post(`${apiAddress}/users/login`, { tcno, password })
-        .then((response) => {
-          
-          if (response.status === 200) {
-            const hesapbakiye = "0";
-            console.log(hesapbakiye);
-            const usersid = userinfo[0].userid;
-            
-            
-            // ekleme yapma
-     axios
-        .post(`${apiAddress}/users/dovizhesap`, {
-          usersid,
-          selectedOptionhesap,
-          hesapbakiye,
-          selectedOptionsube,
-          selectedOptiondoviz,
-          selectedIBAN,
-        })   .then((response) => {
-          
-          if (response.status === 201) {
-            
-            updateSayfa("HomeScreen");
-
-            navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
-            
-          } else {
-            // İstek başarısız oldu, hata mesajını gösterin
-           console.log("hey")
-            console.error(response.data.message);
-          }
-        })
-        .catch((error) => {
-          // HTTP isteği hata verdi, hata mesajını gösterin
-          console.error(error);
-        });
-        
-
-          } else {
-            // İstek başarısız oldu, hata mesajını gösterin
-           
-            console.error(response.data.message);
-          }
-        })
-        .catch((error) => {
-          // HTTP isteği hata verdi, hata mesajını gösterin
-          console.error(error);
-        });
-        
-    } 
-    else if (label === 'Sign Up') {
-      navigation.navigate('Sign Up');
-    } else if (label === '+') {
-      updateSayfa("HesapEkle");
-      navigation.navigate('HesapEkle');
-    } else if (label2 === 'Sign Up')
-    {
-      
-      const { manifest } = Constants;
-      const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-      axios
-        .post(`${apiAddress}/users/users/${tcno}`, { fullname,telno,dogumtarih, tcno, password,email })
-        .then((response) => {
-          
-          if (response.status === 201) {
-            
-            console.log("hey")
-            navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
-            
-          } else {
-            // İstek başarısız oldu, hata mesajını gösterin
-            
-            console.error(response.data.message);
-          }
-        })
-        .catch((error) => {
-          // HTTP isteği hata verdi, hata mesajını gösterin
-          console.error(error);
-        });
-
-    }
-  };
-  
+ 
+  const  HandleButton = (text) =>{
+      OnChangeButton(text);
+  } 
 
   return (
     <View style={styles.container}>
       {label === 'Sign In' ? (
-        <Button icon="send" mode="contained" onPress={() => handleLogin()} style={styles.button}>
+        <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
           {"Giriş"}
         </Button>
-      ) : label === 'Sign Up' || label2 === 'Sign Up' ?(
-       <Button icon="send" mode="contained" onPress={() => handleLogin()} style={styles.button}>
+      ) : label === 'Sign Up' ?(
+       <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
         {"Kayıt"}
         </Button>
     ) : label === '+' ? (
-        <TouchableOpacity onPress={() => handleLogin()}>
+        <TouchableOpacity onPress={() => HandleButton(label)}>
         <View style={{borderWidth:1,padding:10,borderRadius:1000,paddingRight:15,paddingLeft:15,backgroundColor:"#4CAF50"}}>
          <Text style={{fontSize:15}}>{label}</Text>
           </View>
           </TouchableOpacity>
+      ):label === 'Sign Up2' ?(
+        <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
+        {"Kayıt"}
+        </Button>
       ): (
-        <Button icon="send" mode="contained" onPress={() => handleLogin()} style={styles.button}>
+        <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
         {"Hesap Ekle"}
       </Button>
       )}
