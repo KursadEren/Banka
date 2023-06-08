@@ -132,19 +132,44 @@ router.get('/doviz', (req, res) => {
   
   function generateExchangeRates() {
     const exchangeRates = {
-      usd_try: generateExchangeRate(),
-      euro_try: generateExchangeRate(),
-      gbp_try: generateExchangeRate(),
-      chf_try: generateExchangeRate()
+      usd_try: generateExchangeRateusd(),
+      euro_try: generateExchangeRateeuro(),
+      gbp_try: generateExchangeRatesterlin(),
+      chf_try: generateExchangeRatefrang()
     };
     return exchangeRates;
   }
   
-  function generateExchangeRate() {
+  function generateExchangeRateusd() {
     // Burada döviz kuru üretimi için istediğiniz yöntemi veya API'yi kullanabilirsiniz.
     // Örneğin, rastgele bir döviz kuru üretmek için Math.random() kullanabilirsiniz.
     // Aşağıdaki örnekte, döviz kurları 1 ile 10 arasında rastgele değerler alır:
-    const rate = (Math.random() * 9) + 1;
+     
+    const rate = Math.random() + 23;
+    return rate.toFixed(2);
+  }
+  function generateExchangeRateeuro() {
+    // Burada döviz kuru üretimi için istediğiniz yöntemi veya API'yi kullanabilirsiniz.
+    // Örneğin, rastgele bir döviz kuru üretmek için Math.random() kullanabilirsiniz.
+    // Aşağıdaki örnekte, döviz kurları 1 ile 10 arasında rastgele değerler alır:
+     
+    const rate = Math.random() + 25;
+    return rate.toFixed(2);
+  }
+  function generateExchangeRatesterlin() {
+    // Burada döviz kuru üretimi için istediğiniz yöntemi veya API'yi kullanabilirsiniz.
+    // Örneğin, rastgele bir döviz kuru üretmek için Math.random() kullanabilirsiniz.
+    // Aşağıdaki örnekte, döviz kurları 1 ile 10 arasında rastgele değerler alır:
+     
+    const rate = Math.random() + 29;
+    return rate.toFixed(2);
+  }
+  function generateExchangeRatefrang() {
+    // Burada döviz kuru üretimi için istediğiniz yöntemi veya API'yi kullanabilirsiniz.
+    // Örneğin, rastgele bir döviz kuru üretmek için Math.random() kullanabilirsiniz.
+    // Aşağıdaki örnekte, döviz kurları 1 ile 10 arasında rastgele değerler alır:
+     
+    const rate = Math.random() + 25;
     return rate.toFixed(2);
   }
   

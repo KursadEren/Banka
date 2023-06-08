@@ -105,7 +105,7 @@ const ComboBox = ({label, navigation }) => {
       </View>
     </View>
       )
-  } else if (label ==="HesapTUR" ){
+  } else if (label === "HesapTUR" ){
     content = (<View style={styles.container}>
     <Text style={styles.label}>Seçenekleri Seçin:</Text>
     <View style={styles.pickerContainer}>

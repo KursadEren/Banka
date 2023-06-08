@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import axios from 'axios';
 import Constants from 'expo-constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { MyContext } from '../Context/Context';
 const SeeWatchList = () => {
   const [exchangeRates, setExchangeRates] = useState({});
   const [selectedCurrencies, setSelectedCurrencies] = useState([]);
+  const context = useContext(MyContext);
+  const{updateSayfa,sayfa} = context;
 
   useEffect(() => {
     fetchExchangeRates();
     getSelectedCurrencies();
     const interval = setInterval(() => {
       fetchExchangeRates();
-    }, 1000);
+    }, 3000);
 
     return () => {
       clearInterval(interval);
@@ -88,19 +90,31 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 16,
     marginHorizontal: 16,
+    backgroundColor:"#674fa3",
+    
+    
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 8,
+  
   },
   headerCell: {
     fontWeight: 'bold',
     flex: 1,
+    
   },
   cell: {
     flex: 1,
+    borderWidth:0.5,
+    borderColor:"white",
+    textAlign:"center",
+    color:"white",
+    marginHorizontal:"4%",
+    marginVertical:"2%"
   },
 });
+{/**/}
 
 export default SeeWatchList;

@@ -82,7 +82,7 @@ const HomeScreen = ({ navigation }) => {
           
           <MyFlatList OnChangeButton={OnChangeButton} navigation={navigation} />
         </View>
-        <ExpandableScreen onExpand={handleExpand} onCollapse={handleCollapse} />
+        <ExpandableScreen  onExpand={handleExpand} onCollapse={handleCollapse} />
       </View>
     </View>
   );
