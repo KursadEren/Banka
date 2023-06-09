@@ -1,5 +1,5 @@
 import { View, Text,BackHandler,ScrollView } from 'react-native'
-import React,{useContext, useEffect} from 'react'
+import React,{useContext, useEffect, useState} from 'react'
 import { MyContext } from '../Context/Context';
 import SeeWatchList from '../Component/SeeWatchList';
 import ComboBox from '../Component/Combobox';
@@ -7,11 +7,14 @@ import TextInputC from '../Component/TextInput';
 import Buttonx from '../Component/Button';
 import axios from 'axios';
 import Constants from 'expo-constants'
-import { log } from 'react-native-reanimated';
+import { Ionicons } from '@expo/vector-icons';
+import Bilgi from '../Component/Bilgi';
+
+
 const Islem = ({navigation}) => {
     const context = useContext(MyContext);
-    const{updateSayfa,sayfa,updatesetoptiondoviz} = context;
-
+    const{updateSayfa,sayfa,updatesetoptiondoviz,alisSatisdoviz} = context;
+    const[dolarmiktar,setdolarmiktar] = useState('');
     useEffect(() => {
       
      
@@ -55,25 +58,24 @@ const Islem = ({navigation}) => {
   return (
     <ScrollView>
     <View style={{flex:1,marginTop:"7%",width:"100%"}}>
-     <View style={{flex:1,width:"100%"}}>
-           <SeeWatchList sayfa={sayfa}/>
-
-            </View>
             <View style={{flex:3.5}}>
-            <View style={{marginVertical:"5%",width:"80%",marginHorizontal:"10%"}}>
-                <ComboBox  label="doviztipisatis"/>
-                <View>
-                <TextInputC label="Satış"/>
-                </View>
+            <View style={{marginVertical:"5%",width:"100%",flexDirection:"row",justifyContent:"center"}}>
+              
+                
+                <ComboBox  label="doviztipialis"/>
             </View>
             <View style={{marginVertical:"5%",width:"80%",marginHorizontal:"10%"}}>
-                <ComboBox  label="doviztipialis"/>
-                <TextInputC label="Alış" />
+                <View>
+                <TextInputC onChangeText={setdolarmiktar} label="Miktar"/>
+                </View>
             </View>
             </View>
             <View style={{marginTop:'20%'}}>
+              <Bilgi/>
+              
                 <Buttonx label="Çevir" OnChangeButton={OnChangeButton} navigation={navigation} />
             </View>
+            <Text>{alisSatisdoviz}</Text>
     </View>
     </ScrollView>
   )

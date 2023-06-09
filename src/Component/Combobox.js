@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderRadius: 5,
     paddingHorizontal: 10,
-    width: 200,
+    width: 150,
   },
   picker: {
     height: 40,

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Dimensions, Animated, PanResponder, TouchableOp
 import SeeWatchList from './SeeWatchList';
 
 
-const ExpandableScreen = ({ onExpand, onCollapse }) => {
+const ExpandableScreen = ({ onExpand, onCollapse,navigation }) => {
   const [expanded, setExpanded] = useState(false);
   const animation = useRef(new Animated.Value(expanded ? 1 : 0)).current;
   const screenHeight = Dimensions.get('window').height;
@@ -68,7 +68,7 @@ const ExpandableScreen = ({ onExpand, onCollapse }) => {
       
         <View style={styles.expandedContent}>
         <ScrollView style={{flex:1,width:"100%"}}>
-           <SeeWatchList/>
+           <SeeWatchList navigation={navigation}/>
        
             </ScrollView>
         </View>
@@ -95,9 +95,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   line: {
-    width: 100,
-    height: 20,
-    backgroundColor: 'gray',
+    width: 200,
+    borderRadius:20,
+    height: 15,
+    backgroundColor: 'black',
   },
   expandedContent: {
     flex: 1,
