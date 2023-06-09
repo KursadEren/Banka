@@ -36,7 +36,12 @@ export const MyContextProvider = ({ children }) => {
    //Combobox satış için seçilen değerler 
    const[ chechdoviz,setChechdoviz] = useState('');
    const[ chechdoviz2,setChechdoviz2] = useState('');
+   const[ alisSatisdoviz,setAlisSatisdoviz] = useState('');
 
+
+   const updatesetAlisSatisdoviz = (newsetAlisSatisdoviz ) => {
+    setAlisSatisdoviz(newsetAlisSatisdoviz);
+  };
    const updatesetChechdoviz = (newsetoptiondoviz ) => {
     setChechdoviz(newsetoptiondoviz );
   };
@@ -170,6 +175,9 @@ export const MyContextProvider = ({ children }) => {
       updatesetChechdoviz2,
       chechdoviz,
       chechdoviz2,
+
+      alisSatisdoviz,
+      updatesetAlisSatisdoviz
       }}>
       {children}
     </MyContext.Provider>

@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import { DrawerActions } from '@react-navigation/native';
 const AppBar = ({navigation}) => {
     const context = useContext(MyContext);
-    const {sayfa,updatesayfa} = context;
+    const {sayfa,updatesayfa,userinfo} = context;
 
     const [switchValue, setSwitchValue] = useState(false);
 
@@ -39,7 +39,9 @@ const AppBar = ({navigation}) => {
             <Appbar.Content title={sayfa} titleStyle={{ flex: 1, textAlign: 'center', marginHorizontal: '10%' }} />
             <Switch value={switchValue} onValueChange={handleSwitchToggle} />
             <Appbar.Action icon={() => <Avatar.Image size={24} label="" />} />
+            
         </>
+        
       )}
     </Appbar.Header>
     <Snackbar
@@ -49,7 +51,8 @@ const AppBar = ({navigation}) => {
       >
         {switchValue ? 'Açık Tema' : 'Koyu Tema'}
       </Snackbar>
-      
+     
+     
   </View>
   )
 }

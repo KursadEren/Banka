@@ -28,7 +28,7 @@ const DraverNavigator = () => {
       <Drawer.Screen name="HomeScreen" component={HomeScreen} />
       <Drawer.Screen name="Profile" component={Profile} />
       <Drawer.Screen name="WatchList" component={WatchList} />
-      <Drawer.Screen name="islem" component={Islem} />
+      
     </Drawer.Navigator>
   );
 };

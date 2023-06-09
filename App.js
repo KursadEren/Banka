@@ -7,7 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { PaperProvider } from 'react-native-paper';
 import DraverNavigator from './src/Component/DraverNavigator';
 import HesapEkle from './src/Screen/HesapEkle';
-
+import Islem from './src/Screen/islem';
 
 const Stack = createNativeStackNavigator();
 const BetweenNavigator = () =>{
@@ -44,7 +44,7 @@ const BetweenNavigator = () =>{
         <Stack.Screen name="Sign Up" component={SignUp} />
         <Stack.Screen name="DraverNavigator" component={DraverNavigator} />
         <Stack.Screen name="HesapEkle" component={HesapEkle} />
-       
+        <Stack.Screen name="islem" component={Islem} />
 
       </Stack.Navigator>
       

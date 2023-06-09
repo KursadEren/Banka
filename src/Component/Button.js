@@ -2,8 +2,8 @@ import { View, Text, StyleSheet } from 'react-native';
 import React, { useContext, useEffect } from 'react';
 import { Button } from 'react-native-paper';
 import { MyContext } from '../Context/Context';
-
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Ionicons } from '@expo/vector-icons';
+import { TouchableOpacity } from  'react-native-gesture-handler';
 
 
 const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
@@ -27,9 +27,13 @@ const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
         </Button>
     ) : label === '+' ? (
         <TouchableOpacity onPress={() => HandleButton(label)}>
-        <View style={{borderWidth:1,padding:10,borderRadius:1000,paddingRight:15,paddingLeft:15,backgroundColor:"#4CAF50"}}>
-         <Text style={{fontSize:15}}>{label}</Text>
-          </View>
+       
+        <Ionicons
+                  name="add-circle"
+                  size={40}
+                  
+                />
+         
           </TouchableOpacity>
       ):label === 'Sign Up2' ?(
         <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>

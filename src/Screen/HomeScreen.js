@@ -8,7 +8,7 @@ import Constants from 'expo-constants';
 import axios from 'axios';
 const HomeScreen = ({ navigation }) => {
   const context = useContext(MyContext);
-  const {tcno,  updateSayfa,  updateUserinfo } = context;
+  const {tcno,  updateSayfa,  updateUserinfo,userinfo } = context;
 
   useEffect(() => {
     const { manifest } = Constants;
@@ -82,7 +82,7 @@ const HomeScreen = ({ navigation }) => {
           
           <MyFlatList OnChangeButton={OnChangeButton} navigation={navigation} />
         </View>
-        <ExpandableScreen  onExpand={handleExpand} onCollapse={handleCollapse} />
+        <ExpandableScreen navigation={navigation}  onExpand={handleExpand} onCollapse={handleCollapse} />
       </View>
     </View>
   );
