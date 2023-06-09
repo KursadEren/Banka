@@ -5,7 +5,8 @@ import { MyContext } from '../Context/Context';
 import ComboBox from '../Component/Combobox';
 import TextInputC from '../Component/TextInput';
 import Buttonx from '../Component/Button';
-
+import Constants from 'expo-constants'
+import axios from 'axios';
 const HesapEkle = ({ navigation }) => {
   
   function generateRandomNumber() {
@@ -14,13 +15,9 @@ const HesapEkle = ({ navigation }) => {
   
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-  const kartnumarasi  = generateRandomNumber();
-
-  const ulkekodu = "TR";
-  const bankakodu = "1232"
-  const IBAN = ulkekodu + bankakodu + kartnumarasi;
+ 
   const context = useContext(MyContext);
-  const {selectedOptiondoviz,  selectedOptionhesap, selectedOptionsube, sayfa, updateSayfa,updateSelectedIBAN } = context;
+  const {selectedOptiondoviz,  selectedOptionhesap, selectedOptionsube, sayfa, updateSayfa,updateSelectedIBAN,updatesetOptions,updatesetOptions2,updatesetOptions3 } = context;
  
   
   
@@ -127,13 +124,58 @@ const HesapEkle = ({ navigation }) => {
     setStep(step - 1);
   };
 
+  
+
+  useEffect(() => {
+    const { manifest } = Constants;
+    const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+
+    axios
+      .get(`${apiAddress}/users/doviztipi`)
+      .then((response) => {
+        // API'den alınan verileri options state'ine ata
+        updatesetOptions(response.data);
+       
+      })
+      .catch((error) => {
+        console.error('API veri alınırken bir hata oluştu:', error);
+      });
+
+      axios
+      .get(`${apiAddress}/users/hesaptur`)
+      .then((response) => {
+        // API'den alınan verileri options state'ine ata
+        updatesetOptions2(response.data);
+       
+      })
+      .catch((error) => {
+        console.error('API veri alınırken bir hata oluştu:', error);
+      });
+
+      axios
+      .get(`${apiAddress}/users/sube`)
+      .then((response) => {
+        // API'den alınan verileri options state'ine ata
+        updatesetOptions3(response.data);
+       
+      })
+      .catch((error) => {
+        console.error('API veri alınırken bir hata oluştu:', error);
+      });
+  }, []);
+  const onChangeBox = (text) =>{
+
+
+  }
+
+
   const renderStep = () => {
     switch (step) {
       case 1:
         return (
           <View style={styles.stepContainer}>
             <Text style={styles.stepText}>Doviz Tipini Seçin:</Text>
-            <ComboBox label="doviztipi"/>
+            <ComboBox   label="doviztipi"/>
             <Text style={styles.stepText}>Hesap Türünü Seçin:</Text>
             <ComboBox label="HesapTUR"/>
             <Text style={styles.stepText}>Şube Seçin:</Text>

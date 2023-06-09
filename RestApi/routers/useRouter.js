@@ -36,6 +36,18 @@ router.get('/doviztipi',async (req,res) =>{
         return res.status(400).json({message: error.message})
     }
 })
+router.get('/dovizsatis',async (req,res) =>{
+    try{
+        const text = "SELECT * FROM doviz "
+
+        const {rows} = await postgresClient.query(text)
+        return res.status(200).json(rows)
+        
+    } catch (error){
+        console.log('error occured', error.message)
+        return res.status(400).json({message: error.message})
+    }
+})
 //şube combobox
 router.get('/sube',async (req,res) =>{
     try{

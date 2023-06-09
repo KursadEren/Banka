@@ -5,12 +5,16 @@ import SeeWatchList from '../Component/SeeWatchList';
 import ComboBox from '../Component/Combobox';
 import TextInputC from '../Component/TextInput';
 import Buttonx from '../Component/Button';
-
+import axios from 'axios';
+import Constants from 'expo-constants'
+import { log } from 'react-native-reanimated';
 const Islem = ({navigation}) => {
     const context = useContext(MyContext);
-    const{updateSayfa,sayfa} = context;
+    const{updateSayfa,sayfa,updatesetoptiondoviz} = context;
 
     useEffect(() => {
+      
+     
         
         const backAction = () => {
           updateSayfa("HomeScreen");
@@ -31,6 +35,22 @@ const Islem = ({navigation}) => {
     const  OnChangeButton =  () =>{
 
     }
+    useEffect(()=>{
+      const { manifest } = Constants;
+      const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+  
+      axios
+      .get(`${apiAddress}/users/dovizsatis`)
+      .then((response) => {
+        // API'den alınan verileri options state'ine ata
+        
+        updatesetoptiondoviz(response.data);
+      })
+      .catch((error) => {
+        console.error('API veri alınırken bir hata oluştu:', error);
+      });
+    },[])
+
 
   return (
     <ScrollView>
@@ -41,14 +61,14 @@ const Islem = ({navigation}) => {
             </View>
             <View style={{flex:3.5}}>
             <View style={{marginVertical:"5%",width:"80%",marginHorizontal:"10%"}}>
-                <ComboBox  label="doviztipi"/>
+                <ComboBox  label="doviztipisatis"/>
                 <View>
-                <TextInputC label="merhaba"/>
+                <TextInputC label="Satış"/>
                 </View>
             </View>
             <View style={{marginVertical:"5%",width:"80%",marginHorizontal:"10%"}}>
-                <ComboBox  label="doviztipi"/>
-                <TextInputC  />
+                <ComboBox  label="doviztipialis"/>
+                <TextInputC label="Alış" />
             </View>
             </View>
             <View style={{marginTop:'20%'}}>

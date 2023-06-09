@@ -26,6 +26,39 @@ export const MyContextProvider = ({ children }) => {
    const[checkpassword,setCheckpassword] = useState();
    const[checkpassword2,setCheckpassword2] = useState();
 
+
+   // Combobox
+   const [options, setOptions] = useState([]);
+   const [options2, setOptions2] = useState([]);
+   const [options3, setOptions3] = useState([]);
+   const[ optiondoviz,setoptiondoviz] = useState([]);
+
+   //Combobox satış için seçilen değerler 
+   const[ chechdoviz,setChechdoviz] = useState('');
+   const[ chechdoviz2,setChechdoviz2] = useState('');
+
+   const updatesetChechdoviz = (newsetoptiondoviz ) => {
+    setChechdoviz(newsetoptiondoviz );
+  };
+  const updatesetChechdoviz2 = (newsetoptiondoviz ) => {
+    setChechdoviz2(newsetoptiondoviz );
+  };
+
+  const updatesetoptiondoviz = (newsetoptiondoviz ) => {
+    setoptiondoviz(newsetoptiondoviz );
+  };
+   const updatesetOptions = (newsetOptions ) => {
+    setOptions(newsetOptions );
+  };
+  const updatesetOptions2 = (newsetOptions2 ) => {
+    setOptions2(newsetOptions2 );
+  };
+
+  const updatesetOptions3 = (newsetOptions3 ) => {
+    setOptions3(newsetOptions3 );
+  };
+
+
    const updatesetDogumtarih = (newdogumtarih ) => {
     setDogumtarih(newdogumtarih );
   };
@@ -121,7 +154,22 @@ export const MyContextProvider = ({ children }) => {
       updatesetTelno,
       telno,
       dogumtarih,
-      updatesetDogumtarih
+      updatesetDogumtarih,
+
+      options,
+      options2,
+      options3,
+      updatesetOptions,
+      updatesetOptions2,
+      updatesetOptions3,
+
+      optiondoviz,
+      updatesetoptiondoviz,
+
+      updatesetChechdoviz,
+      updatesetChechdoviz2,
+      chechdoviz,
+      chechdoviz2,
       }}>
       {children}
     </MyContext.Provider>
