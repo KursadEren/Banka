@@ -6,7 +6,7 @@ import { MyContext } from '../Context/Context';
 const currencies = [
   { id: 'usd', name: 'Amerikan Doları' },
   { id: 'eur', name: 'Euro' },
-  { id: 'gbp', name: 'İngiliz Sterlin' },
+  { id: 'gbp', name: 'İngiliz Sterlini' },
   { id: 'chf', name: 'İsviçre Frangı' },
 ];
 
