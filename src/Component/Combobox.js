@@ -121,7 +121,7 @@ const ComboBox = ({label, navigation,onChangeBox }) => {
   else if(label === "doviztipialis")
   {
     content = (<View style={styles.container}>
-      <Text style={styles.label}>Seçenekleri Seçin:</Text>
+      <Text style={styles.label}>Dönüştürülecek Tip</Text>
       <View style={styles.pickerContainer}>
         <Picker
           selectedValue={chechdoviz2}
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderRadius: 5,
     paddingHorizontal: 10,
-    width: 150,
+    width: 200,
   },
   picker: {
     height: 40,

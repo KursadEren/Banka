@@ -8,7 +8,7 @@ import Constants from 'expo-constants';
 import axios from 'axios';
 const HomeScreen = ({ navigation }) => {
   const context = useContext(MyContext);
-  const {tcno,  updateSayfa,  updateUserinfo,userinfo } = context;
+  const {tcno,  updateSayfa,  updateUserinfo,userinfo, } = context;
 
   useEffect(() => {
     const { manifest } = Constants;

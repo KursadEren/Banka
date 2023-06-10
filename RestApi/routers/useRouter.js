@@ -92,6 +92,21 @@ router.get('/hesap/:tcno', async (req,res) => {
     }
 })
 
+// satis alis işlemleri
+
+router.get('/dovizgetir/:dovizadi', async (req,res) => {
+    try {
+        const { dovizadi } = req.params;
+        const text ="select doviztipiid from doviz where dovizadi = $1";
+        const value = [dovizadi]
+        const {rows} = await postgresClient.query(text,value)
+        return res.status(200).json(rows)
+    } catch (error) {
+        console.log('error occured', error.message)
+        return res.status(400).json({message: error.message})
+    }
+})
+
 // CREATE USERS
 
 

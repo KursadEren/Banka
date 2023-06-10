@@ -12,7 +12,7 @@ const SeeWatchList = ({ navigation }) => {
   const [exchangeRates, setExchangeRates] = useState({});
   const [selectedCurrencies, setSelectedCurrencies] = useState([]);
   const context = useContext(MyContext);
-  const { updateSayfa, sayfa,updatesetAlisSatisdoviz,alisSatisdoviz } = context;
+  const { updateSayfa, sayfa,updatesetAlisSatisdoviz,alisSatisdoviz,updatesetChechdoviz, updatesetChechdoviz2, chechdoviz, chechdoviz2, } = context;
 
   const getSelectedCurrencies = async () => {
     try {
@@ -55,49 +55,87 @@ const SeeWatchList = ({ navigation }) => {
     };
   }, []);
 
+  const request = ({ currency }) => {
+    const dovizadi = currency;
+    console.log(currency);
+    const { manifest } = Constants;
+    const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+    axios
+      .get(`${apiAddress}/users/dovizgetir/${dovizadi}`)
+      .then((response) => {
+        if (response.status === 200) {
+          if (response.data) {
+            updatesetChechdoviz(response.data.doviztipiid);
+            console.log(response.data);
+          } else {
+            console.error('Boş yanıt alındı.');
+          }
+        } else {
+          console.error(response.data.message);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+  
+
   const handleAlis = (currency) => {
-    if (currency === 'usd') {
+    if (currency === 'Amerikan Doları') {
       console.log('alış yapıldı: USD');
-      updatesetAlisSatisdoviz(exchangeRates.usd_try);
-      navigation.navigate('islem')
       
-    } else if (currency === 'chf') {
+      updatesetAlisSatisdoviz(exchangeRates.usd_try);
+      request({currency});
+      navigation.navigate('islem',{currency})
+      
+    } else if (currency === 'İsviçre frangı') {
       console.log('alış yapıldı: CHF');
       updatesetAlisSatisdoviz(exchangeRates.chf_try);
-      navigation.navigate('islem')
+      request({currency});
+      navigation.navigate('islem' ,{currency})
       
-    } else if (currency === 'gbp') {
+    } else if (currency === 'İngiliz Sterlini') {
       console.log('alış yapıldı: gbp');
       updatesetAlisSatisdoviz(exchangeRates.gbp_try);
-      navigation.navigate('islem')
+      request({currency});
+      navigation.navigate('islem',{currency})
     }
-    else if (currency === 'eur') {
-      console.log('alış yapıldı: eur');
+    else if (currency === 'Euro') {
+      
       updatesetAlisSatisdoviz(exchangeRates.euro_try);
-      navigation.navigate('islem')
+      request({currency});
+      navigation.navigate('islem',{currency})
     }
   };
 
   const handleSatis = (currency) => {
-    if (currency === 'usd') {
+    
+    if (currency === 'Amerikan Doları') {
       console.log('Satış yapıldı: USD');
       updatesetAlisSatisdoviz(exchangeRates.usd_try);
-      navigation.navigate('islem')
+      request({currency});
+     
+      navigation.navigate('islem',{currency})
       
-    } else if (currency === 'chf') {
+    } else if (currency === 'İngiliz Sterlini') {
       console.log('Satış yapıldı: CHF');
       updatesetAlisSatisdoviz(exchangeRates.chf_try);
-      navigation.navigate('islem')
+      request({currency});
+      navigation.navigate('islem',{currency})
       
-    } else if (currency === 'gbp') {
+    } else if (currency === 'İngiliz Sterlini') {
       console.log('Satış yapıldı: gbp');
       updatesetAlisSatisdoviz(exchangeRates.gbp_try);
-      navigation.navigate('islem')
+      request({currency});
+      
+      navigation.navigate('islem',{currency})
     }
-    else if (currency === 'eur') {
+    else if (currency === 'Euro') {
       console.log('Satış yapıldı: eur');
       updatesetAlisSatisdoviz(exchangeRates.euro_try);
-      navigation.navigate('islem')
+      request({currency});
+      
+      navigation.navigate('islem',{currency})
     }
   };
 
@@ -111,10 +149,10 @@ const SeeWatchList = ({ navigation }) => {
       {selectedCurrencies.includes('usd') && (
         <View style={styles.row}>
           <Text style={styles.currencyCell}>USD/TRY</Text>
-          <TouchableOpacity style={styles.cell} onPress={() => handleAlis('usd')}>
+          <TouchableOpacity style={styles.cell} onPress={() => handleAlis('Amerikan Doları')}>
             <Text style={styles.valueCell}>{exchangeRates.usd_try}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.cell} onPress={() => handleSatis('usd')}>
+          <TouchableOpacity style={styles.cell} onPress={() => handleSatis('Amerikan Doları')}>
             <Text style={styles.valueCell}>{(exchangeRates.usd_try - 0.5).toFixed(2)}</Text>
           </TouchableOpacity>
         </View>
@@ -122,10 +160,10 @@ const SeeWatchList = ({ navigation }) => {
       {selectedCurrencies.includes('eur') && (
         <View style={styles.row}>
           <Text style={styles.currencyCell}>EUR/TRY</Text>
-          <TouchableOpacity  onPress={() => handleAlis('eur')}style={styles.cell}>
+          <TouchableOpacity  onPress={() => handleAlis('Euro')}style={styles.cell}>
             <Text style={styles.valueCell}>{exchangeRates.euro_try}</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleSatis('eur')} style={styles.cell}>
+          <TouchableOpacity onPress={() => handleSatis('Euro')} style={styles.cell}>
             <Text style={styles.valueCell}>{(exchangeRates.euro_try - 0.5).toFixed(2)}</Text>
           </TouchableOpacity>
         </View>
@@ -133,21 +171,21 @@ const SeeWatchList = ({ navigation }) => {
       {selectedCurrencies.includes('gbp') && (
         <View style={styles.row}>
           <Text style={styles.currencyCell}>GBP/TRY</Text>
-          <TouchableOpacity onPress={() => handleAlis('gbp')} style={styles.cell}>
+          <TouchableOpacity onPress={() => handleAlis('İngiliz Sterlini')} style={styles.cell}>
             <Text style={styles.valueCell}>{exchangeRates.gbp_try}</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleSatis('gbp')} style={styles.cell}>
+          <TouchableOpacity onPress={() => handleSatis('İngiliz Sterlini')} style={styles.cell}>
             <Text style={styles.valueCell}>{(exchangeRates.gbp_try - 0.5).toFixed(2)}</Text>
           </TouchableOpacity>
         </View>
       )}
-      {selectedCurrencies.includes('chf') && (
+      {selectedCurrencies.includes('İsviçre Frangı') && (
         <View style={styles.row}>
           <Text style={styles.currencyCell}>CHF/TRY</Text>
-          <TouchableOpacity style={styles.cell} onPress={() => handleAlis('chf')}>
+          <TouchableOpacity style={styles.cell} onPress={() => handleAlis('İsviçre Frangı')}>
             <Text style={styles.valueCell}>{exchangeRates.chf_try}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.cell} onPress={() => handleSatis('chf')}>
+          <TouchableOpacity style={styles.cell} onPress={() => handleSatis('İsviçre Frangı')}>
             <Text style={styles.valueCell}>{(exchangeRates.chf_try - 0.5).toFixed(2)}</Text>
           </TouchableOpacity>
         </View>
