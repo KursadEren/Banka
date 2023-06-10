@@ -7,7 +7,6 @@ import TextInputC from '../Component/TextInput';
 import Buttonx from '../Component/Button';
 import axios from 'axios';
 import Constants from 'expo-constants';
-
 import BilgiKarti from '../Component/Bilgi';
 
 const Islem = ({ navigation }) => {
@@ -17,11 +16,18 @@ const Islem = ({ navigation }) => {
     updateSayfa,
     sayfa,
     updatesetoptiondoviz,
-    chechdoviz
+    chechdoviz,
+    chechdoviz2,
+    secilenDoviz,
+    tcno,
+    updatesetHesaplananParaDegeri,
+    hesaplananpara,
+     
     
   } = context;
   const [dolarmiktar, setdolarmiktar] = useState('');
   const [sure, setSure] = useState(60);
+  const [userbilgi,setUserbilgi] = useState([]);
   
   useEffect(() => {
     const sayaç = setInterval(() => {
@@ -54,6 +60,8 @@ const Islem = ({ navigation }) => {
     updateSayfa("islem");
   }, []);
 
+  //
+
   useEffect(() => {
     const { manifest } = Constants;
     const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
@@ -62,15 +70,68 @@ const Islem = ({ navigation }) => {
       .get(`${apiAddress}/users/dovizsatis`)
       .then((response) => {
         updatesetoptiondoviz(response.data);
+        
       })
       .catch((error) => {
         console.error('API veri alınırken bir hata oluştu:', error);
       });
   }, []);
 
-  const OnChangeButton = () => {
-    // Butona tıklanınca yapılması gereken işlemler
-  };
+  
+
+  useEffect(() => {
+    
+    const hesaplananParaDegeri = dolarmiktar * secilenDoviz;
+  
+    
+    updatesetHesaplananParaDegeri(hesaplananParaDegeri);
+  }, [dolarmiktar]);
+
+  const OnChangeButton = (label) => {
+   
+    const tc = '27337851310'
+    const doviztipiid = chechdoviz;
+    const hesapbakiye= hesaplananpara;
+    //hesap varmı yok mu kontorolü ve bakiye varmı yok mu kontrolü
+    
+    const { manifest } = Constants;
+      const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+
+      axios.post(`${apiAddress}/users/dovizkontrol`, {   
+           tcno,
+           doviztipiid,
+           dolarmiktar
+         }) .then((response) => {
+          
+          if (response.status === 200) {
+           
+            // islem sayfasına gereken bilgileri sağlamak için axios get isteği
+           /* axios
+            .get(`${apiAddress}/users/ozetbilgi`, {tcno})
+            .then((response) => {
+              setUserbilgi(response.data)
+              
+            })
+            .catch((error) => {
+              console.error('API veri alınırken bir hata oluştu:', error);
+            });
+            */
+                //satilanparatutari,alinacakparatutari,tarih,usersid,alinanparatipi,satilanparatipi,satildigikur
+
+           
+          } else {
+            // İstek başarısız oldu, hata mesajını gösterin
+            console.log('he')
+            console.error(response.data.message);
+          }
+        })
+        .catch((error) => {
+          // HTTP isteği hata verdi, hata mesajını gösterin
+          console.error(error);
+        });
+
+  
+    };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -89,6 +150,8 @@ const Islem = ({ navigation }) => {
           <TextInputC onChangeText={setdolarmiktar} label="Miktar" />
         </View>
       </View>
+      <Text> Hesaplanan Değer:  </Text>
+        <Text>{hesaplananpara}</Text>
       <View style={styles.buttonContainer}>
         
         <Buttonx label="Çevir" OnChangeButton={OnChangeButton} navigation={navigation} />
@@ -129,7 +192,7 @@ const styles = StyleSheet.create({
     marginTop:"3%"
   },
   buttonContainer: {
-    marginTop: '20%',
+    marginTop: '15%',
   },
 });
 

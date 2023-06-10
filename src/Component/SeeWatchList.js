@@ -12,7 +12,7 @@ const SeeWatchList = ({ navigation }) => {
   const [exchangeRates, setExchangeRates] = useState({});
   const [selectedCurrencies, setSelectedCurrencies] = useState([]);
   const context = useContext(MyContext);
-  const { updateSayfa, sayfa,updatesetAlisSatisdoviz,alisSatisdoviz,updatesetChechdoviz, updatesetChechdoviz2, chechdoviz, chechdoviz2, } = context;
+  const { updatesetChechdoviz,chechdoviz,updatesetsecilendovizAdı,   updatesetSecilenDoviz,secilenDoviz, updatesetalisSatisEuro,updatesetalisSatisSterlin,updatesetalisSatisddolar,updatesetalisSatisfrang,} = context;
 
   const getSelectedCurrencies = async () => {
     try {
@@ -57,7 +57,6 @@ const SeeWatchList = ({ navigation }) => {
 
   const request = ({ currency }) => {
     const dovizadi = currency;
-    console.log(currency);
     const { manifest } = Constants;
     const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
     axios
@@ -65,8 +64,8 @@ const SeeWatchList = ({ navigation }) => {
       .then((response) => {
         if (response.status === 200) {
           if (response.data) {
-            updatesetChechdoviz(response.data.doviztipiid);
-            console.log(response.data);
+            updatesetChechdoviz(response.data[0].doviztipiid);
+            
           } else {
             console.error('Boş yanıt alındı.');
           }
@@ -82,60 +81,90 @@ const SeeWatchList = ({ navigation }) => {
 
   const handleAlis = (currency) => {
     if (currency === 'Amerikan Doları') {
-      console.log('alış yapıldı: USD');
       
-      updatesetAlisSatisdoviz(exchangeRates.usd_try);
+      updatesetsecilendovizAdı(currency);
+      updatesetSecilenDoviz(exchangeRates.usd_try);
+      updatesetalisSatisEuro(exchangeRates.euro_try);
+      updatesetalisSatisSterlin(exchangeRates.gbp_try);
+      updatesetalisSatisfrang(exchangeRates.chf_try);
       request({currency});
-      navigation.navigate('islem',{currency})
+      navigation.navigate('islem')
       
-    } else if (currency === 'İsviçre frangı') {
-      console.log('alış yapıldı: CHF');
-      updatesetAlisSatisdoviz(exchangeRates.chf_try);
+    } else if (currency === 'İsviçre Frangı') {
+      
+      updatesetsecilendovizAdı(currency);
+      updatesetalisSatisddolar(exchangeRates.usd_try);
+      updatesetalisSatisEuro(exchangeRates.euro_try);
+      updatesetalisSatisSterlin(exchangeRates.gbp_try);
+      updatesetSecilenDoviz(exchangeRates.chf_try);
       request({currency});
-      navigation.navigate('islem' ,{currency})
+      navigation.navigate('islem')
       
     } else if (currency === 'İngiliz Sterlini') {
-      console.log('alış yapıldı: gbp');
-      updatesetAlisSatisdoviz(exchangeRates.gbp_try);
+      
+      updatesetsecilendovizAdı(currency);
+      updatesetalisSatisddolar(exchangeRates.usd_try);
+      updatesetalisSatisEuro(exchangeRates.euro_try);
+      updatesetSecilenDoviz(exchangeRates.gbp_try);
+      updatesetalisSatisfrang(exchangeRates.chf_try);
       request({currency});
-      navigation.navigate('islem',{currency})
+      navigation.navigate('islem')
     }
     else if (currency === 'Euro') {
-      
-      updatesetAlisSatisdoviz(exchangeRates.euro_try);
+      updatesetsecilendovizAdı(currency);
+      updatesetalisSatisddolar(exchangeRates.usd_try);
+      updatesetSecilenDoviz(exchangeRates.euro_try);
+      updatesetalisSatisSterlin(exchangeRates.gbp_try);
+      updatesetalisSatisfrang(exchangeRates.chf_try);
       request({currency});
-      navigation.navigate('islem',{currency})
+      navigation.navigate('islem')
     }
   };
 
   const handleSatis = (currency) => {
     
     if (currency === 'Amerikan Doları') {
-      console.log('Satış yapıldı: USD');
-      updatesetAlisSatisdoviz(exchangeRates.usd_try);
+      
+      updatesetsecilendovizAdı(currency);
+      updatesetSecilenDoviz(exchangeRates.usd_try);
+      updatesetalisSatisEuro(exchangeRates.euro_try);
+      updatesetalisSatisSterlin(exchangeRates.gbp_try);
+      updatesetalisSatisfrang(exchangeRates.chf_try);
       request({currency});
      
-      navigation.navigate('islem',{currency})
+      navigation.navigate('islem')
       
     } else if (currency === 'İngiliz Sterlini') {
-      console.log('Satış yapıldı: CHF');
-      updatesetAlisSatisdoviz(exchangeRates.chf_try);
-      request({currency});
-      navigation.navigate('islem',{currency})
       
-    } else if (currency === 'İngiliz Sterlini') {
-      console.log('Satış yapıldı: gbp');
-      updatesetAlisSatisdoviz(exchangeRates.gbp_try);
+      updatesetsecilendovizAdı(currency);
+      updatesetalisSatisddolar(exchangeRates.usd_try);
+      updatesetalisSatisEuro(exchangeRates.euro_try);
+      updatesetSecilenDoviz(exchangeRates.gbp_try);
+      updatesetalisSatisfrang(exchangeRates.chf_try);
+      request({currency});
+      navigation.navigate('islem')
+      
+    } else if (currency === 'İsviçre Frangı') {
+      
+      updatesetsecilendovizAdı(currency);
+      updatesetalisSatisddolar(exchangeRates.usd_try);
+      updatesetalisSatisEuro(exchangeRates.euro_try);
+      updatesetalisSatisSterlin(exchangeRates.gbp_try);
+      updatesetSecilenDoviz(exchangeRates.chf_try);
       request({currency});
       
-      navigation.navigate('islem',{currency})
+      navigation.navigate('islem')
     }
     else if (currency === 'Euro') {
-      console.log('Satış yapıldı: eur');
-      updatesetAlisSatisdoviz(exchangeRates.euro_try);
+      
+      updatesetsecilendovizAdı(currency);
+      updatesetalisSatisddolar(exchangeRates.usd_try);
+      updatesetSecilenDoviz(exchangeRates.euro_try);
+      updatesetalisSatisSterlin(exchangeRates.gbp_try);
+      updatesetalisSatisfrang(exchangeRates.chf_try);
       request({currency});
       
-      navigation.navigate('islem',{currency})
+      navigation.navigate('islem')
     }
   };
 
@@ -179,7 +208,7 @@ const SeeWatchList = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       )}
-      {selectedCurrencies.includes('İsviçre Frangı') && (
+      {selectedCurrencies.includes('chf') && (
         <View style={styles.row}>
           <Text style={styles.currencyCell}>CHF/TRY</Text>
           <TouchableOpacity style={styles.cell} onPress={() => handleAlis('İsviçre Frangı')}>

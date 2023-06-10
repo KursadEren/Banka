@@ -4,14 +4,15 @@ import { AntDesign } from '@expo/vector-icons';
 import { MyContext } from '../Context/Context';
 const BilgiKarti = () => {
   const context = useContext(MyContext);
-  const {chechdoviz, updatesetoptiondoviz,
-    alisSatisdoviz} = context;
+  const {chechdoviz, secilendovizAdı,secilenDoviz} = context;
+  
   return (
     <View style={styles.container}>
       <Text style={styles.baslik}>İşlem Yapılacak Kur</Text>
       <View style={styles.veriContainer}>
-       <Text style={styles.dovizFiyat}>{chechdoviz} </Text>
-       <Text style={styles.dovizFiyat}>{alisSatisdoviz}</Text>
+       <Text style={styles.dovizFiyat}>{secilendovizAdı} </Text>
+       <Text style={styles.dovizFiyat}>{secilenDoviz} </Text>
+       
        
        </View>
        <View style={styles.bilgilendirme}>

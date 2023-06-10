@@ -168,33 +168,25 @@ router.get('/doviz', (req, res) => {
   }
   
   function generateExchangeRateusd() {
-    // Burada döviz kuru üretimi için istediğiniz yöntemi veya API'yi kullanabilirsiniz.
-    // Örneğin, rastgele bir döviz kuru üretmek için Math.random() kullanabilirsiniz.
-    // Aşağıdaki örnekte, döviz kurları 1 ile 10 arasında rastgele değerler alır:
+    
      
     const rate = Math.random() + 23;
     return rate.toFixed(2);
   }
   function generateExchangeRateeuro() {
-    // Burada döviz kuru üretimi için istediğiniz yöntemi veya API'yi kullanabilirsiniz.
-    // Örneğin, rastgele bir döviz kuru üretmek için Math.random() kullanabilirsiniz.
-    // Aşağıdaki örnekte, döviz kurları 1 ile 10 arasında rastgele değerler alır:
+   
      
     const rate = Math.random() + 25;
     return rate.toFixed(2);
   }
   function generateExchangeRatesterlin() {
-    // Burada döviz kuru üretimi için istediğiniz yöntemi veya API'yi kullanabilirsiniz.
-    // Örneğin, rastgele bir döviz kuru üretmek için Math.random() kullanabilirsiniz.
-    // Aşağıdaki örnekte, döviz kurları 1 ile 10 arasında rastgele değerler alır:
+    
      
     const rate = Math.random() + 29;
     return rate.toFixed(2);
   }
   function generateExchangeRatefrang() {
-    // Burada döviz kuru üretimi için istediğiniz yöntemi veya API'yi kullanabilirsiniz.
-    // Örneğin, rastgele bir döviz kuru üretmek için Math.random() kullanabilirsiniz.
-    // Aşağıdaki örnekte, döviz kurları 1 ile 10 arasında rastgele değerler alır:
+    
      
     const rate = Math.random() + 25;
     return rate.toFixed(2);
@@ -218,5 +210,29 @@ router.post('/login', async (req,res) =>{
         return res.status(400).json({message:error.message})
     }
 })
+
+router.post('/dovizkontrol', async (req,res) =>{
+    try {
+        
+        const text = "SELECT * FROM users u INNER JOIN usershesap h ON h.usersid = u.userid  INNER JOIN doviz d ON d.doviztipiid = h.doviztipiid  WHERE u.tcno = $1  AND h.doviztipiid = $2 AND h.hesapbakiye >= $3   "
+        const values = [req.body.tcno, req.body.doviztipiid,req.body.dolarmiktar]
+        const {rows} = await postgresClient.query(text,values)
+        console.log(rows)
+        if(!rows.length)
+        {
+            
+
+            return res.status(404).json()
+        }
+        return res.status(200).json({ message:' authentication succesfull'})
+    } catch (error) {
+        console.log('error occured', error.message)
+        return res.status(400).json({message:error.message})
+    }
+})
+
+
+
+
 
 export default router;
