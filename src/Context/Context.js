@@ -34,13 +34,39 @@ export const MyContextProvider = ({ children }) => {
    const[ optiondoviz,setoptiondoviz] = useState([]);
 
    //Combobox satış için seçilen değerler 
-   const[ chechdoviz,setChechdoviz] = useState('');
+   
+   const[ chechdoviz,setChechdoviz] = useState(0);
    const[ chechdoviz2,setChechdoviz2] = useState('');
-   const[ alisSatisdoviz,setAlisSatisdoviz] = useState('');
+   const[ alisSatisddolar,setalisSatisddolar] = useState('');
+   const[ alisSatisEuro,setalisSatisEuro] = useState('');
+   const[ alisSatisSterlin,setalisSatisSterlin] = useState('');
+   const[ alisSatisfrang,setalisSatisfrang] = useState('');
+   const[ secilenDoviz,setSecilenDoviz] = useState('');
+   const[secilendovizAdı,setsecilendovizAdı] = useState('');
+   const[hesaplananpara,setHesaplananParaDegeri] = useState('');
+
+   const updatesetHesaplananParaDegeri = (newsetAlisSatisdoviz ) => {
+    setHesaplananParaDegeri(newsetAlisSatisdoviz);
+  };
+   const updatesetsecilendovizAdı = (newsetAlisSatisdoviz ) => {
+    setsecilendovizAdı(newsetAlisSatisdoviz);
+  };
+   const updatesetSecilenDoviz = (newsetAlisSatisdoviz ) => {
+    setSecilenDoviz(newsetAlisSatisdoviz);
+  };
 
 
-   const updatesetAlisSatisdoviz = (newsetAlisSatisdoviz ) => {
-    setAlisSatisdoviz(newsetAlisSatisdoviz);
+   const updatesetalisSatisddolar = (newsetAlisSatisdoviz ) => {
+    setalisSatisddolar(newsetAlisSatisdoviz);
+  };
+  const updatesetalisSatisEuro = (newsetAlisSatisdoviz ) => {
+    setalisSatisEuro(newsetAlisSatisdoviz);
+  };
+  const updatesetalisSatisSterlin = (newsetAlisSatisdoviz ) => {
+    setalisSatisSterlin(newsetAlisSatisdoviz);
+  };
+  const updatesetalisSatisfrang = (newsetAlisSatisdoviz ) => {
+    setalisSatisfrang(newsetAlisSatisdoviz);
   };
    const updatesetChechdoviz = (newsetoptiondoviz ) => {
     setChechdoviz(newsetoptiondoviz );
@@ -176,8 +202,23 @@ export const MyContextProvider = ({ children }) => {
       chechdoviz,
       chechdoviz2,
 
-      alisSatisdoviz,
-      updatesetAlisSatisdoviz
+     updatesetalisSatisEuro,
+     updatesetalisSatisSterlin,
+     updatesetalisSatisddolar,
+     updatesetalisSatisfrang,
+     alisSatisEuro,
+     alisSatisSterlin,
+     alisSatisddolar,
+     alisSatisfrang,
+
+     updatesetSecilenDoviz,
+     secilenDoviz,
+
+     updatesetsecilendovizAdı,
+     secilendovizAdı,
+
+     hesaplananpara,
+     updatesetHesaplananParaDegeri,
       }}>
       {children}
     </MyContext.Provider>
