@@ -27,7 +27,7 @@ const AppBar = ({navigation}) => {
 
   return (
     <View>
-    <Appbar.Header>
+    <Appbar.Header style={{backgroundColor:"#674fa3"}}>
       {sayfa === 'Sign In' ? (
         <Appbar.Content title={sayfa} titleStyle={{ flex: 1, textAlign: 'center' }} />
         
