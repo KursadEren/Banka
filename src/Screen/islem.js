@@ -10,7 +10,7 @@ import Constants from 'expo-constants';
 import BilgiKarti from '../Component/Bilgi';
 
 const Islem = ({ navigation }) => {
-  
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const context = useContext(MyContext);
   const {
     updateSayfa,
@@ -22,13 +22,12 @@ const Islem = ({ navigation }) => {
     tcno,
     updatesetHesaplananParaDegeri,
     hesaplananpara,
-     
-    
+    userinfo,
   } = context;
   const [dolarmiktar, setdolarmiktar] = useState('');
   const [sure, setSure] = useState(60);
-  const [userbilgi,setUserbilgi] = useState([]);
-  
+  const [userbilgi, setUserbilgi] = useState([]);
+ 
   useEffect(() => {
     const sayaç = setInterval(() => {
       setSure(prevSure => prevSure - 1);
@@ -60,8 +59,6 @@ const Islem = ({ navigation }) => {
     updateSayfa("islem");
   }, []);
 
-  //
-
   useEffect(() => {
     const { manifest } = Constants;
     const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
@@ -70,58 +67,71 @@ const Islem = ({ navigation }) => {
       .get(`${apiAddress}/users/dovizsatis`)
       .then((response) => {
         updatesetoptiondoviz(response.data);
-        
       })
       .catch((error) => {
         console.error('API veri alınırken bir hata oluştu:', error);
       });
   }, []);
 
-  
-
   useEffect(() => {
-    
     const hesaplananParaDegeri = dolarmiktar * secilenDoviz;
-  
-    
     updatesetHesaplananParaDegeri(hesaplananParaDegeri);
   }, [dolarmiktar]);
 
   const OnChangeButton = (label) => {
-   
-    const tc = '27337851310'
-    const doviztipiid = chechdoviz;
-    const hesapbakiye= hesaplananpara;
-    //hesap varmı yok mu kontorolü ve bakiye varmı yok mu kontrolü
     
-    const { manifest } = Constants;
-      const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+    if(label ==='Çevir'){
 
-      axios.post(`${apiAddress}/users/dovizkontrol`, {   
-           tcno,
-           doviztipiid,
-           dolarmiktar
-         }) .then((response) => {
-          
-          if (response.status === 200) {
-           
-            // islem sayfasına gereken bilgileri sağlamak için axios get isteği
-           /* axios
-            .get(`${apiAddress}/users/ozetbilgi`, {tcno})
+    
+    const doviztipiid = chechdoviz;
+    const hesapbakiye = hesaplananpara;
+
+    const { manifest } = Constants;
+    const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+
+    axios
+      .post(`${apiAddress}/users/dovizkontrol`, {
+        tcno,
+        doviztipiid,
+        dolarmiktar,
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          axios
+            .get(`${apiAddress}/users/ozetbilgi/${tcno}`)
             .then((response) => {
-              setUserbilgi(response.data)
-              
+              setUserbilgi(response.data.rows[0]);
+              console.log(response.data.rows[0]);
+              setShowConfirmation(true);
             })
             .catch((error) => {
               console.error('API veri alınırken bir hata oluştu:', error);
             });
-            */
-                //satilanparatutari,alinacakparatutari,tarih,usersid,alinanparatipi,satilanparatipi,satildigikur
-
-           
+        } else {
+          console.log('hey');
+          console.error(response.data.message);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    }else if(label==='Onayla')
+    {
+      const doviztipiid = chechdoviz;
+      const userid=userinfo[0].userid
+      const tarih = new Date();
+      const { manifest } = Constants;
+      const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+      axios
+        .post(`${apiAddress}/users/dovizozet`, {dolarmiktar,hesaplananpara,tarih,userid,doviztipiid,chechdoviz2,secilenDoviz})
+        .then((response) => {
+          
+          if (response.status === 201) {
+            
+           console.log('hey')
           } else {
             // İstek başarısız oldu, hata mesajını gösterin
-            console.log('he')
+           
             console.error(response.data.message);
           }
         })
@@ -130,19 +140,17 @@ const Islem = ({ navigation }) => {
           console.error(error);
         });
 
-  
-    };
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.sureContainer}>
         <Text style={styles.sureText}>{sure}</Text>
-        <Text>Saniye sonra Ana Sayfaya yönlendirileceksiniz </Text>
-        
-        
+        <Text>Saniye sonra Ana Sayfaya yönlendirileceksiniz</Text>
       </View>
       <View style={styles.formContainer}>
-      <BilgiKarti   />
+        <BilgiKarti />
         <View style={styles.comboboxContainer}>
           <ComboBox label="doviztipialis" />
         </View>
@@ -150,12 +158,21 @@ const Islem = ({ navigation }) => {
           <TextInputC onChangeText={setdolarmiktar} label="Miktar" />
         </View>
       </View>
-      <Text> Hesaplanan Değer:  </Text>
-        <Text>{hesaplananpara}</Text>
+      <Text> Hesaplanan Değer: </Text>
+      <Text>{hesaplananpara}</Text>
       <View style={styles.buttonContainer}>
-        
         <Buttonx label="Çevir" OnChangeButton={OnChangeButton} navigation={navigation} />
       </View>
+      {showConfirmation && (
+        <View style={styles.overlay}>
+          <View style={styles.confirmationContainer}>
+            <Text style={styles.confirmationText}>İşlemi onaylıyor musunuz?</Text>
+            <View style={styles.confirmationButtonContainer}>
+              <Buttonx label="Onayla" OnChangeButton={OnChangeButton} />
+            </View>
+          </View>
+        </View>
+      )}
     </ScrollView>
   );
 };
@@ -163,36 +180,60 @@ const Islem = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    marginTop: "35%",
-    width: "100%",
+    marginTop: '35%',
+    width: '100%',
     alignItems: 'center',
   },
   sureContainer: {
-    marginBottom: "5%",
+    marginBottom: '5%',
   },
   sureText: {
     fontSize: 24,
     fontWeight: 'bold',
-    justifyContent:"center",
-    textAlign:"center"
+    justifyContent: 'center',
+    textAlign: 'center',
   },
   formContainer: {
-    width: "100%",
+    width: '100%',
     alignItems: 'center',
-    marginVertical: "5%",
+    marginVertical: '5%',
   },
   comboboxContainer: {
-    width: "80%",
-    marginHorizontal: "10%",
-    marginVertical: "5%",
+    width: '80%',
+    marginHorizontal: '10%',
+    marginVertical: '5%',
   },
   textInputContainer: {
-    width: "80%",
-    marginHorizontal: "10%",
-    marginTop:"3%"
+    width: '80%',
+    marginHorizontal: '10%',
+    marginTop: '3%',
   },
   buttonContainer: {
     marginTop: '15%',
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  confirmationContainer: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: 'gray',
+    alignItems: 'center',
+  },
+  confirmationText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  confirmationButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '60%',
   },
 });
 

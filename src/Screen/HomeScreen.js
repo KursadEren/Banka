@@ -56,7 +56,8 @@ const HomeScreen = ({ navigation }) => {
 
   const handleExit = () => {
     BackHandler.removeEventListener('hardwareBackPress', backAction); // Geri tuşu olayını kaldır
-
+    
+   
     updateSayfa('Sign In');
     navigation.goBack();
   };

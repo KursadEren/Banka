@@ -52,9 +52,13 @@ const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
         <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
         {label}
       </Button>
-      ):(
+      ):label === 'Geri'?(
         <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
         {"Geri"}
+      </Button>
+      ):(
+        <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
+        {label}
       </Button>
       )}
     </View>

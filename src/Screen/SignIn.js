@@ -29,7 +29,7 @@ const SignIn = ({navigation}) => {
           
           if (response.status === 200) {
             
-            updatePassword("");
+            
             navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
             
           } else {
