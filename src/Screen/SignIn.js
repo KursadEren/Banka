@@ -52,7 +52,7 @@ const SignIn = ({navigation}) => {
   }
 
   return (
-    <View>
+    <View style={{flex:1,backgroundColor:"#CC764B"}}>
         <View style={style.con}>
             <View style={style.appBarr}>
                 <AppBar/>
@@ -88,7 +88,7 @@ const SignIn = ({navigation}) => {
 
 const style = StyleSheet.create({
     container:{flex:1,flexDirection:'row'},
-    appBarr:{marginVertical:'5%'},
+    appBarr:{},
     Body:{marginVertical:'5%',marginHorizontal:'10%'},
     ButonContainer:{flexDirection:'row',justifyContent:'space-around',marginTop:"20%"},
     TextInput:{marginVertical:'8%'},
