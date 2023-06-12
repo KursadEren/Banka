@@ -18,7 +18,7 @@ const ComboBox = ({label, navigation,onChangeBox }) => {
       updatesetChechdoviz2,
       chechdoviz,
       chechdoviz2,
-    optiondoviz,updatesetoptiondoviz} = context;
+    optiondoviz,updatesetoptiondoviz,updatesetcevirilecekdovizadi} = context;
     
 
  
@@ -42,9 +42,12 @@ const ComboBox = ({label, navigation,onChangeBox }) => {
    
     updatesetChechdoviz(itemValue);
   };
-  const handleOptionChangealis = (itemValue) =>{
+  const handleOptionChangealis = (itemValue,selectedIndex) =>{
     updatesetChechdoviz2(itemValue);
+    updatesetcevirilecekdovizadi(optiondoviz[selectedIndex].dovizadi);
+
   }
+  
 
   let content;
   if(label === "doviztipi")
@@ -128,7 +131,7 @@ const ComboBox = ({label, navigation,onChangeBox }) => {
           onValueChange={handleOptionChangealis}
           style={styles.picker}
         >
-          {optiondoviz.map((option) => (
+          {optiondoviz.map((option,index) => (
             <Picker.Item key={option.doviztipiid} label={option.dovizadi} value={option.doviztipiid} />
           ))}
         </Picker>

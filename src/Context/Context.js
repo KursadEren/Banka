@@ -15,6 +15,9 @@ export const MyContextProvider = ({ children }) => {
   const [hesapbakiye,setHesapbakiye] = useState('');
   const [telno, setTelno] = useState('');
   const [dogumtarih, setDogumtarih] = useState('');
+  const [cevirilecekdovizadi , setCevirilecekdovizadi] = useState('');
+
+  
 
    //hesap ekle SAYFASI
    const [selectedOptiondoviz, setSelectedOptiondoviz] = useState('');
@@ -42,14 +45,17 @@ export const MyContextProvider = ({ children }) => {
    const[ alisSatisSterlin,setalisSatisSterlin] = useState('');
    const[ alisSatisfrang,setalisSatisfrang] = useState('');
    const[ secilenDoviz,setSecilenDoviz] = useState('');
-   const[secilendovizAdı,setsecilendovizAdı] = useState('');
+   const[secilendovizAdi,setsecilendovizAdi] = useState('');
    const[hesaplananpara,setHesaplananParaDegeri] = useState('');
 
+   const updatesetcevirilecekdovizadi= (newcevirilecekdovizadi ) => {
+    setCevirilecekdovizadi(newcevirilecekdovizadi);
+  };
    const updatesetHesaplananParaDegeri = (newsetAlisSatisdoviz ) => {
     setHesaplananParaDegeri(newsetAlisSatisdoviz);
   };
-   const updatesetsecilendovizAdı = (newsetAlisSatisdoviz ) => {
-    setsecilendovizAdı(newsetAlisSatisdoviz);
+   const updatesetsecilendovizAdi = (newsetAlisSatisdoviz ) => {
+    setsecilendovizAdi(newsetAlisSatisdoviz);
   };
    const updatesetSecilenDoviz = (newsetAlisSatisdoviz ) => {
     setSecilenDoviz(newsetAlisSatisdoviz);
@@ -155,6 +161,7 @@ export const MyContextProvider = ({ children }) => {
 
   return (
     <MyContext.Provider value={{ theme,
+      
       updateTheme,
       fullname,
       updateFullname,
@@ -201,6 +208,8 @@ export const MyContextProvider = ({ children }) => {
       updatesetChechdoviz2,
       chechdoviz,
       chechdoviz2,
+      updatesetcevirilecekdovizadi,
+      cevirilecekdovizadi,
 
      updatesetalisSatisEuro,
      updatesetalisSatisSterlin,
@@ -214,8 +223,8 @@ export const MyContextProvider = ({ children }) => {
      updatesetSecilenDoviz,
      secilenDoviz,
 
-     updatesetsecilendovizAdı,
-     secilendovizAdı,
+     updatesetsecilendovizAdi,
+     secilendovizAdi,
 
      hesaplananpara,
      updatesetHesaplananParaDegeri,

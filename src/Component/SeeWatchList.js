@@ -12,7 +12,7 @@ const SeeWatchList = ({ navigation }) => {
   const [exchangeRates, setExchangeRates] = useState({});
   const [selectedCurrencies, setSelectedCurrencies] = useState([]);
   const context = useContext(MyContext);
-  const { updatesetChechdoviz,chechdoviz,updatesetsecilendovizAdı,   updatesetSecilenDoviz,secilenDoviz, updatesetalisSatisEuro,updatesetalisSatisSterlin,updatesetalisSatisddolar,updatesetalisSatisfrang,} = context;
+  const { updatesetChechdoviz,chechdoviz,updatesetsecilendovizAdi,   updatesetSecilenDoviz,secilenDoviz, updatesetalisSatisEuro,updatesetalisSatisSterlin,updatesetalisSatisddolar,updatesetalisSatisfrang,} = context;
 
   const getSelectedCurrencies = async () => {
     try {
@@ -82,7 +82,7 @@ const SeeWatchList = ({ navigation }) => {
   const handleAlis = (currency) => {
     if (currency === 'Amerikan Doları') {
       
-      updatesetsecilendovizAdı(currency);
+      updatesetsecilendovizAdi(currency);
       updatesetSecilenDoviz(exchangeRates.usd_try);
       updatesetalisSatisEuro(exchangeRates.euro_try);
       updatesetalisSatisSterlin(exchangeRates.gbp_try);
@@ -92,7 +92,7 @@ const SeeWatchList = ({ navigation }) => {
       
     } else if (currency === 'İsviçre Frangı') {
       
-      updatesetsecilendovizAdı(currency);
+      updatesetsecilendovizAdi(currency);
       updatesetalisSatisddolar(exchangeRates.usd_try);
       updatesetalisSatisEuro(exchangeRates.euro_try);
       updatesetalisSatisSterlin(exchangeRates.gbp_try);
@@ -102,7 +102,7 @@ const SeeWatchList = ({ navigation }) => {
       
     } else if (currency === 'İngiliz Sterlini') {
       
-      updatesetsecilendovizAdı(currency);
+      updatesetsecilendovizAdi(currency);
       updatesetalisSatisddolar(exchangeRates.usd_try);
       updatesetalisSatisEuro(exchangeRates.euro_try);
       updatesetSecilenDoviz(exchangeRates.gbp_try);
@@ -111,7 +111,7 @@ const SeeWatchList = ({ navigation }) => {
       navigation.navigate('islem')
     }
     else if (currency === 'Euro') {
-      updatesetsecilendovizAdı(currency);
+      updatesetsecilendovizAdi(currency);
       updatesetalisSatisddolar(exchangeRates.usd_try);
       updatesetSecilenDoviz(exchangeRates.euro_try);
       updatesetalisSatisSterlin(exchangeRates.gbp_try);
@@ -124,8 +124,8 @@ const SeeWatchList = ({ navigation }) => {
   const handleSatis = (currency) => {
     
     if (currency === 'Amerikan Doları') {
-      
-      updatesetsecilendovizAdı(currency);
+      console.log(currency)
+      updatesetsecilendovizAdi(currency);
       updatesetSecilenDoviz(exchangeRates.usd_try);
       updatesetalisSatisEuro(exchangeRates.euro_try);
       updatesetalisSatisSterlin(exchangeRates.gbp_try);
@@ -136,7 +136,7 @@ const SeeWatchList = ({ navigation }) => {
       
     } else if (currency === 'İngiliz Sterlini') {
       
-      updatesetsecilendovizAdı(currency);
+      updatesetsecilendovizAdi(currency);
       updatesetalisSatisddolar(exchangeRates.usd_try);
       updatesetalisSatisEuro(exchangeRates.euro_try);
       updatesetSecilenDoviz(exchangeRates.gbp_try);
@@ -146,7 +146,7 @@ const SeeWatchList = ({ navigation }) => {
       
     } else if (currency === 'İsviçre Frangı') {
       
-      updatesetsecilendovizAdı(currency);
+      updatesetsecilendovizAdi(currency);
       updatesetalisSatisddolar(exchangeRates.usd_try);
       updatesetalisSatisEuro(exchangeRates.euro_try);
       updatesetalisSatisSterlin(exchangeRates.gbp_try);
@@ -157,7 +157,7 @@ const SeeWatchList = ({ navigation }) => {
     }
     else if (currency === 'Euro') {
       
-      updatesetsecilendovizAdı(currency);
+      updatesetsecilendovizAdi(currency);
       updatesetalisSatisddolar(exchangeRates.usd_try);
       updatesetSecilenDoviz(exchangeRates.euro_try);
       updatesetalisSatisSterlin(exchangeRates.gbp_try);
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 16,
     marginHorizontal: 16,
-    backgroundColor: '#674fa3',
+    backgroundColor: 'rgb(6, 70, 130)',
   },
   headerRow: {
     flexDirection: 'row',

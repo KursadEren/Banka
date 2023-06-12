@@ -68,6 +68,7 @@ const MyFlatList = ({navigation,OnChangeButton}) => {
         pagingEnabled
         style={styles.flatList}
         data={userInfo}
+        
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity style={styles.touchableOpacityContainer}>
@@ -80,7 +81,8 @@ const MyFlatList = ({navigation,OnChangeButton}) => {
       
       <View style={styles.pagination}>
       <View style={{marginRight:"20%"}}>
-         <Buttonx label="+" navigation={navigation}/> 
+        <Text>Hesap Sil</Text>
+         <Buttonx label="-" navigation={navigation}/> 
          </View>
         {userInfo.map((_, index) => (
           <View
@@ -89,6 +91,7 @@ const MyFlatList = ({navigation,OnChangeButton}) => {
           />
         ))}
         <View style={{marginLeft:"20%"}}>
+        <Text>Hesap Ekle</Text>
          <Buttonx label="+" OnChangeButton={OnChangeButton} navigation={navigation}/>
          </View>
       </View>
@@ -100,11 +103,13 @@ const styles = StyleSheet.create({
   itemContainer: {
     flex: 1,
     marginTop: '10%',
+    
   },
   flatList: {
     flexGrow: 0,
     width: Dimensions.get('window').width,
     height: 200,
+    
   },
   itemContainer: {
     width: Dimensions.get('window').width - 40,
@@ -115,15 +120,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 5,
+    backgroundColor:"rgb(6, 70, 130)"
+
   },
   itemTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+    color:"white",
   },
   itemSubtitle: {
     fontSize: 16,
-    color: '#888888',
+    color:"white",
   },
   touchableOpacityContainer: {
     flex: 1,

@@ -1,12 +1,15 @@
 import { View, Text,StyleSheet, Alert } from 'react-native'
-import React,{useContext,useEffect,useState} from 'react'
+import React,{useContext,useEffect} from 'react'
 import AppBar from '../Component/AppBar'
 import { MyContext } from '../Context/Context';
 import TextInputC from '../Component/TextInput';
 import Buttonx from '../Component/Button';
 import Constants from 'expo-constants'
 import axios from 'axios';
+
+
 const SignIn = ({navigation}) => {
+ 
     
     const context = useContext(MyContext);
     const {dogumtarih,tcno, updateSayfa,  password, userinfo,selectedOptiondoviz,selectedOptionsube,selectedOptionhesap,selectedIBAN,updateTcno, email, updateEmail,updatePassword,telno,updatesetTelno,   fullname,updateFullname, } = context;
@@ -52,11 +55,11 @@ const SignIn = ({navigation}) => {
   }
 
   return (
-    <View style={{flex:1,backgroundColor:"#CC764B"}}>
+    <View style={{flex:1,backgroundColor:"rgb(6, 70, 130)"}}>
         <View style={style.con}>
             <View style={style.appBarr}>
                 <AppBar/>
-               <Text style={{textAlign:'center',marginTop:"10%",fontSize:20,}}> Hoşgeldiniz </Text>
+               <Text style={{textAlign:'center',marginTop:"10%",fontSize:20 }}> Hoşgeldiniz </Text>
             </View>
             <View style={style.Body}>
                 <View style={style.TextInput}>

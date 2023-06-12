@@ -14,26 +14,27 @@ const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
   const  HandleButton = (text) =>{
       OnChangeButton(text);
   } 
+  
+  
 
   return (
     <View style={styles.container}>
       {label === 'Sign In' ? (
-        <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
+        <Button  icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
           {"Giriş"}
         </Button>
       ) : label === 'Sign Up' ?(
-       <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
+       <Button  icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
         {"Kayıt"}
         </Button>
     ) : label === '+' ? (
-        <TouchableOpacity onPress={() => HandleButton(label)}>
+        <TouchableOpacity  onPress={() => HandleButton(label)}>
        
-        <Ionicons
-                  name="add-circle"
-                  size={40}
-                  
-                />
-         
+            <Ionicons
+               name="add-circle"
+               size={40}
+               color="rgb(6, 70, 130)"
+            />
           </TouchableOpacity>
       ):label === 'Sign Up2' ?(
         <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
@@ -56,8 +57,17 @@ const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
         <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
         {"Geri"}
       </Button>
-      ):(
-        <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
+      ): label === '-'? (
+        <TouchableOpacity  onPress={() => HandleButton(label)}>
+       
+            <Ionicons
+               name="close-circle"
+               size={40}
+               color="rgb(6, 70, 130)"
+            />
+          </TouchableOpacity>
+      ): (
+        <Button icon="send" mode="contained"  onPress={() => HandleButton(label)} style={styles.button}>
         {label}
       </Button>
       )}
@@ -71,9 +81,11 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
+   
   },
   button: {
     marginBottom: 10,
+    backgroundColor: 'rgb(6, 70, 130)'
   },
   customLabel: {
     fontSize: 16,
