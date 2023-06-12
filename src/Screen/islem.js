@@ -22,6 +22,8 @@ const Islem = ({ navigation }) => {
     tcno,
     updatesetHesaplananParaDegeri,
     cevirilecekdovizadi,
+    setIslemtipi,
+    islemtipi,
     hesaplananpara,
     userinfo,
     secilendovizAdi,
@@ -42,6 +44,7 @@ const Islem = ({ navigation }) => {
 
     if (sure <= 0) {
       clearInterval(sayaç);
+      updatesetHesaplananParaDegeri('0');
       updateSayfa('HomeScreen')
       navigation.navigate('HomeScreen');
     }
@@ -53,6 +56,7 @@ const Islem = ({ navigation }) => {
 
   useEffect(() => {
     const backAction = () => {
+      updatesetHesaplananParaDegeri('0');
       updateSayfa("HomeScreen");
       navigation.navigate('HomeScreen');
       return true;
@@ -82,12 +86,58 @@ const Islem = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    const hesaplananParaDegeri = dolarmiktar * secilenDoviz;
-    
-    updatesetHesaplananParaDegeri(hesaplananParaDegeri);
-  }, [dolarmiktar]);
+    console.log(secilendovizAdi)
+    if(islemtipi === 'Satış'){
+      
+     
+      
+      if(cevirilecekdovizadi === 'Amerikan Doları' && secilendovizAdi != 'Amerikan Doları')
+      { const hesaplananParaDegeri = dolarmiktar * secilenDoviz;
+        updatesetHesaplananParaDegeri(hesaplananParaDegeri / (alisSatisddolar-0.5))
+      }else if(cevirilecekdovizadi === 'İsviçre Frangı' && secilendovizAdi != 'İsviçre Frangı')
+      { const hesaplananParaDegeri = dolarmiktar * secilenDoviz;
+        updatesetHesaplananParaDegeri(  hesaplananParaDegeri /(alisSatisfrang-0.5))
+      }
+      else if(cevirilecekdovizadi === 'İngiliz Sterlini' && secilendovizAdi != 'İngiliz Sterlini')
+      { const hesaplananParaDegeri = dolarmiktar * secilenDoviz;
+        updatesetHesaplananParaDegeri (hesaplananParaDegeri /(alisSatisSterlin-0.5))
+      }else if(cevirilecekdovizadi === 'Euro' && secilendovizAdi != 'Euro')
+      { const hesaplananParaDegeri = dolarmiktar * secilenDoviz;
+        const deger = hesaplananParaDegeri / (alisSatisEuro-0.5)
+        
+        updatesetHesaplananParaDegeri(deger);
+        
+      }else if(cevirilecekdovizadi === 'Türk Lirası'){
+        const hesaplananParaDegeri = dolarmiktar * secilenDoviz;
+        updatesetHesaplananParaDegeri(hesaplananParaDegeri);
+      } 
+       
+    }else if(islemtipi === 'Alım'){
 
-  const OnChangeButton = (label) => {
+      
+      if(cevirilecekdovizadi === 'Amerikan Doları' && secilendovizAdi != 'Amerikan Doları')
+      {const hesaplananParaDegeri = dolarmiktar / secilenDoviz;
+        updatesetHesaplananParaDegeri(hesaplananParaDegeri * (alisSatisddolar))
+      }else if(cevirilecekdovizadi === 'İsviçre Frangı' && secilendovizAdi != 'İsviçre Frangı')
+      {const hesaplananParaDegeri = dolarmiktar / secilenDoviz;
+        updatesetHesaplananParaDegeri(  hesaplananParaDegeri * (alisSatisfrang))
+      }
+      else if(cevirilecekdovizadi === 'İngiliz Sterlini' && secilendovizAdi != 'İngiliz Sterlini')
+      {const hesaplananParaDegeri = dolarmiktar / secilenDoviz;
+        updatesetHesaplananParaDegeri (hesaplananParaDegeri *(alisSatisSterlin))
+      }else if(cevirilecekdovizadi === 'Euro' && secilendovizAdi != 'Euro')
+      {const hesaplananParaDegeri = dolarmiktar / secilenDoviz;
+        updatesetHesaplananParaDegeri(hesaplananParaDegeri * (alisSatisEuro));
+      }else if(cevirilecekdovizadi === 'Türk Lirası'){
+        const hesaplananParaDegeri = dolarmiktar / secilenDoviz;
+          updatesetHesaplananParaDegeri(hesaplananParaDegeri);
+      } 
+    
+    }
+    
+  }, [dolarmiktar,chechdoviz2]);
+
+  const OnChangeButtonSatim = (label) => {
     
     if(label ==='Çevir'){
 
@@ -132,17 +182,17 @@ const Islem = ({ navigation }) => {
       // sayılar var sayi değeri şeklinde düzelt yazı olarak değil
       if(cevirilecekdovizadi === 'Amerikan Doları' && secilendovizAdi != 'Amerikan Doları')
       {
-        updatesetHesaplananParaDegeri(hesaplananpara* alisSatisddolar)
+        
       }else if(cevirilecekdovizadi === 'İsviçre Frangı' && secilendovizAdi != 'İsviçre Frangı')
       {
-        updatesetHesaplananParaDegeri(  hesaplananpara*alisSatisfrang)
+        
       }
       else if(cevirilecekdovizadi === 'İngiliz Sterlini' && secilendovizAdi != 'İngiliz Sterlini')
       {
-        updatesetHesaplananParaDegeri (hesaplananpara*alisSatisSterlin)
+        
       }else if(cevirilecekdovizadi === 'Euro' && secilendovizAdi != 'Euro')
       {
-        updatesetHesaplananParaDegeri(hesaplananpara* alisSatisEuro);
+        
       }else if(cevirilecekdovizadi === 'Türk Lirası'){
         
       } 
@@ -177,6 +227,9 @@ const Islem = ({ navigation }) => {
 
     }
   };
+  const onChangeButtonAlim = () => {
+
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -201,14 +254,14 @@ const Islem = ({ navigation }) => {
       <Text> Hesaplanan Değer: </Text>
       <Text>{hesaplananpara}</Text>
       <View style={styles.buttonContainer}>
-        <Buttonx label="Çevir" OnChangeButton={OnChangeButton} navigation={navigation} />
+        <Buttonx label="Çevir" OnChangeButton={islemtipi === 'Satış' ? OnChangeButtonSatim: onChangeButtonAlim } navigation={navigation} />
       </View>
       {showConfirmation && (
         <View style={styles.overlay}>
           <View style={styles.confirmationContainer}>
             <Text style={styles.confirmationText}>İşlemi onaylıyor musunuz?</Text>
              <View style={styles.confirmationButtonContainer}>
-              <Buttonx label="Onayla" OnChangeButton={OnChangeButton} />
+              <Buttonx label="Onayla" OnChangeButton={islemtipi === 'Satış' ? OnChangeButtonSatim: onChangeButtonAlim} />
              </View>
           </View>
         </View>

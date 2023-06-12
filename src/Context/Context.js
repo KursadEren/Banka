@@ -47,12 +47,16 @@ export const MyContextProvider = ({ children }) => {
    const[ secilenDoviz,setSecilenDoviz] = useState('');
    const[secilendovizAdi,setsecilendovizAdi] = useState('');
    const[hesaplananpara,setHesaplananParaDegeri] = useState('');
+   const[islemtipi,setIslemtipi] = useState('');
 
+   const updatesetIslemtipi= (newcevirilecekdovizadi ) => {
+    setIslemtipi(newcevirilecekdovizadi);
+  };
    const updatesetcevirilecekdovizadi= (newcevirilecekdovizadi ) => {
     setCevirilecekdovizadi(newcevirilecekdovizadi);
   };
-   const updatesetHesaplananParaDegeri = (newsetAlisSatisdoviz ) => {
-    setHesaplananParaDegeri(newsetAlisSatisdoviz);
+   const updatesetHesaplananParaDegeri = (newhesaplananpara ) => {
+    setHesaplananParaDegeri(newhesaplananpara);
   };
    const updatesetsecilendovizAdi = (newsetAlisSatisdoviz ) => {
     setsecilendovizAdi(newsetAlisSatisdoviz);
@@ -228,6 +232,9 @@ export const MyContextProvider = ({ children }) => {
 
      hesaplananpara,
      updatesetHesaplananParaDegeri,
+
+     updatesetIslemtipi,
+     islemtipi,
       }}>
       {children}
     </MyContext.Provider>

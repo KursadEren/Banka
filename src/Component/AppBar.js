@@ -29,16 +29,16 @@ const AppBar = ({navigation}) => {
     <View>
     <Appbar.Header style={{backgroundColor:"rgb(6, 70, 130)"}}>
       {sayfa === 'Sign In' ? (
-        <Appbar.Content title={sayfa} titleStyle={{ flex: 1, textAlign: 'center',color:"rgb(218, 231, 237)" }} />
+        <Appbar.Content  title={sayfa} titleStyle={{ flex: 1, textAlign: 'center' }} />
         
       ) : (
         <>
-        <Appbar.Action icon="menu" onPress={handleMenuToggle} />
-            <Appbar.Action icon={() => <Icon name="globe" size={24} />} onPress={() => DraverNavigator()} />
+        <Appbar.Action icon="menu" color='white' onPress={handleMenuToggle} />
+            <Appbar.Action icon={() => <Icon name="globe" size={24} color="white" />} onPress={() => DraverNavigator()} />
 
-            <Appbar.Content title={sayfa} titleStyle={{ flex: 1, textAlign: 'center', marginHorizontal: '10%' }} />
-            <Switch value={switchValue} onValueChange={handleSwitchToggle} />
-            <Appbar.Action icon={() => <Avatar.Image size={24} label="" />} />
+            <Appbar.Content title={sayfa} titleStyle={{ flex: 1, textAlign: 'center', marginHorizontal: '10%',color:"white"  }} />
+            <Switch color='white' value={switchValue} onValueChange={handleSwitchToggle} />
+            <Appbar.Action icon={() => <Avatar.Image size={24} label=""   />} />
             
         </>
         

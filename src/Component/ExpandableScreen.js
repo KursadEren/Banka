@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     width: 200,
     borderRadius:20,
     height: 15,
-    backgroundColor: 'black',
+    backgroundColor: 'rgb(6, 70, 130)',
   },
   expandedContent: {
     flex: 1,
