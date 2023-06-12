@@ -12,7 +12,7 @@ const SeeWatchList = ({ navigation }) => {
   const [exchangeRates, setExchangeRates] = useState({});
   const [selectedCurrencies, setSelectedCurrencies] = useState([]);
   const context = useContext(MyContext);
-  const { updatesetChechdoviz,chechdoviz,updatesetsecilendovizAdi,   updatesetSecilenDoviz,secilenDoviz, updatesetalisSatisEuro,updatesetalisSatisSterlin,updatesetalisSatisddolar,updatesetalisSatisfrang,} = context;
+  const { updatesetChechdoviz,updatesetIslemtipi,updatesetsecilendovizAdi,   updatesetSecilenDoviz,secilenDoviz, updatesetalisSatisEuro,updatesetalisSatisSterlin,updatesetalisSatisddolar,updatesetalisSatisfrang,} = context;
 
   const getSelectedCurrencies = async () => {
     try {
@@ -80,6 +80,8 @@ const SeeWatchList = ({ navigation }) => {
   
 
   const handleAlis = (currency) => {
+    updatesetIslemtipi('Alım')
+
     if (currency === 'Amerikan Doları') {
       
       updatesetsecilendovizAdi(currency);
@@ -122,7 +124,7 @@ const SeeWatchList = ({ navigation }) => {
   };
 
   const handleSatis = (currency) => {
-    
+    updatesetIslemtipi('Satış')
     if (currency === 'Amerikan Doları') {
       console.log(currency)
       updatesetsecilendovizAdi(currency);
