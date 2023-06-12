@@ -83,7 +83,7 @@ router.get('/hesap/:tcno', async (req,res) => {
         INNER JOIN hesaptur t on t.hesapturid = h.hesapturid\
         INNER JOIN sube s on s.subeid = h.subeid\
         WHERE tcno = $1"; 
-                       const value = [tcno]
+        const value = [tcno]
         const {rows} = await postgresClient.query(text,value)
         return res.status(200).json(rows)
     } catch (error) {

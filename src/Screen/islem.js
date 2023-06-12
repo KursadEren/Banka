@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, BackHandler, ScrollView, StyleSheet } from 'react-native';
 import { MyContext } from '../Context/Context';
-
 import ComboBox from '../Component/Combobox';
 import TextInputC from '../Component/TextInput';
 import Buttonx from '../Component/Button';
@@ -11,6 +10,7 @@ import BilgiKarti from '../Component/Bilgi';
 
 const Islem = ({ navigation }) => {
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
   const context = useContext(MyContext);
   const {
     updateSayfa,
@@ -21,8 +21,15 @@ const Islem = ({ navigation }) => {
     secilenDoviz,
     tcno,
     updatesetHesaplananParaDegeri,
+    cevirilecekdovizadi,
     hesaplananpara,
     userinfo,
+    secilendovizAdi,
+    alisSatisEuro,
+     alisSatisSterlin,
+     alisSatisddolar,
+     alisSatisfrang,
+
   } = context;
   const [dolarmiktar, setdolarmiktar] = useState('');
   const [sure, setSure] = useState(60);
@@ -35,6 +42,7 @@ const Islem = ({ navigation }) => {
 
     if (sure <= 0) {
       clearInterval(sayaç);
+      updateSayfa('HomeScreen')
       navigation.navigate('HomeScreen');
     }
 
@@ -75,6 +83,7 @@ const Islem = ({ navigation }) => {
 
   useEffect(() => {
     const hesaplananParaDegeri = dolarmiktar * secilenDoviz;
+    
     updatesetHesaplananParaDegeri(hesaplananParaDegeri);
   }, [dolarmiktar]);
 
@@ -84,7 +93,7 @@ const Islem = ({ navigation }) => {
 
     
     const doviztipiid = chechdoviz;
-    const hesapbakiye = hesaplananpara;
+    
 
     const { manifest } = Constants;
     const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
@@ -117,6 +126,31 @@ const Islem = ({ navigation }) => {
       });
     }else if(label==='Onayla')
     {
+      console.log(secilendovizAdi)
+      console.log(cevirilecekdovizadi)
+
+      // sayılar var sayi değeri şeklinde düzelt yazı olarak değil
+      if(cevirilecekdovizadi === 'Amerikan Doları' && secilendovizAdi != 'Amerikan Doları')
+      {
+        updatesetHesaplananParaDegeri(hesaplananpara* alisSatisddolar)
+      }else if(cevirilecekdovizadi === 'İsviçre Frangı' && secilendovizAdi != 'İsviçre Frangı')
+      {
+        updatesetHesaplananParaDegeri(  hesaplananpara*alisSatisfrang)
+      }
+      else if(cevirilecekdovizadi === 'İngiliz Sterlini' && secilendovizAdi != 'İngiliz Sterlini')
+      {
+        updatesetHesaplananParaDegeri (hesaplananpara*alisSatisSterlin)
+      }else if(cevirilecekdovizadi === 'Euro' && secilendovizAdi != 'Euro')
+      {
+        updatesetHesaplananParaDegeri(hesaplananpara* alisSatisEuro);
+      }else if(cevirilecekdovizadi === 'Türk Lirası'){
+        
+      } 
+      else{
+        setShowConfirmation(false);
+        setErrorMessage('Aynı Tipe dönüştüremezsiniz.');
+       
+      }
       const doviztipiid = chechdoviz;
       const userid=userinfo[0].userid
       const tarih = new Date();
@@ -128,7 +162,7 @@ const Islem = ({ navigation }) => {
           
           if (response.status === 201) {
             
-           console.log('hey')
+           
           } else {
             // İstek başarısız oldu, hata mesajını gösterin
            
@@ -137,6 +171,7 @@ const Islem = ({ navigation }) => {
         })
         .catch((error) => {
           // HTTP isteği hata verdi, hata mesajını gösterin
+         
           console.error(error);
         });
 
@@ -153,6 +188,11 @@ const Islem = ({ navigation }) => {
         <BilgiKarti />
         <View style={styles.comboboxContainer}>
           <ComboBox label="doviztipialis" />
+          {errorMessage && (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>{errorMessage}</Text>
+        </View>
+      )}
         </View>
         <View style={styles.textInputContainer}>
           <TextInputC onChangeText={setdolarmiktar} label="Miktar" />
@@ -167,17 +207,29 @@ const Islem = ({ navigation }) => {
         <View style={styles.overlay}>
           <View style={styles.confirmationContainer}>
             <Text style={styles.confirmationText}>İşlemi onaylıyor musunuz?</Text>
-            <View style={styles.confirmationButtonContainer}>
+             <View style={styles.confirmationButtonContainer}>
               <Buttonx label="Onayla" OnChangeButton={OnChangeButton} />
-            </View>
+             </View>
           </View>
         </View>
       )}
+      
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  errorContainer: {
+    backgroundColor: 'red',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+    alignSelf: 'center',
+  },
+  errorText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
   container: {
     flexGrow: 1,
     marginTop: '35%',

@@ -33,7 +33,10 @@
         "expo": {
           "packagerOpts": {
             "port": 19000
-          }
+          },
+          "assetBundlePatterns": [
+            "assets/fonts/Futura.ttf"
+          ]
         }
       }
     },
