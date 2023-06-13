@@ -314,7 +314,26 @@ router.post('/hesapekle', async (req, res) => {
       
       return res.status(200).json({ message: 'Hesap güncelleme işlemi başarılı' })
     } catch (error) {
-        console.log('heyy')
+        
+      console.log('Hata oluştu:', error.message)
+      return res.status(400).json({ message: error.message })
+    }
+  })
+    // içinde para varmı kontolü için
+  router.post('/hesapKontrol', async (req, res) => {
+    try {
+      const Text1 = " SELECT * FROM usershesap WHERE usersid = $2 AND doviztipiid = $3 AND hesapbakiye >= $1  "
+      const values = [req.body.dolarmiktar, req.body.userid, req.body.chechdoviz2]
+      const result = await postgresClient.query( Text1 , values)
+  
+      if (!result.rows.length) {
+        
+        return res.status(404).json({ message:  "Kaynak bulunamadı" })
+      }
+
+      return res.status(200).json({ message: 'Hesap güncelleme işlemi başarılı' })
+    } catch (error) {
+        
       console.log('Hata oluştu:', error.message)
       return res.status(400).json({ message: error.message })
     }
