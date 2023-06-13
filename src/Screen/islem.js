@@ -140,10 +140,22 @@ const Islem = ({ navigation }) => {
   const OnChangeButton = (label) => {
     
     if(label ==='Çevir'){
+      
+      if(cevirilecekdovizadi===secilendovizAdi){
+        setShowConfirmation(false);
+        setErrorMessage('Aynı Tipe dönüştüremezsiniz.');
+        return;
+      }
+      if(dolarmiktar === '')
+      {
+        setShowConfirmation(false);
+        setErrorMessage('Bakiye değeri giriniz.');
+        return;
+      }
         if(islemtipi === 'Satış')
         {
           const doviztipiid = chechdoviz;
-    
+          //satış kısmındaki ana sayfdan seçilen hesap varmı yada hesap bakiyesi yeterli mi diye kontol edilir
 
           const { manifest } = Constants;
           const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
@@ -156,6 +168,7 @@ const Islem = ({ navigation }) => {
             })
             .then((response) => {
               if (response.status === 200) {
+
                 axios
                   .get(`${apiAddress}/users/ozetbilgi/${tcno}`)
                   .then((response) => {
@@ -166,19 +179,22 @@ const Islem = ({ navigation }) => {
                   .catch((error) => {
                     console.error('API veri alınırken bir hata oluştu:', error);
                   });
+                  
               } else {
-                console.log('hey');
+               
                 console.error(response.data.message);
               }
             })
             .catch((error) => {
-              console.error(error);
+              setShowConfirmation(false);
+              setErrorMessage('Hesap bulunamadı veya bakiye yetersiz');
+              return;
             });
         }
         else  if(islemtipi === 'Alım')
         {
           const doviztipiid = chechdoviz2;
-    
+          // DOVİZ KONTROL ALIM KISMINDAKİ SEÇİLEN HESABIN BAKİYESİ VEYA HESAP VARMI DİYE KONTOL EDER
 
           const { manifest } = Constants;
           const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
@@ -207,7 +223,9 @@ const Islem = ({ navigation }) => {
               }
             })
             .catch((error) => {
-              console.error(error);
+              setShowConfirmation(false);
+              setErrorMessage('Hesap bulunamadı veya bakiye yetersiz');
+              return;
             });
         }
     
@@ -217,113 +235,158 @@ const Islem = ({ navigation }) => {
       console.log(secilendovizAdi)
       console.log(cevirilecekdovizadi)
 
-      // sayılar var sayi değeri şeklinde düzelt yazı olarak değil
-      if(cevirilecekdovizadi === 'Amerikan Doları' && secilendovizAdi != 'Amerikan Doları')
-      {
-        
-      }else if(cevirilecekdovizadi === 'İsviçre Frangı' && secilendovizAdi != 'İsviçre Frangı')
-      {
-        
-      }
-      else if(cevirilecekdovizadi === 'İngiliz Sterlini' && secilendovizAdi != 'İngiliz Sterlini')
-      {
-        
-      }else if(cevirilecekdovizadi === 'Euro' && secilendovizAdi != 'Euro')
-      {
-        
-      }else if(cevirilecekdovizadi === 'Türk Lirası'){
-        
-      } 
-      else{
-        setShowConfirmation(false);
-        setErrorMessage('Aynı Tipe dönüştüremezsiniz.');
+      // bu kontrol kullanıcın aynı tipte doviz seçtiğini söyler
+     
 
-      }
-
-
-
-
-      
       // en son islem tablosuna kayıt ekleyeceksin alım ve satım işini yaptıktan sonra içlerinden gönder 
 
-
-
-
-
-      const doviztipiid = chechdoviz;
-      const userid=userinfo[0].userid
-      const tarih = new Date();
-      const { manifest } = Constants;
-      const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-      axios
-        .post(`${apiAddress}/users/dovizozet`, {dolarmiktar,hesaplananpara,tarih,userid,doviztipiid,chechdoviz2,secilenDoviz,islemtipi})
-        .then((response) => {
-          
-          if (response.status === 201) {
-            
-           
-          } else {
-            // İstek başarısız oldu, hata mesajını gösterin
-           
-            console.error(response.data.message);
-          }
-        })
-        .catch((error) => {
-          // HTTP isteği hata verdi, hata mesajını gösterin
-         
-          console.error(error);
-        });
-        if(islemtipi === 'Alım')
-        {
-          
-         
-          // para eklenecek hesap için 
-          const { manifest } = Constants;
-          const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-       axios
-        .post(`${apiAddress}/users/hesapekle`, {dolarmiktar: parseFloat(dolarmiktar),userid,chechdoviz})
-        .then((response) => {
-          
-          if (response.status === 200) {
-            
-           
-          } else {
-            // İstek başarısız oldu, hata mesajını gösterin
-           
-            console.error(response.data.message);
-          }
-        })
-        .catch((error) => {
-          // HTTP isteği hata verdi, hata mesajını gösterin
-         
-          console.error(error);
-        });
-        // para eklenecek hesap için 
       
-     axios
-      .post(`${apiAddress}/users/hesapcikart`, {dolarmiktar: parseFloat(dolarmiktar),userid,chechdoviz2})
-      .then((response) => {
-        
-        if (response.status === 200) {
-          
-         
-        } else {
-          // İstek başarısız oldu, hata mesajını gösterin
-         
-          console.error(response.data.message);
-        }
-      })
-      .catch((error) => {
-        // HTTP isteği hata verdi, hata mesajını gösterin
-        
-        console.error(error);
-      });
-          
+
+
+
+          // kontrol için
+        if(islemtipi === 'Alım')
+        {const { manifest } = Constants;
+         const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+
+              // para eklenecek hesap için 
+                          
+                       axios
+                       .post(`${apiAddress}/users/hesapekle`, {dolarmiktar: parseFloat(dolarmiktar),userid,chechdoviz})
+                       .then((response) => {
+                         
+                         if (response.status === 200) {
+                           
+                          
+                         } else {
+                           // İstek başarısız oldu, hata mesajını gösterin
+                          
+                           console.error(response.data.message);
+                         }
+                       })
+                       .catch((error) => {
+                         // HTTP isteği hata verdi, hata mesajını gösterin
+                        
+                         console.error(error);
+                       });
+                
+                
+                       // para çekilecek hesap için  
+                     
+                    axios
+                     .post(`${apiAddress}/users/hesapcikart`, {dolarmiktar: parseFloat(dolarmiktar),userid,chechdoviz2})
+                     .then((response) => {
+                       
+                       if (response.status === 200) {
+                         
+                        
+                       } else {
+                         // İstek başarısız oldu, hata mesajını gösterin
+                        
+                         console.error(response.data.message);
+                       }
+                     })
+                     .catch((error) => {
+                       // HTTP isteği hata verdi, hata mesajını gösterin
+                       
+                       console.error(error);
+                     });
+
+
+                     // işlem sayfasına ekleme
+               const doviztipiid = chechdoviz;
+              const userid=userinfo[0].userid
+              const tarih = new Date();
+              axios
+                .post(`${apiAddress}/users/dovizozet`, {dolarmiktar,hesaplananpara,tarih,userid,doviztipiid,chechdoviz2,secilenDoviz,islemtipi})
+                .then((response) => {
+                  
+                  if (response.status === 201) {
+                    
+                   
+                  } else {
+                    // İstek başarısız oldu, hata mesajını gösterin
+                   
+                    console.error(response.data.message);
+                  }
+                })
+                .catch((error) => {
+                  // HTTP isteği hata verdi, hata mesajını gösterin
+                 
+                  console.error(error);
+                });
+            
 
         }
         else if(islemtipi=== 'Satış')
         {
-                                                                              // satış işlemleri
+                      // satış işlemleri
+
+            // seçilen hesaptan para eksilt
+             axios
+             .post(`${apiAddress}/users/hesapcikart`, {dolarmiktar: parseFloat(dolarmiktar),userid,chechdoviz})
+             .then((response) => {
+               
+               if (response.status === 200) {
+                 
+                
+               } else {
+                 // İstek başarısız oldu, hata mesajını gösterin
+                
+                 console.error(response.data.message);
+               }
+             })
+             .catch((error) => {
+               // HTTP isteği hata verdi, hata mesajını gösterin
+              
+               console.error(error);
+             });
+        
+        
+          
+          // sayfada seçilene para aktar 
+          axios
+           .post(`${apiAddress}/users/hesapekle`, {dolarmiktar: parseFloat(dolarmiktar),userid,chechdoviz2})
+           .then((response) => {
+             
+             if (response.status === 200) {
+               
+              
+             } else {
+               // İstek başarısız oldu, hata mesajını gösterin
+              
+               console.error(response.data.message);
+             }
+           })
+           .catch((error) => {
+             // HTTP isteği hata verdi, hata mesajını gösterin
+             
+             console.error(error);
+           });
+
+
+              // işlem sayfasına ekleme
+              const doviztipiid = chechdoviz;
+              const userid=userinfo[0].userid
+              const tarih = new Date();
+              axios
+                .post(`${apiAddress}/users/dovizozet`, {dolarmiktar,hesaplananpara,tarih,userid,doviztipiid,chechdoviz2,secilenDoviz,islemtipi})
+                .then((response) => {
+                  
+                  if (response.status === 201) {
+                    
+                   
+                  } else {
+                    // İstek başarısız oldu, hata mesajını gösterin
+                   
+                    console.error(response.data.message);
+                  }
+                })
+                .catch((error) => {
+                  // HTTP isteği hata verdi, hata mesajını gösterin
+                 
+                  console.error(error);
+                });
         }
 
     }
