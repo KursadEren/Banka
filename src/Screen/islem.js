@@ -88,9 +88,7 @@ const Islem = ({ navigation }) => {
   useEffect(() => {
     console.log(secilendovizAdi)
     if(islemtipi === 'Satış'){
-      
-     
-      
+
       if(cevirilecekdovizadi === 'Amerikan Doları' && secilendovizAdi != 'Amerikan Doları')
       { const hesaplananParaDegeri = dolarmiktar * secilenDoviz;
         updatesetHesaplananParaDegeri(hesaplananParaDegeri / (alisSatisddolar-0.5))
@@ -111,8 +109,10 @@ const Islem = ({ navigation }) => {
         const hesaplananParaDegeri = dolarmiktar * secilenDoviz;
         updatesetHesaplananParaDegeri(hesaplananParaDegeri);
       } 
+      // girilen para değerini seçilenden çıkar çıkan sonucu gerekli yere ekle
        
-    }else if(islemtipi === 'Alım'){
+    }
+    else if(islemtipi === 'Alım'){
 
       
       if(cevirilecekdovizadi === 'Amerikan Doları' && secilendovizAdi != 'Amerikan Doları')
@@ -129,51 +129,89 @@ const Islem = ({ navigation }) => {
       {const hesaplananParaDegeri = dolarmiktar / secilenDoviz;
         updatesetHesaplananParaDegeri(hesaplananParaDegeri * (alisSatisEuro));
       }else if(cevirilecekdovizadi === 'Türk Lirası'){
-        const hesaplananParaDegeri = dolarmiktar / secilenDoviz;
+        const hesaplananParaDegeri = dolarmiktar * secilenDoviz;
           updatesetHesaplananParaDegeri(hesaplananParaDegeri);
-      } 
+      } //hesaplanan para çıkartılacak kısım girilen para değerini seçilene aktar
     
     }
     
   }, [dolarmiktar,chechdoviz2]);
 
-  const OnChangeButtonSatim = (label) => {
+  const OnChangeButton = (label) => {
     
     if(label ==='Çevir'){
-
+        if(islemtipi === 'Satış')
+        {
+          const doviztipiid = chechdoviz;
     
-    const doviztipiid = chechdoviz;
-    
 
-    const { manifest } = Constants;
-    const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-
-    axios
-      .post(`${apiAddress}/users/dovizkontrol`, {
-        tcno,
-        doviztipiid,
-        dolarmiktar,
-      })
-      .then((response) => {
-        if (response.status === 200) {
+          const { manifest } = Constants;
+          const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+      
           axios
-            .get(`${apiAddress}/users/ozetbilgi/${tcno}`)
+            .post(`${apiAddress}/users/dovizkontrol`, {
+              tcno,
+              doviztipiid,
+              dolarmiktar,
+            })
             .then((response) => {
-              setUserbilgi(response.data.rows[0]);
-              console.log(response.data.rows[0]);
-              setShowConfirmation(true);
+              if (response.status === 200) {
+                axios
+                  .get(`${apiAddress}/users/ozetbilgi/${tcno}`)
+                  .then((response) => {
+                    setUserbilgi(response.data.rows[0]);
+                    console.log(response.data.rows[0]);
+                    setShowConfirmation(true);
+                  })
+                  .catch((error) => {
+                    console.error('API veri alınırken bir hata oluştu:', error);
+                  });
+              } else {
+                console.log('hey');
+                console.error(response.data.message);
+              }
             })
             .catch((error) => {
-              console.error('API veri alınırken bir hata oluştu:', error);
+              console.error(error);
             });
-        } else {
-          console.log('hey');
-          console.error(response.data.message);
         }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+        else  if(islemtipi === 'Alım')
+        {
+          const doviztipiid = chechdoviz2;
+    
+
+          const { manifest } = Constants;
+          const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+      
+          axios
+            .post(`${apiAddress}/users/dovizkontrol`, {
+              tcno,
+              doviztipiid,
+              dolarmiktar,
+            })
+            .then((response) => {
+              if (response.status === 200) {
+                axios
+                  .get(`${apiAddress}/users/ozetbilgi/${tcno}`)
+                  .then((response) => {
+                    setUserbilgi(response.data.rows[0]);
+                    console.log(response.data.rows[0]);
+                    setShowConfirmation(true);
+                  })
+                  .catch((error) => {
+                    console.error('API veri alınırken bir hata oluştu:', error);
+                  });
+              } else {
+                console.log('hey');
+                console.error(response.data.message);
+              }
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        }
+    
+   
     }else if(label==='Onayla')
     {
       console.log(secilendovizAdi)
@@ -199,15 +237,26 @@ const Islem = ({ navigation }) => {
       else{
         setShowConfirmation(false);
         setErrorMessage('Aynı Tipe dönüştüremezsiniz.');
-       
+
       }
+
+
+
+
+      
+      // en son islem tablosuna kayıt ekleyeceksin alım ve satım işini yaptıktan sonra içlerinden gönder 
+
+
+
+
+
       const doviztipiid = chechdoviz;
       const userid=userinfo[0].userid
       const tarih = new Date();
       const { manifest } = Constants;
       const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
       axios
-        .post(`${apiAddress}/users/dovizozet`, {dolarmiktar,hesaplananpara,tarih,userid,doviztipiid,chechdoviz2,secilenDoviz})
+        .post(`${apiAddress}/users/dovizozet`, {dolarmiktar,hesaplananpara,tarih,userid,doviztipiid,chechdoviz2,secilenDoviz,islemtipi})
         .then((response) => {
           
           if (response.status === 201) {
@@ -224,12 +273,62 @@ const Islem = ({ navigation }) => {
          
           console.error(error);
         });
+        if(islemtipi === 'Alım')
+        {
+          
+         
+          // para eklenecek hesap için 
+          const { manifest } = Constants;
+          const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+       axios
+        .post(`${apiAddress}/users/hesapekle`, {dolarmiktar: parseFloat(dolarmiktar),userid,chechdoviz})
+        .then((response) => {
+          
+          if (response.status === 200) {
+            
+           
+          } else {
+            // İstek başarısız oldu, hata mesajını gösterin
+           
+            console.error(response.data.message);
+          }
+        })
+        .catch((error) => {
+          // HTTP isteği hata verdi, hata mesajını gösterin
+         
+          console.error(error);
+        });
+        // para eklenecek hesap için 
+      
+     axios
+      .post(`${apiAddress}/users/hesapcikart`, {dolarmiktar: parseFloat(dolarmiktar),userid,chechdoviz2})
+      .then((response) => {
+        
+        if (response.status === 200) {
+          
+         
+        } else {
+          // İstek başarısız oldu, hata mesajını gösterin
+         
+          console.error(response.data.message);
+        }
+      })
+      .catch((error) => {
+        // HTTP isteği hata verdi, hata mesajını gösterin
+        
+        console.error(error);
+      });
+          
+
+        }
+        else if(islemtipi=== 'Satış')
+        {
+                                                                              // satış işlemleri
+        }
 
     }
   };
-  const onChangeButtonAlim = () => {
-
-  }
+  
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -254,14 +353,14 @@ const Islem = ({ navigation }) => {
       <Text> Hesaplanan Değer: </Text>
       <Text>{hesaplananpara}</Text>
       <View style={styles.buttonContainer}>
-        <Buttonx label="Çevir" OnChangeButton={islemtipi === 'Satış' ? OnChangeButtonSatim: onChangeButtonAlim } navigation={navigation} />
+        <Buttonx label="Çevir" OnChangeButton={ OnChangeButton } navigation={navigation} />
       </View>
       {showConfirmation && (
         <View style={styles.overlay}>
           <View style={styles.confirmationContainer}>
             <Text style={styles.confirmationText}>İşlemi onaylıyor musunuz?</Text>
              <View style={styles.confirmationButtonContainer}>
-              <Buttonx label="Onayla" OnChangeButton={islemtipi === 'Satış' ? OnChangeButtonSatim: onChangeButtonAlim} />
+              <Buttonx label="Onayla" OnChangeButton={ OnChangeButton} />
              </View>
           </View>
         </View>
