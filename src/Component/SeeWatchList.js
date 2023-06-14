@@ -12,7 +12,7 @@ const SeeWatchList = ({ navigation }) => {
   const [exchangeRates, setExchangeRates] = useState({});
   const [selectedCurrencies, setSelectedCurrencies] = useState([]);
   const context = useContext(MyContext);
-  const { updatesetChechdoviz,updatesetIslemtipi,updatesetsecilendovizAdi,   updatesetSecilenDoviz,secilenDoviz, updatesetalisSatisEuro,updatesetalisSatisSterlin,updatesetalisSatisddolar,updatesetalisSatisfrang,} = context;
+  const { chechdoviz,updatesetChechdoviz,updatesetIslemtipi,updatesetsecilendovizAdi,   updatesetSecilenDoviz,secilenDoviz, updatesetalisSatisEuro,updatesetalisSatisSterlin,updatesetalisSatisddolar,updatesetalisSatisfrang,} = context;
 
   const getSelectedCurrencies = async () => {
     try {
@@ -56,6 +56,7 @@ const SeeWatchList = ({ navigation }) => {
   }, []);
 
   const request = ({ currency }) => {
+    console.log('currency',currency)
     const dovizadi = currency;
     const { manifest } = Constants;
     const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
@@ -64,6 +65,7 @@ const SeeWatchList = ({ navigation }) => {
       .then((response) => {
         if (response.status === 200) {
           if (response.data) {
+            
             updatesetChechdoviz(response.data[0].doviztipiid);
             
           } else {
