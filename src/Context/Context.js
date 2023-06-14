@@ -48,7 +48,15 @@ export const MyContextProvider = ({ children }) => {
    const[secilendovizAdi,setsecilendovizAdi] = useState('');
    const[hesaplananpara,setHesaplananParaDegeri] = useState('');
    const[islemtipi,setIslemtipi] = useState('');
+   const [errortext, setErrorText] = useState("");
+   const [error, setError] = useState('');
 
+   const updatesetError= (newerror ) => {
+    setError(newerror);
+  };
+   const updatesetErrorText= (newerrortext ) => {
+    setErrorText(newerrortext);
+  };
    const updatesetIslemtipi= (newcevirilecekdovizadi ) => {
     setIslemtipi(newcevirilecekdovizadi);
   };
@@ -235,6 +243,11 @@ export const MyContextProvider = ({ children }) => {
 
      updatesetIslemtipi,
      islemtipi,
+
+    errortext,
+    updatesetErrorText,
+    updatesetError,
+    error,
       }}>
       {children}
     </MyContext.Provider>

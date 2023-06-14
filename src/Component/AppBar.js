@@ -29,7 +29,7 @@ const AppBar = ({navigation}) => {
     <View>
     <Appbar.Header style={{backgroundColor:"rgb(6, 70, 130)"}}>
       {sayfa === 'Sign In' ? (
-        <Appbar.Content  title={sayfa} titleStyle={{ flex: 1, textAlign: 'center' }} />
+        <Appbar.Content  title={sayfa} titleStyle={{ flex: 1, textAlign: 'center',color:'rgb(218, 231, 237)' }} />
         
       ) : (
         <>
