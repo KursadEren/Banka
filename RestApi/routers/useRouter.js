@@ -220,7 +220,7 @@ router.post('/dovizkontrol', async (req,res) =>{
         console.log(rows)
         if(!rows.length)
         {
-            
+           
 
             return res.status(404).json()
         }
@@ -256,40 +256,56 @@ values($1,$2,$3,$4,$5,$6,$7)*/
 
 router.post('/dovizozet', async (req,res) =>{
     try {
-        
+       
         const text = "insert into islem \
         (satilanparatutari,alinacakparatutari,tarih,usersid,alinanparatipi,satilanparatipi,satildigikur, alimsatim) \
         values($1,$2,$3,$4,$5,$6,$7,$8)"
-        const values = [req.body.dolarmiktar,req.body.hesaplananpara,req.body.tarih,req.body.userid,req.body.doviztipiid,req.body.chechdoviz2,req.body.secilenDoviz,req.body.islemtipi]
+        const values = [req.body.dolarmiktar,req.body.hesaplananpara,req.body.tarih,req.body.userid,req.body.chechdoviz,req.body.chechdoviz2,req.body.secilenDoviz,req.body.islemtipi]
         const {rows} = await postgresClient.query(text,values)
         console.log(rows)
         
+        
         return res.status(201).json({ message:' authentication succesfull'})
     } catch (error) {
+        console.log('dovizozet')
         console.log('error occured', error.message)
+        console.log('dovizozet')
         return res.status(400).json({message:error.message})
     }
 })
 //
 //
 //;//hesapcikart
+
+
+
+
+
+
+
+
+
 router.post('/hesapekle', async (req, res) => {
     try {
-      const Text1 = "SELECT * FROM usershesap WHERE usersid = $2 AND doviztipiid = $3 AND hesapbakiye >= $1"
+      const Text1 = "SELECT * FROM usershesap WHERE usersid = $2 AND doviztipiid = $3 AND hesapbakiye >= $1 "
       const values = [req.body.dolarmiktar, req.body.userid, req.body.chechdoviz]
       const result = await postgresClient.query(Text1, values)
-  
-      if (!result.rows.length) {
+      
+      if (result.rows.length <= 0) {
+        
         return res.status(404).json({ message: "Kaynak bulunamadı" })
       }
   
       const text = "UPDATE usershesap SET hesapbakiye = hesapbakiye + $1 WHERE usersid = $2 AND doviztipiid = $3"
   
-      const updateValues = [req.body.dolarmiktar, req.body.userid, req.body.chechdoviz]
-      await postgresClient.query(text, updateValues)
+      const updatevalues = [req.body.dolarmiktar, req.body.userid, req.body.chechdoviz]
+     
+      const {rows} =  await postgresClient.query(text, updatevalues)
   
       return res.status(200).json({ message: 'Hesap güncelleme işlemi başarılı' })
     } catch (error) {
+       
+        console.log('hesapekle')
       console.log('Hata oluştu:', error.message)
       return res.status(400).json({ message: error.message })
     }
@@ -298,39 +314,52 @@ router.post('/hesapekle', async (req, res) => {
 
   router.post('/hesapcikart', async (req, res) => {
     try {
-      const Text1 = " SELECT * FROM usershesap WHERE usersid = $2 AND doviztipiid = $3 AND hesapbakiye >= $1  "
-      const values = [req.body.dolarmiktar, req.body.userid, req.body.chechdoviz2]
-      const result = await postgresClient.query( Text1 , values)
-  
-      if (!result.rows.length) {
         
-        return res.status(404).json({ message:  "Kaynak bulunamadı" })
-      }
-     
-      const text = "UPDATE usershesap SET hesapbakiye = hesapbakiye - $1 WHERE usersid = $2 AND doviztipiid = $3"
+        const Text1 = " SELECT * FROM usershesap WHERE usersid = $2 AND doviztipiid = $3 AND hesapbakiye >= $1  "
+        const values = [req.body.dolarmiktar, req.body.userid,req.body.chechdoviz2];
+        const result = await postgresClient.query( Text1 , values)
+        
+        if (result.rows.length <=0) {
+            console.log(typeof req.body.dolarmiktar,typeof req.body.userid,typeof req.body.chechdoviz2)
+          return res.status(404).json({ message:  "Kaynak bulunamadı" })
+        }
+        
+        const text = "UPDATE usershesap SET hesapbakiye = hesapbakiye - $3 WHERE usersid = $1 AND doviztipiid = $2"
+        
+        const updateValues =  [req.body.userid, req.body.chechdoviz2,req.body.dolarmiktar];
+        await postgresClient.query(text, updateValues)
+        
+        return res.status(200).json({ message: 'Hesap güncelleme işlemi başarılı' })
       
-      const updateValues = [req.body.dolarmiktar, req.body.userid, req.body.chechdoviz2]
-      await postgresClient.query(text, updateValues)
       
-      return res.status(200).json({ message: 'Hesap güncelleme işlemi başarılı' })
+
     } catch (error) {
-        
+        console.log('hesapcikart')
       console.log('Hata oluştu:', error.message)
       return res.status(400).json({ message: error.message })
     }
   })
+
+
+
+
+
+
+
+
+
     // içinde para varmı kontolü için
   router.post('/hesapKontrol', async (req, res) => {
     try {
       const Text1 = " SELECT * FROM usershesap WHERE usersid = $2 AND doviztipiid = $3 AND hesapbakiye >= $1  "
-      const values = [req.body.dolarmiktar, req.body.userid, req.body.chechdoviz2]
+      const values = [req.body.dolarmiktar, req.body.userid, req.body.doviztipi]
       const result = await postgresClient.query( Text1 , values)
   
       if (!result.rows.length) {
-        
+       
         return res.status(404).json({ message:  "Kaynak bulunamadı" })
       }
-
+      console.log('merhaba')
       return res.status(200).json({ message: 'Hesap güncelleme işlemi başarılı' })
     } catch (error) {
         

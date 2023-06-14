@@ -39,7 +39,7 @@ export const MyContextProvider = ({ children }) => {
    //Combobox satış için seçilen değerler 
    
    const[ chechdoviz,setChechdoviz] = useState(0);
-   const[ chechdoviz2,setChechdoviz2] = useState('');
+   const[ chechdoviz2,setChechdoviz2] = useState(0);
    const[ alisSatisddolar,setalisSatisddolar] = useState('');
    const[ alisSatisEuro,setalisSatisEuro] = useState('');
    const[ alisSatisSterlin,setalisSatisSterlin] = useState('');
