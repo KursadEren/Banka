@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { TextInput } from 'react-native-paper';
+import { View, StyleSheet } from 'react-native';
+import { TextInput, HelperText } from 'react-native-paper';
 
-const TextInputC = ({ label, onChangeText }) => {
+const TextInputC = ({ label, onChangeText, error, errorPassword }) => {
   const [text, setText] = useState("");
   const [isFocused, setIsFocused] = useState(false);
 
@@ -19,15 +20,28 @@ const TextInputC = ({ label, onChangeText }) => {
   };
 
   return (
-    <TextInput
-      label={label}
-      value={text}
-      mode="outlined"
-      onBlur={handleBlur}
-      style={isFocused ? { borderColor: 'blue' } : null}
-      onChangeText={handleTextChange}
-    />
+    <View style={styles.container}>
+      <TextInput
+        label={label}
+        value={text}
+        mode="outlined"
+        onBlur={handleBlur}
+        onFocus={handleFocus} // Değişiklik burada
+        style={{backgroundColor:'rgb(218, 231, 237)'}}
+        theme={{colors: {primary: '#064682'}}}
+        onChangeText={handleTextChange}
+      />
+      {error && <HelperText type="error" visible={true}>{error}</HelperText>}
+      {errorPassword && <HelperText type="error" visible={true}>{errorPassword}</HelperText>}
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    width: 300,
+    height: 100
+  },
+});
 
 export default TextInputC;
