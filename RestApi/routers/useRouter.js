@@ -36,11 +36,12 @@ router.get('/doviztipi',async (req,res) =>{
         return res.status(400).json({message: error.message})
     }
 })
-router.get('/dovizsatis',async (req,res) =>{
+router.get('/dovizsatis/:tcno',async (req,res) =>{
     try{
-        const text = "SELECT * FROM doviz "
-
-        const {rows} = await postgresClient.query(text)
+        const { tcno } = req.params;
+        const text = "select h.doviztipiid,d.dovizadi from users u INNER JOIN usershesap h on u.userid = h.usersid INNER JOIN doviz d on d.doviztipiid = h.doviztipiid where tcno = $1"
+        const value = [tcno]
+        const {rows} = await postgresClient.query(text,value)
         return res.status(200).json(rows)
         
     } catch (error){
