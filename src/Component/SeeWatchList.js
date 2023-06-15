@@ -12,7 +12,7 @@ const SeeWatchList = ({ navigation }) => {
   const [exchangeRates, setExchangeRates] = useState({});
   const [selectedCurrencies, setSelectedCurrencies] = useState([]);
   const context = useContext(MyContext);
-  const { chechdoviz,updatesetChechdoviz,updatesetIslemtipi,updatesetsecilendovizAdi,   updatesetSecilenDoviz,secilenDoviz, updatesetalisSatisEuro,updatesetalisSatisSterlin,updatesetalisSatisddolar,updatesetalisSatisfrang,} = context;
+  const {updatesetErrorText,optiondoviz,chechdoviz,updatesetChechdoviz,updatesetIslemtipi,updatesetsecilendovizAdi,   updatesetSecilenDoviz,secilenDoviz, updatesetalisSatisEuro,updatesetalisSatisSterlin,updatesetalisSatisddolar,updatesetalisSatisfrang,} = context;
 
   const getSelectedCurrencies = async () => {
     try {
@@ -82,6 +82,16 @@ const SeeWatchList = ({ navigation }) => {
   
 
   const handleAlis = (currency) => {
+
+    const bulunanVeri = optiondoviz.find(veri => veri.dovizadi === currency);
+
+    if (bulunanVeri) {
+      console.log("Doviz Tipi ID:", bulunanVeri.doviztipiid);
+      updatesetErrorText("")
+    } else {
+      updatesetErrorText("Belirtilen döviz hesabı bulunamadı.");
+      return
+    }
     updatesetIslemtipi('Alım')
 
     if (currency === 'Amerikan Doları') {
@@ -126,6 +136,16 @@ const SeeWatchList = ({ navigation }) => {
   };
 
   const handleSatis = (currency) => {
+    const bulunanVeri = optiondoviz.find(veri => veri.dovizadi === currency);
+
+    if (bulunanVeri) {
+      console.log("Doviz Tipi ID:", bulunanVeri.doviztipiid);
+      updatesetErrorText("")
+    } else {
+      updatesetErrorText("Belirtilen döviz hesabı bulunamadı.");
+      return
+    }
+  
     updatesetIslemtipi('Satış')
     if (currency === 'Amerikan Doları') {
       console.log(currency)
