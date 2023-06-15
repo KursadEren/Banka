@@ -6,6 +6,7 @@ import ExpandableScreen from '../Component/ExpandableScreen';
 import MyFlatList from '../Component/FlatList';
 import Constants from 'expo-constants';
 import axios from 'axios';
+import ErrorBubble from '../Component/ErrorBuble';
 
 const HomeScreen = ({ navigation }) => {
   const context = useContext(MyContext);
@@ -79,7 +80,7 @@ const HomeScreen = ({ navigation }) => {
           <View style={styles.listItemContainer}>
           <MyFlatList OnChangeButton={OnChangeButton} navigation={navigation} />
         </View>
-        
+        <ErrorBubble/>
         <ExpandableScreen navigation={navigation} onExpand={handleExpand} onCollapse={handleCollapse} />
         
       </ScrollView>

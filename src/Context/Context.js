@@ -16,6 +16,7 @@ export const MyContextProvider = ({ children }) => {
   const [telno, setTelno] = useState('');
   const [dogumtarih, setDogumtarih] = useState('');
   const [cevirilecekdovizadi , setCevirilecekdovizadi] = useState('');
+  
 
   
 
