@@ -80,11 +80,14 @@ const Islem = ({ navigation }) => {
   useEffect(() => {
     const { manifest } = Constants;
     const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-
+    
+    
     axios
-      .get(`${apiAddress}/users/dovizsatis`)
+      .get(`${apiAddress}/users/dovizsatis/${tcno}`)
       .then((response) => {
         updatesetoptiondoviz(response.data);
+        console.log('response.data')
+        console.log(response.status)
       })
       .catch((error) => {
         console.error('API veri alınırken bir hata oluştu:', error);
@@ -465,10 +468,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 10,
     alignSelf: 'center',
+    position:"absolute"
   },
   errorText: {
     color: 'white',
     fontWeight: 'bold',
+    
   },
   container: {
     flexGrow: 1,
@@ -488,7 +493,7 @@ const styles = StyleSheet.create({
   formContainer: {
     width: '100%',
     alignItems: 'center',
-    marginVertical: '5%',
+    marginVertical: '3%',
   },
   comboboxContainer: {
     width: '80%',
@@ -501,7 +506,7 @@ const styles = StyleSheet.create({
     marginTop: '3%',
   },
   buttonContainer: {
-    marginTop: '15%',
+    marginTop: '5%',
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
