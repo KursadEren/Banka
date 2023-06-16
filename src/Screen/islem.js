@@ -422,6 +422,7 @@ const Islem = ({ navigation }) => {
   
 
   return (
+    <View style={{flex:1,backgroundColor:"rgb(218, 231, 237)"}}>
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.sureContainer}>
         <Text style={styles.sureText}>{sure}</Text>
@@ -458,6 +459,7 @@ const Islem = ({ navigation }) => {
       )}
       
     </ScrollView>
+    </View>
   );
 };
 
@@ -480,6 +482,7 @@ const styles = StyleSheet.create({
     marginTop: '35%',
     width: '100%',
     alignItems: 'center',
+    
   },
   sureContainer: {
     marginBottom: '5%',

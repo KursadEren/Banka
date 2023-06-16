@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { View, Text, Alert, BackHandler, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { View, Text, Alert, BackHandler, StyleSheet, Dimensions } from 'react-native';
 import AppBar from '../Component/AppBar';
 import { MyContext } from '../Context/Context';
 import ExpandableScreen from '../Component/ExpandableScreen';
@@ -10,7 +10,22 @@ import ErrorBubble from '../Component/ErrorBuble';
 
 const HomeScreen = ({ navigation }) => {
   const context = useContext(MyContext);
-  const { tcno, updateSayfa, updateUserinfo, userinfo } = context;
+  const { tcno, updateSayfa, updateUserinfo, updatesetoptiondoviz, userinfo } = context;
+  useEffect(() => {
+    const { manifest } = Constants;
+    const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+
+    axios
+      .get(`${apiAddress}/users/dovizsatis/${tcno}`)
+      .then((response) => {
+        updatesetoptiondoviz(response.data);
+        console.log('response.data');
+        console.log(response.status);
+      })
+      .catch((error) => {
+        console.error('API veri alınırken bir hata oluştu:', error);
+      });
+  }, []);
 
   useEffect(() => {
     const { manifest } = Constants;
@@ -52,6 +67,10 @@ const HomeScreen = ({ navigation }) => {
       updateSayfa('HesapEkle');
       navigation.navigate('HesapEkle');
     }
+    if (text === '-') {
+      updateSayfa('Ozet');
+      navigation.navigate('Ozet');
+    }
   };
 
   const handleExit = () => {
@@ -72,18 +91,16 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <AppBar navigation={navigation} />
-      <ScrollView contentContainerStyle={styles.contentContainer}>
-       
-          <View style={styles.headerContainer}>
-            <Text style={styles.headerText}> Hesaplarınız </Text>
-          </View>
-          <View style={styles.listItemContainer}>
+      <View style={styles.contentContainer}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerText}> Hesaplarınız </Text>
+        </View>
+        <View style={styles.listItemContainer}>
           <MyFlatList OnChangeButton={OnChangeButton} navigation={navigation} />
         </View>
-        <ErrorBubble/>
+        <ErrorBubble />
         <ExpandableScreen navigation={navigation} onExpand={handleExpand} onCollapse={handleCollapse} />
-        
-      </ScrollView>
+      </View>
     </View>
   );
 };
@@ -95,8 +112,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
-    flexGrow: 1,
-    
+    flex: 1,
   },
   listItemContainer: {
     marginTop: height * 0.01,
@@ -106,16 +122,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerContainer: {
-    backgroundColor: '#e2e2e2',
+    backgroundColor: 'rgb(218, 231, 237)',
     margin: 10,
     borderRadius: 10,
   },
   headerText: {
     fontSize: 20,
+    textAlign:"center"
   },
-  ExpanScreen:{
-    flex:1
-  }
+  ExpanScreen: {
+    flex: 1,
+  },
 });
 
 export default HomeScreen;

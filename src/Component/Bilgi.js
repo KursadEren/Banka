@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     alignSelf: 'center',
+    borderColor:"rgb(6, 70, 130)"
   },
   baslik: {
     textAlign: 'center',

@@ -368,7 +368,81 @@ router.post('/hesapekle', async (req, res) => {
       return res.status(400).json({ message: error.message })
     }
   })
+  /*select i.satilanparatutari,i.alinacakparatutari , i.tarih, i.alinanparatipi,i.satilanparatipi, i.satildigikur, i.alimsatim
+from users u
+INNER JOIN islem i on i.usersid = u.userid
+where tcno = '27337851310'
+*/
+router.get('/user-transactions', async (req, res) => {
+    const { tcno, page } = req.query;
+    const perPage = 10; // Sayfa başına gösterilecek veri sayısı
+    console.log('hello');
   
+    try {
+      // Toplam işlem sayısını al
+      const totalCountResult = await postgresClient.query(
+        `SELECT COUNT(*) as count
+        FROM users u
+        INNER JOIN islem i ON i.usersid = u.userid
+        WHERE u.tcno = $1`,
+        [tcno]
+      );
+      const totalCount = totalCountResult.rows[0].count;
+      const totalPages = Math.ceil(totalCount / perPage);
+      // Geçerli sayfa sınırlarını belirle
+      const startIndex = (page - 1) * perPage;
+      const endIndex = page * perPage;
+  
+      const userTransactionsResult = await postgresClient.query(
+        `SELECT d.dovizadi , i.satilanparatutari, i.alinacakparatutari, i.tarih, i.alinanparatipi, i.satilanparatipi, i.satildigikur, i.alimsatim
+        FROM users u
+        INNER JOIN islem i ON i.usersid = u.userid
+        INNER JOIN usershesap h on h.usersid = u.userid
+        INNER JOIN doviz d on h.doviztipiid = d.doviztipiid
+        WHERE u.tcno = $1
+        LIMIT $2 OFFSET $3`,
+        [tcno, perPage, startIndex]
+      );
+  
+      const userTransactions = userTransactionsResult.rows;
+  
+      res.json({
+        transactions: userTransactions,
+        totalPages: totalPages,
+        currentPage: page,
+      });
+    } catch (error) {
+      console.error('Sorgu sırasında bir hata oluştu:', error);
+      res.status(500).json({ error: 'Sunucu hatası' });
+    }
+  });
+  
+  
+  
+  
+  
+router.get('/ozetbilgi/:tcno', async (req,res) =>{
+    try {
+        const {tcno} = req.params
+        const text = "SELECT * FROM users u INNER JOIN usershesap h ON h.usersid = u.userid  INNER JOIN doviz d ON d.doviztipiid = h.doviztipiid  WHERE u.tcno = $1    "
+        const values = [tcno]
+        const {rows} = await postgresClient.query(text,values)
+        console.log(rows)
+        if(!rows.length)
+        {
+            
+
+            return res.status(404).json()
+        }
+        return res.status(200).json({rows})
+    } catch (error) {
+        console.log('error occured', error.message)
+        return res.status(400).json({message:error.message})
+    }
+
+    //
+    
+})
 
 
 export default router;

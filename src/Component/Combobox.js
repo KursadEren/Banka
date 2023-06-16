@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
     marginBottom:'5%',
     alignItems: 'center',
     justifyContent: 'center',
+    borderColor:"rgb(6, 70, 130)"
   },
   label: {
     fontSize: 18,

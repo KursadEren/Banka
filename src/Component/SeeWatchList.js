@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import axios from 'axios';
 import Constants from 'expo-constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -137,7 +137,7 @@ const SeeWatchList = ({ navigation }) => {
 
   const handleSatis = (currency) => {
     const bulunanVeri = optiondoviz.find(veri => veri.dovizadi === currency);
-
+      
     if (bulunanVeri) {
       console.log("Doviz Tipi ID:", bulunanVeri.doviztipiid);
       updatesetErrorText("")
@@ -193,7 +193,7 @@ const SeeWatchList = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.headerRow}>
         <Text style={styles.headerCell}>Döviz</Text>
         <Text style={styles.headerCell}>Alış</Text>
@@ -243,7 +243,7 @@ const SeeWatchList = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 };
 
@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'left',
     marginLeft: width * 0.06,
-    marginVertical: width * 0.02,
+    marginVertical: width * 0.03,
     fontSize: width * 0.04,
   },
   cell: {

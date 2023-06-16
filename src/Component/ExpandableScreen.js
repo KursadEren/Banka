@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, Dimensions, Animated, PanResponder, TouchableOpacity, ScrollView } from 'react-native';
 import SeeWatchList from './SeeWatchList';
+import Ozet from './OzetComponent';
 
-
-const ExpandableScreen = ({ onExpand, onCollapse,navigation }) => {
+const ExpandableScreen = ({ onExpand, onCollapse, navigation }) => {
   const [expanded, setExpanded] = useState(false);
   const animation = useRef(new Animated.Value(expanded ? 1 : 0)).current;
   const screenHeight = Dimensions.get('window').height;
@@ -65,14 +65,15 @@ const ExpandableScreen = ({ onExpand, onCollapse,navigation }) => {
           <View style={styles.line} {...panResponder.panHandlers} />
         </TouchableOpacity>
       </View>
-      
-        <View style={styles.expandedContent}>
-        <ScrollView style={{flex:1,width:"100%"}}>
-           <SeeWatchList navigation={navigation}/>
-       
-            </ScrollView>
+
+      <View style={styles.expandedContent}>
+        <View style={{ height: expanded ? '50%' : '100%', width: '100%' }}>
+          <SeeWatchList navigation={navigation} />
         </View>
-      
+        <View style={{ height: expanded ? '50%' : 0, width: '100%', backgroundColor: 'red' }}>
+          <Ozet />
+        </View>
+      </View>
     </Animated.View>
   );
 };
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
   },
   line: {
     width: 200,
-    borderRadius:20,
+    borderRadius: 20,
     height: 15,
     backgroundColor: 'rgb(6, 70, 130)',
   },
@@ -104,9 +105,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor:"#e2e2e2",
-    width:"100%"
-   
+    backgroundColor: 'rgb(218, 231, 237)',
+    width: '100%',
   },
   expandedText: {
     fontSize: 18,
