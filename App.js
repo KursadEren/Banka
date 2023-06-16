@@ -8,6 +8,7 @@ import { PaperProvider } from 'react-native-paper';
 import DraverNavigator from './src/Component/DraverNavigator';
 import HesapEkle from './src/Screen/HesapEkle';
 import Islem from './src/Screen/islem';
+import Ozet from './src/Component/OzetComponent';
 
 const Stack = createNativeStackNavigator();
 const BetweenNavigator = () =>{
@@ -45,6 +46,8 @@ const BetweenNavigator = () =>{
         <Stack.Screen name="DraverNavigator" component={DraverNavigator} />
         <Stack.Screen name="HesapEkle" component={HesapEkle} />
         <Stack.Screen name="islem" component={Islem} />
+        <Stack.Screen name="Ozet" component={Ozet} />
+
 
       </Stack.Navigator>
       

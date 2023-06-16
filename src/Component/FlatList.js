@@ -82,7 +82,7 @@ const MyFlatList = ({navigation,OnChangeButton}) => {
       <View style={styles.pagination}>
       <View style={{marginRight:"20%"}}>
         <Text>Hesap Sil</Text>
-         <Buttonx label="-" navigation={navigation}/> 
+         <Buttonx label="-" OnChangeButton={OnChangeButton} navigation={navigation}/> 
          </View>
         {userInfo.map((_, index) => (
           <View
