@@ -67,12 +67,10 @@ const ExpandableScreen = ({ onExpand, onCollapse, navigation }) => {
       </View>
 
       <View style={styles.expandedContent}>
-        <View style={{ height: expanded ? '50%' : '100%', width: '100%' }}>
+        <View style={{ height: expanded ? '100%' : '100%', width: '100%' }}>
           <SeeWatchList navigation={navigation} />
         </View>
-        <View style={{ height: expanded ? '50%' : 0, width: '100%', backgroundColor: 'red' }}>
-          <Ozet />
-        </View>
+       
       </View>
     </Animated.View>
   );

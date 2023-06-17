@@ -257,7 +257,7 @@ values($1,$2,$3,$4,$5,$6,$7)*/
 
 router.post('/dovizozet', async (req,res) =>{
     try {
-       
+      console.log(typeof req.body.chechdoviz,typeof req.body.chechdoviz2)
         const text = "insert into islem \
         (satilanparatutari,alinacakparatutari,tarih,usersid,alinanparatipi,satilanparatipi,satildigikur, alimsatim) \
         values($1,$2,$3,$4,$5,$6,$7,$8)"
@@ -321,7 +321,7 @@ router.post('/hesapekle', async (req, res) => {
         const result = await postgresClient.query( Text1 , values)
         
         if (result.rows.length <=0) {
-            console.log(typeof req.body.dolarmiktar,typeof req.body.userid,typeof req.body.chechdoviz2)
+           
           return res.status(404).json({ message:  "Kaynak bulunamadı" })
         }
         
@@ -374,50 +374,62 @@ INNER JOIN islem i on i.usersid = u.userid
 where tcno = '27337851310'
 */
 router.get('/user-transactions', async (req, res) => {
-    const { tcno, page } = req.query;
-    const perPage = 10; // Sayfa başına gösterilecek veri sayısı
-    console.log('hello');
-  
-    try {
-      // Toplam işlem sayısını al
-      const totalCountResult = await postgresClient.query(
-        `SELECT COUNT(*) as count
-        FROM users u
-        INNER JOIN islem i ON i.usersid = u.userid
-        WHERE u.tcno = $1`,
-        [tcno]
-      );
-      const totalCount = totalCountResult.rows[0].count;
-      const totalPages = Math.ceil(totalCount / perPage);
-      // Geçerli sayfa sınırlarını belirle
-      const startIndex = (page - 1) * perPage;
-      const endIndex = page * perPage;
-  
-      const userTransactionsResult = await postgresClient.query(
-        `SELECT d.dovizadi , i.satilanparatutari, i.alinacakparatutari, i.tarih, i.alinanparatipi, i.satilanparatipi, i.satildigikur, i.alimsatim
-        FROM users u
-        INNER JOIN islem i ON i.usersid = u.userid
-        INNER JOIN usershesap h on h.usersid = u.userid
-        INNER JOIN doviz d on h.doviztipiid = d.doviztipiid
-        WHERE u.tcno = $1
-        LIMIT $2 OFFSET $3`,
-        [tcno, perPage, startIndex]
-      );
-  
-      const userTransactions = userTransactionsResult.rows;
-  
-      res.json({
-        transactions: userTransactions,
-        totalPages: totalPages,
-        currentPage: page,
-      });
-    } catch (error) {
-      console.error('Sorgu sırasında bir hata oluştu:', error);
-      res.status(500).json({ error: 'Sunucu hatası' });
-    }
-  });
-  
-  
+  const { tcno, page, sort } = req.query;
+  const perPage = 10; // Sayfa başına gösterilecek veri sayısı
+
+  try {
+    // Toplam işlem sayısını al
+    const totalCountResult = await postgresClient.query(
+      `SELECT COUNT(*) as count
+      FROM users u
+      INNER JOIN islem i ON i.usersid = u.userid
+      WHERE u.tcno = $1`,
+      [tcno]
+    );
+    const totalCount = totalCountResult.rows[0].count;
+    const totalPages = Math.ceil(totalCount / perPage);
+
+    // Geçerli sayfa sınırlarını belirle
+    const startIndex = (page - 1) * perPage;
+    const endIndex = page * perPage;
+
+         let query = `SELECT
+         i.satilanparatutari,
+         i.alinacakparatutari,
+         i.tarih,
+         i.alinanparatipi,
+         i.satilanparatipi,
+         i.satildigikur,
+         (SELECT dovizadi FROM doviz WHERE doviztipiid = i.alinanparatipi::integer) AS alinanparatipi_adi,
+         (SELECT dovizadi FROM doviz WHERE doviztipiid = i.satilanparatipi::integer) AS satilanparatipi_adi
+       FROM
+         users u
+         INNER JOIN islem i ON i.usersid = u.userid
+         INNER JOIN usershesap h ON h.usersid = u.userid
+         INNER JOIN doviz d ON h.doviztipiid = d.doviztipiid
+       WHERE
+         u.tcno = $1
+       ORDER BY
+         i.tarih ${sort === 'descending' ? 'DESC' : 'ASC'}
+       LIMIT
+         $2 OFFSET $3`;
+
+    const userTransactionsResult = await postgresClient.query(query, [tcno, perPage, startIndex]);
+
+    const userTransactions = userTransactionsResult.rows;
+
+    res.json({
+      transactions: userTransactions,
+      totalPages: totalPages,
+      currentPage: page,
+    });
+  } catch (error) {
+    console.error('Sorgu sırasında bir hata oluştu:', error);
+    res.status(500).json({ error: 'Sunucu hatası' });
+  }
+});
+
+
   
   
   
