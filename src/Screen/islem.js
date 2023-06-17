@@ -285,9 +285,9 @@ const Islem = ({ navigation }) => {
                 
                 
                        // para çekilecek hesap için  
-                       
+                     
                     axios
-                     .post(`${apiAddress}/users/hesapcikart`, {dolarmiktar,userid,chechdoviz2})
+                     .post(`${apiAddress}/users/hesapcikart`, {hesaplananpara,userid,chechdoviz2})
                      .then((response) => {
                        
                        if (response.status === 200) {
@@ -330,6 +330,11 @@ const Islem = ({ navigation }) => {
             
 
         }
+
+
+
+
+        
         else if(islemtipi=== 'Satış')
         {
           
@@ -343,9 +348,9 @@ const Islem = ({ navigation }) => {
           const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
 
 
-               
+               // chechdoviz2   usd tl 1  hesaplanapara  satış 
           axios
-           .post(`${apiAddress}/users/hesapekle`, {dolarmiktar: parseFloat(dolarmiktar),userid,chechdoviz})
+           .post(`${apiAddress}/users/hesapekleSatis`, {hesaplananpara,userid,chechdoviz2})
            .then((response) => {
              
              if (response.status === 200) {
@@ -365,15 +370,12 @@ const Islem = ({ navigation }) => {
  
           // sayfada seçilene para aktar 
        
-          console.log ('hesapcikart')
-          console.log (chechdoviz2)
-          console.log (userid)   
-          console.log (dolarmiktar)       // satış işlemleri
+                // satış işlemleri
 
             // seçilen hesaptan para eksilt
-            
+             // chechdoviz   usd tl 1  dolarmiktar  satış 
             axios
-            .post(`${apiAddress}/users/hesapcikart`, {dolarmiktar: parseFloat(dolarmiktar),userid,chechdoviz2})
+            .post(`${apiAddress}/users/hesapcikartSatis`, {dolarmiktar: parseFloat(dolarmiktar),userid,chechdoviz})
             .then((response) => {
               
               if (response.status === 200) {
