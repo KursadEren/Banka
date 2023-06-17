@@ -68,8 +68,8 @@ const HomeScreen = ({ navigation }) => {
       navigation.navigate('HesapEkle');
     }
     if (text === '-') {
-      updateSayfa('Ozet');
-      navigation.navigate('Ozet');
+      updateSayfa('OzetSayfasi');
+      navigation.navigate('OzetSayfasi');
     }
   };
 

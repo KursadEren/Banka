@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, FlatList, Text, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, FlatList, Text, StyleSheet, ActivityIndicator, TouchableOpacity, RefreshControl } from 'react-native';
 import axios from 'axios';
 import { MyContext } from '../Context/Context';
 import Constants from 'expo-constants';
@@ -12,10 +12,11 @@ const Ozet = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-
   const [visible, setVisible] = useState(false);
+  const [sortOrder, setSortOrder] = useState('ascending'); // Sıralama yöntemi, varsayılan olarak artan (ascending)
+  const [refreshing, setRefreshing] = useState(false); // Yenileme durumu
 
-  const getUserTransactions = async (tcno, page) => {
+  const getUserTransactions = async (tcno, page, sort) => {
     const { manifest } = Constants;
     const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
     try {
@@ -23,15 +24,14 @@ const Ozet = () => {
         params: {
           tcno: tcno,
           page: page,
+          sort: sort, // Sıralama yöntemini isteğe bağlı olarak gönder
         },
       });
 
-      // Yanıttan verileri al
       const { data } = response;
       const { transactions: newTransactions, totalPages: newTotalPages } = data;
 
-      // Alınan verileri mevcut verilere ekle
-      setTransactions((prevTransactions) => [...prevTransactions, ...newTransactions]);
+      setTransactions((prevTransactions) => [...newTransactions, ...prevTransactions]); // Verilerin başına ekleme yaparak yeni verileri en üstte göster
       setTotalPages(newTotalPages);
       setIsLoading(false);
     } catch (error) {
@@ -41,25 +41,29 @@ const Ozet = () => {
   };
 
   useEffect(() => {
-    // İlk veri yükleme işlemi
-    getUserTransactions(tcno, currentPage);
+    getUserTransactions(tcno, currentPage, sortOrder); // İlk yükleme işlemi
   }, []);
 
   const handleLoadMore = () => {
     if (currentPage < totalPages) {
       const nextPage = currentPage + 1;
-      getUserTransactions(tcno, nextPage);
+      getUserTransactions(tcno, nextPage, sortOrder); // Yeni sayfayı yükle
       setCurrentPage(nextPage);
     }
   };
 
   const renderTransactionItem = ({ item, index }) => {
+    const tarih = new Date(item.tarih);
+    const day = tarih.getDate();
+    const month = tarih.getMonth() + 1;
+    const year = tarih.getFullYear();
+    const formattedTarih = `${day}/${month}/${year} `;
+
     return (
       <View style={styles.transactionItem}>
-        <Text style={styles.transactionText}> {item.tarih}</Text>
-        <Text style={styles.transactionText}> -{item.satilanparatutari} {item.satilanparatipi} </Text>
+        <Text style={styles.transactionText}>{formattedTarih}</Text>
+        <Text style={styles.transactionText}> -{item.satilanparatutari}  </Text>
         <Text style={styles.transactionText}>{item.alinacakparatutari}</Text>
-        {/* Diğer bilgileri de göster */}
       </View>
     );
   };
@@ -74,31 +78,61 @@ const Ozet = () => {
     );
   };
 
-  const toggleVisibility = () => {
-    setVisible((prevVisible) => !prevVisible);
+  const toggleVisibility = async () => {
+    if (!visible) {
+      setCurrentPage(1);
+      setTransactions([]);
+      await getUserTransactions(tcno, 1, sortOrder);
+    }
+    setVisible(!visible);
+  };
+
+  const toggleSortOrder = async () => {
+    const newSortOrder = sortOrder === 'ascending' ? 'descending' : 'ascending';
+    setSortOrder(newSortOrder);
+    setCurrentPage(1);
+    setTransactions([]);
+    setIsLoading(true);
+    await getUserTransactions(tcno, 1, newSortOrder);
+  };
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await getUserTransactions(tcno, 1, sortOrder);
+    setRefreshing(false);
   };
 
   return (
     <View style={styles.container}>
-      <View>
       <TouchableOpacity onPress={toggleVisibility}>
-        <View style={[styles.card, { flex: visible ? 1 : 0 }]}>
-          <Text style={{fontSize:20,textAlign:'center'}}>Son İşlemler</Text>
-          <Text style={{fontSize:20,textAlign:'center'}}>+</Text>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Son İşlemler</Text>
+          <Text style={styles.headerIcon}>{visible ? '-' : '+'}</Text>
         </View>
       </TouchableOpacity>
-      </View>
 
       {visible && (
-        
-        <FlatList
-          data={transactions}
-          renderItem={renderTransactionItem}
-          keyExtractor={(item, index) => index.toString()}
-          onEndReached={handleLoadMore}
-          onEndReachedThreshold={0.5}
-          ListFooterComponent={renderFooter}
-        />
+        <View>
+          <TouchableOpacity onPress={toggleSortOrder} style={styles.sortButton}>
+            <Text style={styles.sortButtonText}>
+              Sıralama: {sortOrder === 'ascending' ? 'Artan' : 'Azalan'}
+            </Text>
+          </TouchableOpacity>
+          <FlatList
+            data={transactions}
+            renderItem={renderTransactionItem}
+            keyExtractor={(item, index) => index.toString()}
+            onEndReached={handleLoadMore}
+            onEndReachedThreshold={0.5}
+            ListFooterComponent={renderFooter}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={handleRefresh}
+              />
+            }
+          />
+        </View>
       )}
     </View>
   );
@@ -110,13 +144,23 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(218, 231, 237)',
     padding: 16,
   },
-  card: {
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     backgroundColor: '#FFFFFF',
     borderRadius: 8,
     marginVertical: 8,
+    padding: 16,
     elevation: 2,
-    
-    
+  },
+  headerText: {
+    fontSize: 20,
+    textAlign: 'center',
+  },
+  headerIcon: {
+    fontSize: 24,
+    fontWeight: 'bold',
   },
   transactionItem: {
     backgroundColor: '#FFFFFF',
@@ -132,6 +176,15 @@ const styles = StyleSheet.create({
   footerContainer: {
     alignItems: 'center',
     marginTop: 16,
+  },
+  sortButton: {
+    alignSelf: 'flex-end',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+  },
+  sortButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

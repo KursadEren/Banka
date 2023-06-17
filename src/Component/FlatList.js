@@ -84,11 +84,13 @@ const MyFlatList = ({navigation,OnChangeButton}) => {
         <Text>Hesap Sil</Text>
          <Buttonx label="-" OnChangeButton={OnChangeButton} navigation={navigation}/> 
          </View>
+         
         {userInfo.map((_, index) => (
           <View
             key={index}
             style={[styles.paginationDot, index === currentIndex && styles.paginationDotActive]}
           />
+          
         ))}
         <View style={{marginLeft:"20%"}}>
         <Text>Hesap Ekle</Text>
