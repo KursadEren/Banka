@@ -173,6 +173,7 @@ const HesapEkle = ({ navigation }) => {
     switch (step) {
       case 1:
         return (
+          <View style={styles.container}>
           <View style={styles.stepContainer}>
             <Text style={styles.stepText}>Doviz Tipini Seçin:</Text>
             <ComboBox   label="doviztipi"/>
@@ -184,9 +185,11 @@ const HesapEkle = ({ navigation }) => {
               <Buttonx label="Devam Et"  OnChangeButton={OnChangeButton} onPress={handleNextStep} />
             </View>
           </View>
+          </View>
         );
       case 2:
         return (
+          <View style={styles.container}>
           <View style={styles.stepContainer}>
             <Text style={styles.stepText}>TC numaranız:</Text>
             <TextInputC label="TC No"  style={styles.input} />
@@ -195,7 +198,9 @@ const HesapEkle = ({ navigation }) => {
             <View style={styles.buttonContainer}>
               <Buttonx  label="Geri" OnChangeButton={OnChangeButton}  onPress={handlePrevStep} />
               <Buttonx label="Hesap Ekle" OnChangeButton={OnChangeButton} navigation={navigation}/>
+              <Buttonx label="Hesap Ekle" OnChangeButton={OnChangeButton} navigation={navigation}/>
             </View>
+          </View>
           </View>
         );
      
@@ -212,11 +217,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor:'rgb(218, 231, 237)'
   },
   stepContainer: {
     flex: 1,
     width: Dimensions.get('window').width * 0.8,
     justifyContent: 'center',
+    
   },
   stepText: {
     fontSize: 16,

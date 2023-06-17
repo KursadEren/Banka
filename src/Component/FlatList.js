@@ -80,10 +80,9 @@ const MyFlatList = ({navigation,OnChangeButton}) => {
       />
       
       <View style={styles.pagination}>
-      <View style={{marginRight:"20%"}}>
-        <Text>Hesap Sil</Text>
-         <Buttonx label="-" OnChangeButton={OnChangeButton} navigation={navigation}/> 
-         </View>
+      
+        
+        
          
         {userInfo.map((_, index) => (
           <View
@@ -92,11 +91,25 @@ const MyFlatList = ({navigation,OnChangeButton}) => {
           />
           
         ))}
-        <View style={{marginLeft:"20%"}}>
+        
+       
+      </View>
+      <View style={styles.pagination}>
+      <View style={{marginHorizontal:10}}>
+        <Text>Hesap Düzenle</Text>
+         <Buttonx label="-" OnChangeButton={OnChangeButton} navigation={navigation}/>
+       </View>
+       <View style={{marginHorizontal:10}}>
         <Text>Hesap Ekle</Text>
          <Buttonx label="+" OnChangeButton={OnChangeButton} navigation={navigation}/>
          </View>
-      </View>
+         <View  style={{marginHorizontal:10}}>
+        <Text>Son İşlemler</Text>
+         <Buttonx label="islemler" OnChangeButton={OnChangeButton} navigation={navigation}/>
+       </View>
+         </View>
+        
+     
     </View>
   );
 };
@@ -142,6 +155,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: 10,
+    alignItems:"center",
+
   },
   paginationDot: {
     width: 8,
