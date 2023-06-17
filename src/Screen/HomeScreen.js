@@ -68,6 +68,10 @@ const HomeScreen = ({ navigation }) => {
       navigation.navigate('HesapEkle');
     }
     if (text === '-') {
+      updateSayfa('Hesapduzenle');
+      navigation.navigate('Hesapduzenle');
+    }
+    if (text === 'islemler') {
       updateSayfa('OzetSayfasi');
       navigation.navigate('OzetSayfasi');
     }

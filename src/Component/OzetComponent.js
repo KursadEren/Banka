@@ -30,7 +30,7 @@ const Ozet = () => {
 
       const { data } = response;
       const { transactions: newTransactions, totalPages: newTotalPages } = data;
-
+      
       setTransactions((prevTransactions) => [...newTransactions, ...prevTransactions]); // Verilerin başına ekleme yaparak yeni verileri en üstte göster
       setTotalPages(newTotalPages);
       setIsLoading(false);

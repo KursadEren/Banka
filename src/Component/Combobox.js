@@ -53,7 +53,7 @@ const ComboBox = ({label, navigation,onChangeBox }) => {
   if(label === "doviztipi")
   {
     content = (<View style={styles.container}>
-      <Text style={styles.label}>Seçenekleri Seçin:</Text>
+      <Text style={styles.label}>Doviz Tipi</Text>
       <View style={styles.pickerContainer}>
         <Picker
           selectedValue={selectedOptiondoviz}
@@ -69,7 +69,7 @@ const ComboBox = ({label, navigation,onChangeBox }) => {
       )
   } else if (label === "HesapTUR" ){
     content = (<View style={styles.container}>
-    <Text style={styles.label}>Seçenekleri Seçin:</Text>
+    <Text style={styles.label}>Hesap Tür</Text>
     <View style={styles.pickerContainer}>
       <Picker
         selectedValue={selectedOptionhesap}
@@ -89,7 +89,7 @@ const ComboBox = ({label, navigation,onChangeBox }) => {
    
       content = (
         <View style={styles.container}>
-          <Text style={styles.label}>Seçenekleri Seçin:</Text>
+          <Text style={styles.label}>Şubeler</Text>
           <View style={styles.pickerContainer}>
             <Picker
               selectedValue={selectedOptionsube} // selectedOption3 doğru şekilde ayarlandı
@@ -103,7 +103,7 @@ const ComboBox = ({label, navigation,onChangeBox }) => {
       </View>
     </View>
     )
-  }else if(label === "doviztipisatis")
+  }else if(label === "doviztipicheck")
   {
     content = (<View style={styles.container}>
       <Text style={styles.label}>Seçenekleri Seçin:</Text>

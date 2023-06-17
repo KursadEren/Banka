@@ -36,6 +36,21 @@ router.get('/doviztipi',async (req,res) =>{
         return res.status(400).json({message: error.message})
     }
 })
+
+router.get('/doviztipiF',async (req,res) =>{
+  try{
+      const text = "SELECT * from doviz "
+      
+      
+      const {rows} = await postgresClient.query(text)
+      return res.status(200).json(rows)
+      
+  } catch (error){
+      console.log('error occured', error.message)
+      return res.status(400).json({message: error.message})
+  }
+})
+
 router.get('/dovizsatis/:tcno',async (req,res) =>{
     try{
         const { tcno } = req.params;
@@ -258,9 +273,19 @@ values($1,$2,$3,$4,$5,$6,$7)*/
 router.post('/dovizozet', async (req,res) =>{
     try {
       console.log(typeof req.body.chechdoviz,typeof req.body.chechdoviz2)
-        const text = "insert into islem \
-        (satilanparatutari,alinacakparatutari,tarih,usersid,alinanparatipi,satilanparatipi,satildigikur, alimsatim) \
-        values($1,$2,$3,$4,$5,$6,$7,$8)"
+        const text = `INSERT INTO islem
+        (satilanparatutari, alinacakparatutari, tarih, usersid, alinanparatipi, satilanparatipi, satildigikur, alimsatim)
+      VALUES
+        (
+          COALESCE(NULLIF($1, ''), NULL),
+          COALESCE(NULLIF($2, ''), NULL),
+          $3,
+          $4,
+          COALESCE(NULLIF($5, ''), NULL),
+          COALESCE(NULLIF($6, ''), NULL),
+          COALESCE(NULLIF($7, ''), NULL),
+          COALESCE(NULLIF($8, ''), NULL)
+        )`
         const values = [req.body.dolarmiktar,req.body.hesaplananpara,req.body.tarih,req.body.userid,req.body.chechdoviz,req.body.chechdoviz2,req.body.secilenDoviz,req.body.islemtipi]
         const {rows} = await postgresClient.query(text,values)
         console.log(rows)
@@ -278,9 +303,33 @@ router.post('/dovizozet', async (req,res) =>{
 //
 //;//hesapcikart
 
-
-
-
+// hesap silme
+/*
+/
+*/
+router.post('/silme', async (req,res) =>{
+  try {
+    console.log(typeof req.body.tcno,typeof req.body.chechdoviz)
+      const text = `DELETE FROM usershesap
+      WHERE usersid = (
+        SELECT userid
+        FROM users
+        WHERE tcno = $1
+      )
+        AND doviztipiid = $2
+        AND hesapbakiye = 0;
+      `
+      const values = []
+      const {rows} = await postgresClient.query(text,values)
+      console.log(rows)
+      
+      
+      return res.status(200).json({ message:'silme işlemi başarılı'})
+  } catch (error) {
+     
+      return res.status(400).json({message:error.message})
+  }
+})
 
 
 
@@ -393,7 +442,7 @@ router.get('/user-transactions', async (req, res) => {
     const startIndex = (page - 1) * perPage;
     const endIndex = page * perPage;
 
-         let query = `SELECT
+         let query = `SELECT DISTINCT
          i.satilanparatutari,
          i.alinacakparatutari,
          i.tarih,
@@ -409,10 +458,13 @@ router.get('/user-transactions', async (req, res) => {
          INNER JOIN doviz d ON h.doviztipiid = d.doviztipiid
        WHERE
          u.tcno = $1
+         AND i.satilanparatipi != '0'
        ORDER BY
          i.tarih ${sort === 'descending' ? 'DESC' : 'ASC'}
        LIMIT
-         $2 OFFSET $3`;
+         $2 OFFSET $3
+       
+       `;
 
     const userTransactionsResult = await postgresClient.query(query, [tcno, perPage, startIndex]);
 
@@ -452,7 +504,7 @@ router.get('/ozetbilgi/:tcno', async (req,res) =>{
         return res.status(400).json({message:error.message})
     }
 
-    //
+   
     
 })
 

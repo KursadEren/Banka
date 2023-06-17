@@ -9,7 +9,7 @@ import DraverNavigator from './src/Component/DraverNavigator';
 import HesapEkle from './src/Screen/HesapEkle';
 import Islem from './src/Screen/islem';
 import OzetSayfasi from './src/Screen/OzetSayfası';
-
+import Hesapduzenle from './src/Screen/Hesapduzenle';
 const Stack = createNativeStackNavigator();
 const BetweenNavigator = () =>{
  
@@ -47,6 +47,7 @@ const BetweenNavigator = () =>{
         <Stack.Screen name="HesapEkle" component={HesapEkle} />
         <Stack.Screen name="islem" component={Islem} />
         <Stack.Screen name="OzetSayfasi" component={OzetSayfasi} />
+        <Stack.Screen name="Hesapduzenle" component={Hesapduzenle} />
         
 
 

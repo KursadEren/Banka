@@ -66,10 +66,27 @@ const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
                color="rgb(6, 70, 130)"
             />
           </TouchableOpacity>
-      ): (
+      ): label ==='islemler'? (
+        <TouchableOpacity  onPress={() => HandleButton(label)}>
+       
+            <Ionicons
+               name="hourglass"
+               size={40}
+               color="rgb(6, 70, 130)"
+            />
+          </TouchableOpacity>
+         ):label ==='Hesap Sil'?(
+         <Button icon="send" mode="contained"  onPress={() => HandleButton(label)} style={styles.button}>
+             {label}
+           </Button>
+           ):label ==='Hesap Sil'? (
+              <Button icon="send" mode="contained"  onPress={() => HandleButton(label)} style={styles.button}>
+               {label}
+             </Button>
+          ): (
         <Button icon="send" mode="contained"  onPress={() => HandleButton(label)} style={styles.button}>
         {label}
-      </Button>
+         </Button>
       )}
     </View>
   );
