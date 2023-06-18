@@ -89,29 +89,45 @@ const SignIn = ({ navigation }) => {
             .post(`${apiAddress}/users/login`, { tcno, password })
             .then((response) => {
               if (response.status === 200) {
-                navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
-              } else {
-                // İstek başarısız oldu, hata mesajını gösterin
-                console.error(response.data.message);
-              }
-            })
-            .catch((error) => {
                 
-              
-              Alert.alert(`${t('Error')}`,  `${t('Error10')}`
-              );  // kayıt kısmınada eklemen gerek 
-            });
-       
-    } else if (text === 'Sign Up') {
-      navigation.navigate('Sign Up');
-    } else {
-      Alert.alert('hata');
-    }
-  };
-  const handeldeneme = (text) =>{
-    updatsetLanguage(text)
-    i18n.changeLanguage(text)
-  }
+        axios
+          .get(`${apiAddress}/users/hesap/${tcno}`)
+          .then((response) => {
+            if (response.status === 200) {
+              updateUserinfo(response.data);
+              console.log(response.data)
+              updatsetsetuserid(userinfo[0].userid)
+            } else {
+              console.error(response.data.message);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+    
+                    navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
+                  } else {
+                    
+                    console.error(response.data.message);
+                  }
+                })
+                .catch((error) => {
+                    
+                  
+                  Alert.alert(`${t('Error')}`,  `${t('Error10')}`
+                  );  // kayıt kısmınada eklemen gerek 
+                });
+           
+        } else if (text === 'Sign Up') {
+          navigation.navigate('Sign Up');
+        } else {
+          Alert.alert('hata');
+        }
+      };
+      const handeldeneme = (text) =>{
+        updatsetLanguage(text)
+        i18n.changeLanguage(text)
+      }
  
   return (
     <View style={{ flex: 1, backgroundColor: 'rgb(218, 231, 237)' }}>

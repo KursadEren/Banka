@@ -18,13 +18,13 @@ const HesapEkle = ({ navigation }) => {
   }
  
   const context = useContext(MyContext);
-  const {selectedIBAN,userinfo,tcno,password,updateTcno,updatePassword,selectedOptiondoviz,  selectedOptionhesap, selectedOptionsube, sayfa, updateSayfa,updateSelectedIBAN,updatesetOptions,updatesetOptions2,updatesetOptions3 } = context;
+  const {selectedIBAN,usersid,userinfo,tcno,password,updateTcno,updatePassword,selectedOptiondoviz,  selectedOptionhesap, selectedOptionsube, sayfa, updateSayfa,updateSelectedIBAN,updatesetOptions,updatesetOptions2,updatesetOptions3 } = context;
  
   
   
 
   useEffect(() => {
-
+      console.log(usersid)
     const backAction = () => {
       updateSayfa("HomeScreen");
       navigation.navigate('HomeScreen');
@@ -47,7 +47,7 @@ const HesapEkle = ({ navigation }) => {
   
   //                                                              bu kısımda check boxları kontrol et
 
-  const OnChangeButton = (text) =>{
+  const OnChangeButton = async (text) =>{
       if(text === `${t('AddAccount')}`)
       {
         const { manifest } = Constants;
@@ -60,7 +60,7 @@ const HesapEkle = ({ navigation }) => {
             if (response.status === 200) {
               const hesapbakiye = "0";
               console.log(hesapbakiye);
-              const usersid = userinfo[0].userid;
+              
               
               console.log(usersid,
                 selectedOptionhesap,
@@ -133,7 +133,7 @@ const HesapEkle = ({ navigation }) => {
     const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
 
     axios
-      .get(`${apiAddress}/users/doviztipi`)
+      .get(`${apiAddress}/users/doviztipi/${tcno}`)
       .then((response) => {
         // API'den alınan verileri options state'ine ata
         updatesetOptions(response.data);

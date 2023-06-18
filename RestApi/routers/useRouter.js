@@ -20,15 +20,18 @@ router.get('/',async (req,res) =>{
     }
 })
 // doviz Combobx veri
-router.get('/doviztipi',async (req,res) =>{
+router.get('/doviztipi/:tcno',async (req,res) =>{
     try{
-        const text = "SELECT d.dovizadi,d.doviztipiid \
-        FROM doviz d\
-        LEFT JOIN usershesap h ON d.doviztipiid = h.doviztipiid\
-        WHERE h.usersid IS NULL\
-        "
+        const { tcno } = req.params;
+        const text = `SELECT d.dovizadi, d.doviztipiid
+        FROM doviz d
+        LEFT JOIN usershesap h ON d.doviztipiid = h.doviztipiid
+        WHERE h.usersid IS NULL AND h.tcno = $1`
+        const value = [tcno]
+       
+   
         
-        const {rows} = await postgresClient.query(text)
+        const {rows} = await postgresClient.query(text,value)
         return res.status(200).json(rows)
         
     } catch (error){
@@ -59,6 +62,7 @@ router.get('/dovizsatis/:tcno',async (req,res) =>{
         const { tcno } = req.params;
         const text = "select h.doviztipiid,d.dovizadi from users u INNER JOIN usershesap h on u.userid = h.usersid INNER JOIN doviz d on d.doviztipiid = h.doviztipiid where tcno = $1"
         const value = [tcno]
+        
         const {rows} = await postgresClient.query(text,value)
         return res.status(200).json(rows)
         
