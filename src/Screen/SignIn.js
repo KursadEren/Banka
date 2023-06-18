@@ -53,12 +53,12 @@ const SignIn = ({ navigation }) => {
 
         
       } else {
-        setError('Boş bırakamazsınız');
+        setError(`${t('Error6')}`);
         return;
       }
       
       if (!/^\d+$/.test(tcno)) {
-        setError('Sadece sayı giriniz');
+        setError(`${t('Error7')}`);
         return; // Exit the function if password validation fails
       }
 
@@ -66,19 +66,19 @@ const SignIn = ({ navigation }) => {
         setError('');
 
       } else {
-        setError('11 haneli olmalıdır');
+        setError(`${t('Error8')}`);
         return;
       }
       if (password !== '') {
         setErrorPassword('');
 
       } else {
-        setErrorPassword('Boş bırakamazsınız');
+        setErrorPassword(`${t('Error6')}`);
         return;
       }
 
       if (!/^\d+$/.test(password)) {
-        setErrorPassword('Sadece sayı giriniz');
+        setErrorPassword(`${t('Error9')}`);
         return; // Exit the function if password validation fails
       }else{
         setErrorPassword("");
@@ -98,7 +98,8 @@ const SignIn = ({ navigation }) => {
             .catch((error) => {
                 
               
-              Alert.alert('Error', ' TC no veya parola eksik veya yanlış');  // kayıt kısmınada eklemen gerek 
+              Alert.alert(`${t('Error')}`,  `${t('Error10')}`
+              );  // kayıt kısmınada eklemen gerek 
             });
        
     } else if (text === 'Sign Up') {

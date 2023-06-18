@@ -5,6 +5,7 @@ import Buttonx from '../Component/Button';
 import { MyContext } from '../Context/Context';
 import Constants from 'expo-constants'
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 const SignUp = ( {navigation} ) => {
   const context = useContext(MyContext);
@@ -12,7 +13,7 @@ const SignUp = ( {navigation} ) => {
     const [error, setError] = useState('');
     const [errorPassword, setErrorPassword] = useState('');
    const [step,setStep] = useState(1);
- 
+  const {t} = useTranslation()
   const handleNextStep = () => {
     setStep(step + 1);
   };
@@ -49,7 +50,7 @@ const SignUp = ( {navigation} ) => {
       console.error(error);
     });
   }
-  else if(text === 'Devam Et')
+  else if(text === `${t('Next')}`)
   {
     const textLength = tcno.length;
       if (tcno !== '') {
@@ -57,7 +58,7 @@ const SignUp = ( {navigation} ) => {
 
         
       } else {
-        setError('Boş bırakamazsınız');
+        setError(`${t('Error6')}`);
         return;
       }
       
@@ -90,7 +91,7 @@ const SignUp = ( {navigation} ) => {
     handleNextStep();
 
   }
-  else if(text === 'Geri')
+  else if(text === `${t('ButtonName4')}`)
   {
     handlePrevStep();
 
@@ -104,13 +105,13 @@ const SignUp = ( {navigation} ) => {
       case 1:
         return (
           <View style={styles.stepContainer}>
-            <Text style={styles.stepText}>Adınız:</Text>
+            
             <TextInputC onChangeText={updateTcno} error={error} label="TC No"/>
-            <Text style={styles.stepText}>TC NO:</Text>
-            <TextInputC onChangeText={updatePassword} errorPassword={errorPassword}  label="Password"/>
-            <Text style={styles.stepText}>TC NO:</Text>
-            <TextInputC  onChangeText={updateFullname} label="fullname"/>
-            <Buttonx label="Devam Et" OnChangeButton={OnChangeButton}  />
+            
+            <TextInputC onChangeText={updatePassword} errorPassword={errorPassword}  label={t('Password')}/>
+            
+            <TextInputC  onChangeText={updateFullname} label={`${t('fullname')}`} />
+            <Buttonx label={`${t('Next')}`} OnChangeButton={OnChangeButton}  />
           </View>
         );
       case 2:
@@ -119,12 +120,12 @@ const SignUp = ( {navigation} ) => {
             <Text style={styles.stepText}>E-posta Adresiniz:</Text>
             <TextInputC onChangeText={updateEmail}  label="email"/>
             <Text style={styles.stepText}>Telefon Numaranız:</Text>
-            <TextInputC onChangeText={updatesetTelno}  label="telno"/>
+            <TextInputC onChangeText={updatesetTelno}  label={`${t('TelephoneNumber')}`} />
             <Text style={styles.stepText}>Telefon Numaranız:</Text>
             <TextInputC onChangeText={updatesetDogumtarih}  label="dogumtarih"/>
             <View style={styles.buttonContainer}>
             
-              <Buttonx label="Geri" OnChangeButton={OnChangeButton} />
+              <Buttonx label={`${t('ButtonName4')}`} OnChangeButton={OnChangeButton} />
               <Buttonx label="Sign Up2" OnChangeButton={OnChangeButton}  navigation={navigation} />
             </View>
           </View>

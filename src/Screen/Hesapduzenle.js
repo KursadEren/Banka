@@ -49,8 +49,8 @@ export default function Hesapduzenle({navigation}) {
 
 
           }
-          else if (text ==='Hesap Düzenle')
-          {
+          else if (text ===`${t('EditAccount')}`)
+          {  // bu kısımda bir tane kontrol yap ve içinde para olan hesaplar doviztipi değiştirilemez
             const { manifest } = Constants;
             const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
             console.log(typeof chechdoviz,typeof tcno,typeof selectedOptiondoviz,typeof selectedOptionhesap,typeof selectedOptionsube)

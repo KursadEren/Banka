@@ -106,7 +106,7 @@ const Islem = ({ navigation }) => {
   //text boxa ve combbox taki değer değişirse bura tetiklenir 
   useEffect(() => {
     
-    if(islemtipi === 'Satış' ||islemtipi === 'Sell'){
+    if(islemtipi === `${t('Sell')}`){
 
       if(cevirilecekdovizadi === 'Amerikan Doları' && secilendovizAdi != 'Amerikan Doları')
       { const hesaplananParaDegeri = dolarmiktar * secilenDoviz;
@@ -131,7 +131,7 @@ const Islem = ({ navigation }) => {
       // girilen para değerini seçilenden çıkar çıkan sonucu gerekli yere ekle
        
     }
-    else if(islemtipi === 'Alış' || islemtipi === 'Buy'){
+    else if(islemtipi === `${t('Buy')}`){
 
       
       if(cevirilecekdovizadi === 'Amerikan Doları' && secilendovizAdi != 'Amerikan Doları')
@@ -173,7 +173,7 @@ const Islem = ({ navigation }) => {
         setErrorMessage(`${t('Error5')}`);
         return;
       }
-        if(islemtipi === 'Satış' || islemtipi === 'Sell')
+        if(islemtipi === `${t('Sell')}`)
         {
           const doviztipiid=chechdoviz;
           //satış kısmındaki ana sayfdan seçilen hesap varmı yada hesap bakiyesi yeterli mi diye kontol edilir
@@ -211,7 +211,7 @@ const Islem = ({ navigation }) => {
               return;
             });
         }
-        else  if(islemtipi === 'Alış' || islemtipi === 'Buy')
+        else  if(islemtipi ===`${t('Buy')}` )
         {
           const doviztipiid=chechdoviz2;
           // DOVİZ KONTROL ALIM KISMINDAKİ SEÇİLEN HESABIN BAKİYESİ VEYA HESAP VARMI DİYE KONTOL EDER
@@ -254,7 +254,7 @@ const Islem = ({ navigation }) => {
     {
 
           // kontrol için
-        if(islemtipi === 'Alış'|| islemtipi === 'Buy')
+        if(islemtipi === `${t('Buy')}`)
         {
           
           const userid=userinfo[0].userid
@@ -338,7 +338,7 @@ const Islem = ({ navigation }) => {
 
 
 
-        else if(islemtipi=== 'Satış' , islemtipi=== 'Sell')
+        else if(islemtipi=== `${t('Sell')}` )
         {
           
           const userid=userinfo[0].userid

@@ -39,11 +39,11 @@ const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
           </TouchableOpacity>
       ):label === 'Sign Up2' ?(
         <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
-        {t('SignIn')}
+        {t('SignUp')}
         </Button>
-      ): label === 'Hesap Ekle'? (
+      ): label === `${t('AddAccount')}`? (
         <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
-        {"Hesap Ekle"}
+        {`${t('AddAccount')}`}
       </Button>
       ): label === 'Devam Et'?(
         <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>

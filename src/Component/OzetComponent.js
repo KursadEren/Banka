@@ -116,7 +116,7 @@ const Ozet = ({title}) => {
         <View>
           <TouchableOpacity onPress={toggleSortOrder} style={styles.sortButton}>
             <Text style={styles.sortButtonText}>
-              Sıralama: {sortOrder === 'ascending' ? 'Artan' : 'Azalan'}
+              {t('Sorting')}: {sortOrder === 'ascending' ? `${t('Ascending')}` : `${t('Descending')}`}
             </Text>
           </TouchableOpacity>
           <FlatList
