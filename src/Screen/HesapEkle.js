@@ -18,7 +18,7 @@ const HesapEkle = ({ navigation }) => {
   }
  
   const context = useContext(MyContext);
-  const {selectedIBAN,usersid,userinfo,tcno,password,updateTcno,updatePassword,selectedOptiondoviz,  selectedOptionhesap, selectedOptionsube, sayfa, updateSayfa,updateSelectedIBAN,updatesetOptions,updatesetOptions2,updatesetOptions3 } = context;
+  const {selectedIBAN,usersid,tcno,password,updateTcno,updatePassword,selectedOptiondoviz,  selectedOptionhesap, selectedOptionsube, sayfa, updateSayfa,updateSelectedIBAN,updatesetOptions,updatesetOptions2,updatesetOptions3 } = context;
  
   
   
@@ -88,18 +88,15 @@ const HesapEkle = ({ navigation }) => {
             } 
           })
           .catch((error) => {
-            // HTTP isteği hata verdi, hata mesajını gösterin
+            
             console.error(error);
           });
           
   
-            } else {
-              // İstek başarısız oldu, hata mesajını gösterin
-             
-              console.error(response.data.message);
-            }
+            } 
           })
           .catch((error) => {
+            console.log('hey')
             // HTTP isteği hata verdi, hata mesajını gösterin
             console.error(error);
           });
@@ -129,41 +126,44 @@ const HesapEkle = ({ navigation }) => {
   
 
   useEffect(() => {
-    const { manifest } = Constants;
-    const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-
-    axios
-      .get(`${apiAddress}/users/doviztipi/${tcno}`)
-      .then((response) => {
-        // API'den alınan verileri options state'ine ata
-        updatesetOptions(response.data);
-       
-      })
-      .catch((error) => {
-        console.error('API veri alınırken bir hata oluştu:', error);
-      });
-
+    const fetchData = async () =>{
+      const { manifest } = Constants;
+      const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+  
       axios
-      .get(`${apiAddress}/users/hesaptur`)
-      .then((response) => {
-        // API'den alınan verileri options state'ine ata
-        updatesetOptions2(response.data);
-       
-      })
-      .catch((error) => {
-        console.error('API veri alınırken bir hata oluştu:', error);
-      });
-
-      axios
-      .get(`${apiAddress}/users/sube`)
-      .then((response) => {
-        // API'den alınan verileri options state'ine ata
-        updatesetOptions3(response.data);
-       
-      })
-      .catch((error) => {
-        console.error('API veri alınırken bir hata oluştu:', error);
-      });
+        .get(`${apiAddress}/users/doviztipi/${tcno}`)
+        .then((response) => {
+          // API'den alınan verileri options state'ine ata
+          updatesetOptions(response.data);
+          console.log(response.data)
+        })
+        .catch((error) => {
+          console.error('API veri alınırken bir hata oluştu:', error);
+        });
+  
+        axios
+        .get(`${apiAddress}/users/hesaptur`)
+        .then((response) => {
+          // API'den alınan verileri options state'ine ata
+          updatesetOptions2(response.data);
+         
+        })
+        .catch((error) => {
+          console.error('API veri alınırken bir hata oluştu:', error);
+        });
+  
+        axios
+        .get(`${apiAddress}/users/sube`)
+        .then((response) => {
+          // API'den alınan verileri options state'ine ata
+          updatesetOptions3(response.data);
+         
+        })
+        .catch((error) => {
+          console.error('API veri alınırken bir hata oluştu:', error);
+        });
+    }
+    fetchData();
   }, []);
   
 

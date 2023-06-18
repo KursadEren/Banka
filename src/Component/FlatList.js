@@ -16,25 +16,28 @@ const MyFlatList = ({navigation,OnChangeButton}) => {
   const {tcno,updateTcno, sayfa, updateSayfa, email, updateEmail, password, updatePassword, fullname, updateFullname, userinfo, updateUserinfo } = context;
   
   useEffect(() => {
-    updateSayfa('HomeScreen');
-    const { manifest } = Constants;
-    const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-
-    axios
-      .get(`${apiAddress}/users/hesap/${tcno}`)
-      .then((response) => {
-        if (response.status === 200) {
-          console.log(userinfo);
-          setName(response.data[0].fullname);
-          setUserInfo(response.data);
-          console.log(userinfo);
-        } else {
-          console.error(response.data.message);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    const fetchData = async () =>{
+      updateSayfa('HomeScreen');
+      const { manifest } = Constants;
+      const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+  
+await axios
+        .get(`${apiAddress}/users/hesap/${tcno}`)
+        .then((response) => {
+          if (response.status === 200) {
+           
+            setName(response.data[0].fullname);
+            setUserInfo(response.data);
+            
+          } else {
+            console.error(response.data.message);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+    fetchData()
   }, []);
 
   

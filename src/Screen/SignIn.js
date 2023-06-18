@@ -18,25 +18,15 @@ const SignIn = ({ navigation }) => {
   const [errorPassword, setErrorPassword] = useState('');
   const context = useContext(MyContext);
   const {
-    dogumtarih,
     tcno,
     updateSayfa,
     password,
+    updateUserinfo,
     userinfo,
-    selectedOptiondoviz,
-    selectedOptionsube,
-    selectedOptionhesap,
-    selectedIBAN,
     updateTcno,
     updatePassword,
-    email,
-    updateEmail,
-    Language,
     updatsetLanguage,
-    telno,
-    updatesetTelno,
-    fullname,
-    updateFullname,
+    updatsetsetuserid
   } = context;
 
   useEffect(() => {
@@ -45,7 +35,7 @@ const SignIn = ({ navigation }) => {
   }, []);
 
  
-  const OnChangeButton = (text) => {
+  const OnChangeButton = async (text) => {
     if (text === 'Sign In') {
       const textLength = tcno.length;
       if (tcno !== '') {
@@ -90,20 +80,21 @@ const SignIn = ({ navigation }) => {
             .then((response) => {
               if (response.status === 200) {
                 
-        axios
-          .get(`${apiAddress}/users/hesap/${tcno}`)
-          .then((response) => {
-            if (response.status === 200) {
-              updateUserinfo(response.data);
-              console.log(response.data)
-              updatsetsetuserid(userinfo[0].userid)
-            } else {
-              console.error(response.data.message);
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-          });
+                axios
+                .get(`${apiAddress}/users/hesap/${tcno}`)
+                .then((response) => {
+                  if (response.status === 200) {
+                    updateUserinfo(response.data);
+                    
+                    
+                  } else {
+                    console.error(response.data.message);
+                  }
+                })
+                .catch((error) => {
+                  console.error(error);
+                });
+       
     
                     navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
                   } else {

@@ -43,7 +43,7 @@ const ComboBox = ({label, navigation,onChangeBox }) => {
    
     updatesetChechdoviz(itemValue);
   };
-  const handleOptionChangealis = (itemValue,selectedIndex) =>{
+  const handleOptionChangealis = async (itemValue,selectedIndex) =>{
     updatesetChechdoviz2(itemValue);
     updatesetcevirilecekdovizadi(optiondoviz[selectedIndex].dovizadi);
     

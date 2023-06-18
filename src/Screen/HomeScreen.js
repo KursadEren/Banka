@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react';
-import { View, Text, Alert, BackHandler, StyleSheet, Dimensions } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { View, Text, Alert, BackHandler, StyleSheet, Dimensions, ScrollView ,RefreshControl } from 'react-native';
 import AppBar from '../Component/AppBar';
 import { MyContext } from '../Context/Context';
 import ExpandableScreen from '../Component/ExpandableScreen';
@@ -9,39 +9,59 @@ import axios from 'axios';
 import ErrorBubble from '../Component/ErrorBuble';
 import { useTranslation } from 'react-i18next';
 import i18n from '../i18n';
-const HomeScreen = ({ navigation }) => {
 
-  const {t,i18n} = useTranslation();
+const HomeScreen = ({ navigation }) => {
+  const { t, i18n } = useTranslation();
 
   const context = useContext(MyContext);
-  const { tcno, updateSayfa, updateUserinfo, updatesetoptiondoviz,Language, userinfo,userid,
-    updatsetsetuserid } = context;
+  const {
+    tcno,
+    updateSayfa,
+    updatesetoptiondoviz,
+    Language,
+    updatsetsetuserid,
+    usersid,
+  } = context;
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const fetchData = async () => {
+    i18n.changeLanguage(Language);
+    try {
+      const { manifest } = Constants;
+      const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+
+      axios
+        .get(`${apiAddress}/users/users/${tcno}`)
+        .then((response) => {
+          console.log(response.data);
+          updatsetsetuserid(response.data[0].userid);
+          console.log(usersid);
+        })
+        .catch((error) => {
+          console.error('API veri alınırken bir hata oluştu:', error);
+        });
+
+      const response = await axios.get(`${apiAddress}/users/dovizsatis/${tcno}`);
+
+      updatesetoptiondoviz(response.data);
+    } catch (error) {
+      console.error('API veri alınırken bir hata oluştu:', error);
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
   useEffect(() => {
-    
-      i18n.changeLanguage(Language);
-
-    const { manifest } = Constants;
-    const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-
-      // dovizlerin değerleri 
-    axios
-      .get(`${apiAddress}/users/dovizsatis/${tcno}`)
-      .then((response) => {
-        updatesetoptiondoviz(response.data);
-      
-      })
-      .catch((error) => {
-        console.error('API veri alınırken bir hata oluştu:', error);
-      });
+    fetchData();
   }, []);
 
   useEffect(() => {
-    
     const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
 
     return () => backHandler.remove();
   }, []);
-      // çıkış işlemi için 
+
   const backAction = () => {
     Alert.alert('Çıkış yapmak istiyor musunuz?', '', [
       { text: 'Hayır', style: 'cancel' },
@@ -51,7 +71,7 @@ const HomeScreen = ({ navigation }) => {
     return true; // Geri tuşu olayını durdur
   };
 
-  const OnChangeButton = (text) => {
+  const OnChangeButton = async (text) => {
     if (text === 'HesapEkle') {
       updateSayfa('HesapEkle');
       navigation.navigate('HesapEkle');
@@ -85,19 +105,29 @@ const HomeScreen = ({ navigation }) => {
     // Burada yapılacak işlemler
   };
 
+  const handleRefresh = () => {
+    setRefreshing(true);
+    fetchData();
+  };
+
   return (
     <View style={styles.container}>
       <AppBar title={t('HomeScreen')} navigation={navigation} />
-      <View style={styles.contentContainer}>
+      <ScrollView
+        contentContainerStyle={styles.contentContainer}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+        }
+      >
         <View style={styles.headerContainer}>
-          <Text style={styles.headerText}> {t('Account')} </Text>
+          <Text style={styles.headerText}>{t('Account')}</Text>
         </View>
         <View style={styles.listItemContainer}>
           <MyFlatList OnChangeButton={OnChangeButton} navigation={navigation} />
         </View>
         <ErrorBubble />
         <ExpandableScreen navigation={navigation} onExpand={handleExpand} onCollapse={handleCollapse} />
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -125,7 +155,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 20,
-    textAlign:"center"
+    textAlign: 'center',
   },
   ExpanScreen: {
     flex: 1,

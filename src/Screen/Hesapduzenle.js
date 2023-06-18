@@ -20,7 +20,7 @@ export default function Hesapduzenle({navigation}) {
          updatePassword} = context
 
 
-    const OnChangeButton = (text)=>{
+    const OnChangeButton = async (text)=>{
         const { manifest } = Constants;
         const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
         
