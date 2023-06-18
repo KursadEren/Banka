@@ -2,8 +2,8 @@
     "welcome": "Hoş Geldiniz",
     "HomeScreen":"Ana Sayfa",
     "Account": "Hesaplar",
-    "Buy" : "Satış",
-    "Sell": "Alış",
+    "Buy" : "Alış",
+    "Sell": "Satış",
     "Currency":"Para Birimi",
     "SignIn" : "Giriş",
     "SignUp":"Kayıt",
@@ -14,11 +14,7 @@
     "EditAccount" : "Hesap Düzenle",
     "AddAccount":"Hesap Ekle",
     "Timeinformation":"Saniye sonra Ana Sayfaya yönlendirileceksiniz",
-    "Error1":"Hesap bulunamadı veya bakiye yetersiz",
-    "Error2" : "işlem gerçekleşirken bir hata oluştu",
-    "Error3":"Hesap bulunamadı",
-    "Error4": "Aynı Tipe dönüştüremezsiniz.",
-    "Error5":"Bakiye değeri giriniz.",
+   
     "Information1":"İşlemler için dönüştürülecek para birimini ve miktarı giriniz",
     "Branches":"Şubeler",
     "Selectoptions":"Seçeekleri Seçin",
@@ -32,10 +28,24 @@
     "ButtonName2":"Çevir",
     "ButtonName3":"Onayla",
     "ButtonName4":"Geri",
-    "ButtonName5":"Hesap Sil"
-    
-    
-    
-    
+    "ButtonName5":"Hesap Sil",
+    "Sorting":"Sıralama",
+    "Ascending":"Artan",
+    "Descending":"Azalan",
+
+     "Error1":"Hesap bulunamadı veya bakiye yetersiz",
+    "Error2" : "işlem gerçekleşirken bir hata oluştu",
+    "Error3":"Hesap bulunamadı",
+    "Error4": "Aynı Tipe dönüştüremezsiniz.",
+    "Error5":"Bakiye değeri giriniz.",
+    "Error6":"Boş Bırakamazsınız",
+    "Error7":"Sadece sayı giriniz",
+    "Error8":"11 haneli olmalıdır",
+    "Error9":"Sadece sayı giriniz",
+    "Error10":"TC no veya parola eksik veya yanlış",
+    "Error":"Hata",
+    "TelephoneNumber":"Telefon Numarası",
+    "fullname":"Adınız Soyadınız"
+   
   }
   

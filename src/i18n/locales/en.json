@@ -15,11 +15,7 @@
     "Summary":"Summary",
     "Transactions":"Recent",
     "Timeinformation":"You will be redirected to the Home Page in seconds",
-    "Error1":"Account not found or insufficient balance",
-    "Error2":"An error occurred during the transaction",
-    "Error3":"Account not found",
-    "Error4": "Cannot convert to the same type",
-    "Error5": "Please enter the balance value",
+   
     "Information1": "Please enter the currency and amount to be converted for transactions",
     "Branches":"Branches",
     "Selectoptions":"Select options",
@@ -33,7 +29,22 @@
     "ButtonName2":"Convert",
     "ButtonName3":"Confirm",
     "ButtonName4":"Back",
-    "ButtonName5":"Delete Account "
-
+    "ButtonName5":"Delete Account ",
+    "Sorting":"Sorting",
+    "Ascending":"Ascending",
+    "Descending":"Descending",
+    "Error1":"Account not found or insufficient balance",
+    "Error2":"An error occurred during the transaction",
+    "Error3":"Account not found",
+    "Error4": "Cannot convert to the same type",
+    "Error5": "Please enter the balance value",
+    "Error6":"You cannot leave it blank",
+    "Error7":"Please enter only numbers",
+    "Error8":"Must be 11 digits",
+    "Error9": "Please enter only numbers",
+    "Error10":"TC ID or password missing or incorrect",
+    "Error":"Error",
+    "TelephoneNumber":"Telephone Number",
+    "fullname":"FullName"
 }
   

@@ -18,7 +18,7 @@ const HesapEkle = ({ navigation }) => {
   }
  
   const context = useContext(MyContext);
-  const {selectedOptiondoviz,  selectedOptionhesap, selectedOptionsube, sayfa, updateSayfa,updateSelectedIBAN,updatesetOptions,updatesetOptions2,updatesetOptions3 } = context;
+  const {selectedIBAN,userinfo,tcno,password,updateTcno,updatePassword,selectedOptiondoviz,  selectedOptionhesap, selectedOptionsube, sayfa, updateSayfa,updateSelectedIBAN,updatesetOptions,updatesetOptions2,updatesetOptions3 } = context;
  
   
   
@@ -45,7 +45,7 @@ const HesapEkle = ({ navigation }) => {
 
   const [step, setStep] = useState(1);
   
-  
+  //                                                              bu kısımda check boxları kontrol et
 
   const OnChangeButton = (text) =>{
       if(text === `${t('AddAccount')}`)
@@ -62,7 +62,12 @@ const HesapEkle = ({ navigation }) => {
               console.log(hesapbakiye);
               const usersid = userinfo[0].userid;
               
-              
+              console.log(usersid,
+                selectedOptionhesap,
+                hesapbakiye,
+                selectedOptionsube,
+                selectedOptiondoviz,
+                selectedIBAN,)
               // ekleme yapma
        axios
           .post(`${apiAddress}/users/dovizhesap`, {
@@ -186,13 +191,13 @@ const HesapEkle = ({ navigation }) => {
           <View style={styles.container}>
           <View style={styles.stepContainer}>
             
-            <TextInputC label="TC No"  style={styles.input} />
+            <TextInputC onChangeText={updateTcno} label="TC No"  style={styles.input} />
             
-            <TextInputC   label="password" style={styles.input}/>
+            <TextInputC onChangeText={updatePassword}  label="password" style={styles.input}/>
             <View style={styles.buttonContainer}>
 
-              <Buttonx  label={`${t('ButtonName4')}`} OnChangeButton={OnChangeButton}  onPress={handlePrevStep} />
-               <Buttonx label="Hesap Ekle" OnChangeButton={OnChangeButton} navigation={navigation}/>
+               <Buttonx  label={`${t('ButtonName4')}`} OnChangeButton={OnChangeButton}  onPress={handlePrevStep} />
+               <Buttonx label={`${t('AddAccount')}`} OnChangeButton={OnChangeButton} navigation={navigation}/>
             </View>
             <View  style={styles.buttonContainer}>
             

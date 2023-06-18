@@ -198,8 +198,8 @@ const SeeWatchList = ({ navigation }) => {
     <ScrollView style={styles.container}>
       <View style={styles.headerRow}>
         <Text style={styles.headerCell}>{t('Currency')} </Text>
-        <Text style={styles.headerCell}>{t('Sell')} </Text>
-        <Text style={styles.headerCell}>{t('Buy')}</Text>
+        <Text style={styles.headerCell}>{t('Buy')} </Text>
+        <Text style={styles.headerCell}>{t('Sell')}</Text>
       </View>
       {selectedCurrencies.includes('usd') && (
         <View style={styles.row}>
