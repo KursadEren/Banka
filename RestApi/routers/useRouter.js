@@ -8,25 +8,45 @@ import postgresClient from '../config/db.js';
 const router = express.Router();
 
 router.get('/',async (req,res) =>{
-    try{
-        const text = "SELECT * FROM  users "
-        
-        const {rows} = await postgresClient.query(text)
-        return res.status(200).json(rows)
-        
-    } catch (error){
-        console.log('error occured', error.message)
-        return res.status(400).json({message: error.message})
-    }
+  try{
+      const text = "SELECT * FROM  users "
+      
+      const {rows} = await postgresClient.query(text)
+      return res.status(200).json(rows)
+      
+  } catch (error){
+      console.log('error occured', error.message)
+      return res.status(400).json({message: error.message})
+  }
 })
+router.get('/users/:tcno',async (req,res) =>{
+  try{
+     const { tcno } = req.params;
+      const text = "SELECT * FROM  users where tcno = $1 "
+      const value = [tcno]
+      const {rows} = await postgresClient.query(text,value)
+      return res.status(200).json(rows)
+      
+  } catch (error){
+      console.log('error occured', error.message)
+      return res.status(400).json({message: error.message})
+  }
+})
+
 // doviz Combobx veri
 router.get('/doviztipi/:tcno',async (req,res) =>{
     try{
         const { tcno } = req.params;
         const text = `SELECT d.dovizadi, d.doviztipiid
         FROM doviz d
-        LEFT JOIN usershesap h ON d.doviztipiid = h.doviztipiid
-        WHERE h.usersid IS NULL AND h.tcno = $1`
+        WHERE d.doviztipiid NOT IN (
+          SELECT h.doviztipiid
+          FROM usershesap h
+          INNER JOIN users u ON h.usersid = u.userid
+          WHERE u.tcno = $1
+        )
+        
+        `
         const value = [tcno]
        
    
@@ -129,6 +149,7 @@ router.get('/dovizgetir/:dovizadi', async (req,res) => {
         return res.status(400).json({message: error.message})
     }
 })
+
 
 // CREATE USERS
 

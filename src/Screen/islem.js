@@ -158,7 +158,7 @@ const Islem = ({ navigation }) => {
 
     // sayfadaki bütün butonların bulunduğu fonksiyon
 
-  const OnChangeButton = (label) => {
+  const OnChangeButton = async (label) => {
     
     if(label ===`${t('ButtonName2')}`){
       
@@ -213,6 +213,7 @@ const Islem = ({ navigation }) => {
         }
         else  if(islemtipi ===`${t('Buy')}` )
         {
+          
           const doviztipiid=chechdoviz2;
           // DOVİZ KONTROL ALIM KISMINDAKİ SEÇİLEN HESABIN BAKİYESİ VEYA HESAP VARMI DİYE KONTOL EDER
 
