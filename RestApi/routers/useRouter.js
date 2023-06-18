@@ -120,11 +120,12 @@ router.get('/hesaptur',async (req,res) =>{
 router.get('/hesap/:tcno', async (req,res) => {
     try {
         const { tcno } = req.params;
-        const text ="select h.usershesapid as id,h.hesapno,h.hesapbakiye,u.tcno,s.subeadi  ,u.userid, u.fullname, u.telno, t.hesapturadi \
+        const text ="select h.iban, d.dovizadi, h.usershesapid as id,h.hesapno,h.hesapbakiye,u.tcno,s.subeadi  ,u.userid, u.fullname, u.telno, t.hesapturadi \
         from users u \
         INNER JOIN usershesap h on u.userid = h.usersid \
         INNER JOIN hesaptur t on t.hesapturid = h.hesapturid\
         INNER JOIN sube s on s.subeid = h.subeid\
+        INNER JOIN doviz d on d.doviztipiid = h.doviztipiid\
         WHERE tcno = $1"; 
         const value = [tcno]
         const {rows} = await postgresClient.query(text,value)

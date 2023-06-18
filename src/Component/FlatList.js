@@ -42,13 +42,23 @@ await axios
 
   
 
-  const Item = ({ title, hesapno,subeadi}) => {
+  const Item = ({ title, iban,subeadi,hesapbakiye,dovizad}) => {
+    
     return (
-      <View style={styles.itemContainer}>
-        <Text style={styles.itemTitle}>{title}</Text>
-        <Text style={styles.itemSubtitle}>{hesapno}</Text>
-        <Text style={styles.itemSubtitle}>{subeadi}</Text>
+      <View style={styles.itemContainerr}>
+      <View style={{flex:1,width:'100%',alignItems:"flex-start"}}>
+      <Text style={styles.itemSubtitle}>  {subeadi}</Text>
+      <Text style={{color:'white', textAlign:"left"}}>  {iban} </Text>
+      
       </View>
+     
+      <Text style={styles.itemTitle}>{title}</Text>
+
+      <View style={{alignItems:"flex-start",flex:1,width:"100%",justifyContent:"flex-end",marginBottom:'2%'}}>
+      <Text style={styles.itemSubtitle}>  Bakiye </Text>
+      <Text style={styles.itemSubtitle}>  {hesapbakiye}  {dovizad}</Text>
+      </View>
+    </View>
     );
   };
 
@@ -76,7 +86,7 @@ await axios
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity style={styles.touchableOpacityContainer}>
-            <Item title={item.fullname} subeadi={item.subeadi} hesapno={item.hesapno} />
+            <Item title={item.fullname} dovizad={item.dovizadi} hesapbakiye={item.hesapbakiye} subeadi={item.subeadi} iban={item.iban} />
           </TouchableOpacity>
         )}
         onScroll={handleScroll}
@@ -139,17 +149,17 @@ const styles = StyleSheet.create({
   flatList: {
     flexGrow: 0,
     width: Dimensions.get('window').width,
-    height: 200,
+    height: 180,
     
   },
-  itemContainer: {
+  itemContainerr: {
     width: Dimensions.get('window').width - 40,
-    height: 160,
+    height: 170,
     marginHorizontal: 20,
     borderRadius: 10,
     backgroundColor: '#FFFFFF',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems:"center",
     elevation: 5,
     backgroundColor:"rgb(6, 70, 130)"
 

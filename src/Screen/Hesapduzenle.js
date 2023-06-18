@@ -1,4 +1,4 @@
-import { View, Text ,BackHandler,StyleSheet ,Dimensions} from 'react-native'
+import { View, Text ,BackHandler,StyleSheet ,Dimensions,Alert } from 'react-native'
 import React,{useContext, useEffect,useState} from 'react'
 import ComboBox from '../Component/Combobox';
 import Buttonx from '../Component/Button';
@@ -40,8 +40,7 @@ export default function Hesapduzenle({navigation}) {
             axios
             .post(`${apiAddress}/users/silme`,{tcno,chechdoviz})
             .then((response) => {
-             
-       
+              
              })
              .catch((error) => {
                console.error('API veri alınırken bir hata oluştu:', error);
@@ -53,11 +52,21 @@ export default function Hesapduzenle({navigation}) {
           {  // bu kısımda bir tane kontrol yap ve içinde para olan hesaplar doviztipi değiştirilemez
             const { manifest } = Constants;
             const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-            console.log(typeof chechdoviz,typeof tcno,typeof selectedOptiondoviz,typeof selectedOptionhesap,typeof selectedOptionsube)
+            console.log( chechdoviz, tcno, selectedOptiondoviz, selectedOptionhesap, selectedOptionsube)
             axios.post(`${apiAddress}/users/hesapduzenle`   ,{tcno,chechdoviz:parseInt(chechdoviz),selectedOptiondoviz,selectedOptionhesap,selectedOptionsube})
             .then((response) => {
-             
-       
+              
+              Alert.alert(
+                `${t('Notification1')}`,
+                [
+                  {
+                    text: `${t('Alright')}`,
+                    onPress: () => {
+                      navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
+                    },
+                  },
+                ]
+              );
              })
              .catch((error) => {
                 
@@ -87,41 +96,44 @@ export default function Hesapduzenle({navigation}) {
       };
 
       useEffect(() => {
-        const { manifest } = Constants;
-        const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-    
-        axios
-          .get(`${apiAddress}/users/doviztipiF`)
-          .then((response) => {
-            // API'den alınan verileri options state'ine ata
-            updatesetOptions(response.data);
-           
-          })
-          .catch((error) => {
-            console.error('API veri alınırken bir hata oluştu:', error);
-          });
-    
+        const fetchData = async () =>{
+          const { manifest } = Constants;
+          const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+      
           axios
-          .get(`${apiAddress}/users/hesaptur`)
-          .then((response) => {
-            // API'den alınan verileri options state'ine ata
-            updatesetOptions2(response.data);
-           
-          })
-          .catch((error) => {
-            console.error('API veri alınırken bir hata oluştu:', error);
-          });
-    
-          axios
-          .get(`${apiAddress}/users/sube`)
-          .then((response) => {
-            // API'den alınan verileri options state'ine ata
-            updatesetOptions3(response.data);
-           
-          })
-          .catch((error) => {
-            console.error('API veri alınırken bir hata oluştu:', error);
-          });
+            .get(`${apiAddress}/users/doviztipiF`)
+            .then((response) => {
+              // API'den alınan verileri options state'ine ata
+              updatesetOptions(response.data);
+             
+            })
+            .catch((error) => {
+              console.error('API veri alınırken bir hata oluştu:', error);
+            });
+      
+            axios
+            .get(`${apiAddress}/users/hesaptur`)
+            .then((response) => {
+              // API'den alınan verileri options state'ine ata
+              updatesetOptions2(response.data);
+             
+            })
+            .catch((error) => {
+              console.error('API veri alınırken bir hata oluştu:', error);
+            });
+      
+            axios
+            .get(`${apiAddress}/users/sube`)
+            .then((response) => {
+              // API'den alınan verileri options state'ine ata
+              updatesetOptions3(response.data);
+             
+            })
+            .catch((error) => {
+              console.error('API veri alınırken bir hata oluştu:', error);
+            });
+        }
+        fetchData()
       }, []);
 
     useEffect(() => {

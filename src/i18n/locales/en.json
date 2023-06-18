@@ -45,6 +45,13 @@
     "Error10":"TC ID or password missing or incorrect",
     "Error":"Error",
     "TelephoneNumber":"Telephone Number",
-    "fullname":"FullName"
+    "fullname":"FullName",
+    "lighttheme":"Light theme",
+    "darktheme":"Dark theme",
+    "Yes":"Yes",
+    "No":"No",
+    "Notification":"Do you want to exit",
+    "Notification1":"The operation was successfully completed",
+    "Alright":"Alright"
 }
   

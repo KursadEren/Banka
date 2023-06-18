@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, Alert, BackHandler, StyleSheet, Dimensions, ScrollView ,RefreshControl } from 'react-native';
+import { View, Text, Alert, BackHandler, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import AppBar from '../Component/AppBar';
 import { MyContext } from '../Context/Context';
 import ExpandableScreen from '../Component/ExpandableScreen';
@@ -23,8 +23,6 @@ const HomeScreen = ({ navigation }) => {
     usersid,
   } = context;
 
-  const [refreshing, setRefreshing] = useState(false);
-
   const fetchData = async () => {
     i18n.changeLanguage(Language);
     try {
@@ -34,9 +32,9 @@ const HomeScreen = ({ navigation }) => {
       axios
         .get(`${apiAddress}/users/users/${tcno}`)
         .then((response) => {
-          console.log(response.data);
+          
           updatsetsetuserid(response.data[0].userid);
-          console.log(usersid);
+          
         })
         .catch((error) => {
           console.error('API veri alınırken bir hata oluştu:', error);
@@ -47,8 +45,6 @@ const HomeScreen = ({ navigation }) => {
       updatesetoptiondoviz(response.data);
     } catch (error) {
       console.error('API veri alınırken bir hata oluştu:', error);
-    } finally {
-      setRefreshing(false);
     }
   };
 
@@ -63,9 +59,9 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   const backAction = () => {
-    Alert.alert('Çıkış yapmak istiyor musunuz?', '', [
-      { text: 'Hayır', style: 'cancel' },
-      { text: 'Evet', onPress: handleExit },
+    Alert.alert(`${t('Notification')}`, '', [
+      { text: `${t('No')}`, style: 'cancel' },
+      { text: `${t('Yes')}`, onPress: handleExit },
     ]);
 
     return true; // Geri tuşu olayını durdur
@@ -105,20 +101,10 @@ const HomeScreen = ({ navigation }) => {
     // Burada yapılacak işlemler
   };
 
-  const handleRefresh = () => {
-    setRefreshing(true);
-    fetchData();
-  };
-
   return (
     <View style={styles.container}>
       <AppBar title={t('HomeScreen')} navigation={navigation} />
-      <ScrollView
-        contentContainerStyle={styles.contentContainer}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-        }
-      >
+      <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>{t('Account')}</Text>
         </View>

@@ -45,7 +45,14 @@
     "Error10":"TC no veya parola eksik veya yanlış",
     "Error":"Hata",
     "TelephoneNumber":"Telefon Numarası",
-    "fullname":"Adınız Soyadınız"
+    "fullname":"Adınız Soyadınız",
+    "lighttheme":"Açık Tema",
+    "darktheme":"Koyu Tema",
+    "Yes":"Evet",
+    "No":"Hayır",
+    "Notification":"Çıkış yapmak istiyor musunuz?",
+    "Notification1":"İşelem Başarıyla Gerçekleştirildi",
+    "Alright":"Tamam"
    
   }
   

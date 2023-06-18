@@ -147,8 +147,7 @@ const SignIn = ({ navigation }) => {
         <View style={style.ButtonContainer}></View>
       </View>
       <View>
-      <Button title="değiş" onPress={()=>handeldeneme('en')} />
-      <Button title="değiş" onPress={()=>handeldeneme('tr')} />
+      
       </View>
     </View>
   );
