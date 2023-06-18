@@ -51,6 +51,12 @@ export const MyContextProvider = ({ children }) => {
    const[islemtipi,setIslemtipi] = useState('');
    const [errortext, setErrorText] = useState("");
    const [error, setError] = useState('');
+   const [usersid, setuserid] = useState('');
+
+   const updatsetsetuserid= (newsetuserid ) => {
+    setuserid(newsetuserid);
+  };
+
    
    const updatsetLanguage= (newsetLanguage ) => {
     setLanguage(newsetLanguage);
@@ -252,6 +258,10 @@ export const MyContextProvider = ({ children }) => {
     updatesetErrorText,
     updatesetError,
     error,
+
+
+    usersid,
+    updatsetsetuserid
       }}>
       {children}
     </MyContext.Provider>

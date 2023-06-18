@@ -14,8 +14,10 @@ const HomeScreen = ({ navigation }) => {
   const {t,i18n} = useTranslation();
 
   const context = useContext(MyContext);
-  const { tcno, updateSayfa, updateUserinfo, updatesetoptiondoviz,Language, userinfo } = context;
+  const { tcno, updateSayfa, updateUserinfo, updatesetoptiondoviz,Language, userinfo,userid,
+    updatsetsetuserid } = context;
   useEffect(() => {
+    
       i18n.changeLanguage(Language);
 
     const { manifest } = Constants;
@@ -34,22 +36,7 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    const { manifest } = Constants;
-    const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-
-    axios
-      .get(`${apiAddress}/users/hesap/${tcno}`)
-      .then((response) => {
-        if (response.status === 200) {
-          updateUserinfo(response.data);
-        } else {
-          console.error(response.data.message);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-
+    
     const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
 
     return () => backHandler.remove();
