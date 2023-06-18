@@ -27,7 +27,7 @@ const WatchList = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    // AsyncStorage'den seçili öğeleri al
+        updateSayfa('Watchlist')
     const getSelectedCurrencies = async () => {
       try {
         const savedSelectedCurrencies = await AsyncStorage.getItem('selectedCurrencies');
@@ -72,25 +72,34 @@ const WatchList = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Döviz İsimleri</Text>
-        <Text style={styles.headerText}>İşaretli</Text>
       </View>
-      {currencies.map((currency) => (
-        <View key={currency.id} style={styles.row}>
-          <Text style={styles.currencyText}>{currency.name}</Text>
+      <View style={styles.content}>
+        {currencies.map((currency) => (
           <TouchableOpacity
+            key={currency.id}
             onPress={() => toggleSelection(currency.id)}
             style={[
-              styles.button,
-              selectedCurrencies.includes(currency.id) ? styles.selectedButton : styles.unselectedButton,
+              styles.row,
+              selectedCurrencies.includes(currency.id) ? styles.selectedRow : styles.unselectedRow,
             ]}
           >
-            <Text style={styles.buttonText}>
-              {selectedCurrencies.includes(currency.id) ? 'İşaretlendi' : 'İşaretlenmedi'}
-            </Text>
+            <Text style={styles.currencyText}>{currency.name}</Text>
+            <View
+              style={[
+                styles.button,
+                selectedCurrencies.includes(currency.id) ? styles.selectedButton : styles.unselectedButton,
+              ]}
+            >
+              <Text style={styles.buttonText}>
+                {selectedCurrencies.includes(currency.id) ? 'İşaretlendi' : 'İşaretlenmedi'}
+              </Text>
+            </View>
           </TouchableOpacity>
-        </View>
-      ))}
-      <Text>{sayfa}</Text>
+        ))}
+      </View>
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>{sayfa}</Text>
+      </View>
     </View>
   );
 };
@@ -98,27 +107,45 @@ const WatchList = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'rgb(218, 231, 237)',
     paddingHorizontal: 20,
     paddingTop: 20,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    marginBottom: 20,
   },
   headerText: {
+    fontSize: 24,
     fontWeight: 'bold',
-    fontSize: 16,
+  },
+  content: {
+    flex: 1,
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    backgroundColor: '#F5F5F5',
+    borderRadius: 8,
+  },
+  selectedRow: {
+    backgroundColor: '#E3FCEF',
+  },
+  unselectedRow: {
+    backgroundColor: '#F5F5F5',
   },
   currencyText: {
     fontSize: 16,
     flex: 1,
+    color: '#000',
   },
   button: {
     paddingHorizontal: 12,
@@ -137,6 +164,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 12,
     textTransform: 'uppercase',
+  },
+  footer: {
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderTopColor: '#ccc',
+  },
+  footerText: {
+    fontSize: 16,
   },
 });
 
