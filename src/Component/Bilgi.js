@@ -2,18 +2,19 @@ import React, { useContext } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { MyContext } from '../Context/Context';
+import { useTranslation } from 'react-i18next';
 
 const BilgiKarti = () => {
   const context = useContext(MyContext);
   const { chechdoviz, islemtipi, secilendovizAdi, secilenDoviz } = context;
-
+  const{t} = useTranslation()
   const screenWidth = Dimensions.get('window').width;
   const containerWidth = screenWidth * 0.9;
   const containerHeight = containerWidth * 0.55;
 
   return (
     <View style={[styles.container, { width: containerWidth, height: containerHeight }]}>
-      <Text style={styles.baslik}>İşlem Yapılacak Kur</Text>
+      <Text style={styles.baslik}>{t('CurrencyTransaction')} </Text>
       <Text style={styles.baslik}>{islemtipi}</Text>
       <View style={styles.veriContainer}>
         <Text style={styles.dovizFiyat}>{secilendovizAdi}</Text>
@@ -21,7 +22,7 @@ const BilgiKarti = () => {
       </View>
       <View style={styles.bilgilendirme}>
         <AntDesign name="infocirlce" size={24} color="red" />
-        <Text style={styles.dovizFiyat}>İşlemler için dönüştürülecek para birimini ve miktarı giriniz</Text>
+        <Text style={styles.dovizFiyat}>{t('Information1')} </Text>
       </View>
     </View>
   );

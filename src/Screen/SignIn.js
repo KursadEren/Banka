@@ -1,16 +1,19 @@
-import { View, Text, StyleSheet, Alert, Dimensions } from 'react-native';
-import React, { useContext, useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Alert, Dimensions, Button } from 'react-native';
+import React, { useContext, useEffect, useState,  } from 'react';
 import AppBar from '../Component/AppBar';
 import { MyContext } from '../Context/Context';
 import TextInputC from '../Component/TextInput';
 import Buttonx from '../Component/Button';
 import Constants from 'expo-constants';
 import axios from 'axios';
+import i18n from '../i18n';
+import { useTranslation } from 'react-i18next';
 
 const { width, height } = Dimensions.get('window');
 
 const SignIn = ({ navigation }) => {
   const [error, setError] = useState('');
+  const { t,i18n } = useTranslation();
   errorPassword
   const [errorPassword, setErrorPassword] = useState('');
   const context = useContext(MyContext);
@@ -25,9 +28,11 @@ const SignIn = ({ navigation }) => {
     selectedOptionhesap,
     selectedIBAN,
     updateTcno,
+    updatePassword,
     email,
     updateEmail,
-    updatePassword,
+    Language,
+    updatsetLanguage,
     telno,
     updatesetTelno,
     fullname,
@@ -39,6 +44,7 @@ const SignIn = ({ navigation }) => {
     updateSayfa('Sign In'); // Örnek olarak sayfa değerini güncelliyoruz
   }, []);
 
+ 
   const OnChangeButton = (text) => {
     if (text === 'Sign In') {
       const textLength = tcno.length;
@@ -101,20 +107,24 @@ const SignIn = ({ navigation }) => {
       Alert.alert('hata');
     }
   };
-
+  const handeldeneme = (text) =>{
+    updatsetLanguage(text)
+    i18n.changeLanguage(text)
+  }
+ 
   return (
     <View style={{ flex: 1, backgroundColor: 'rgb(218, 231, 237)' }}>
       <View style={style.con}>
         <View style={style.appBarr}>
-          <AppBar />
-          <Text style={{ textAlign: 'center', marginTop: height * 0.05, fontSize: 20 }}>Hoşgeldiniz</Text>
+          <AppBar title={t('SignIn')} />
+          <Text style={{ textAlign: 'center', marginTop: height * 0.05, fontSize: 20 }}>{t('welcome')}</Text>
         </View>
         <View style={style.Body}>
           <View style={style.TextInput}>
             <TextInputC onChangeText={updateTcno} error={error} label="TC No" />
           </View>
           <View style={style.TextInput}>
-            <TextInputC onChangeText={updatePassword} errorPassword={errorPassword} label="Password" />
+            <TextInputC onChangeText={updatePassword} errorPassword={errorPassword} label={t('Password')} />
           </View>
           <View style={style.ButtonContainer}>
             <Buttonx label="Sign In" OnChangeButton={OnChangeButton} navigation={navigation} />
@@ -127,6 +137,10 @@ const SignIn = ({ navigation }) => {
           </View>
         </View>
         <View style={style.ButtonContainer}></View>
+      </View>
+      <View>
+      <Button title="değiş" onPress={()=>handeldeneme('en')} />
+      <Button title="değiş" onPress={()=>handeldeneme('tr')} />
       </View>
     </View>
   );

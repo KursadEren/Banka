@@ -4,8 +4,9 @@ import { MyContext } from '../Context/Context';
 import Constants from 'expo-constants';
 import axios from 'axios';
 import Buttonx from './Button';
-
+import { useTranslation } from 'react-i18next';
 const MyFlatList = ({navigation,OnChangeButton}) => {
+  const {t} = useTranslation();
   const [userInfo, setUserInfo] = useState([]);
   const [name, setName] = useState(' ');
   const flatListRef = useRef(null);
@@ -94,20 +95,32 @@ const MyFlatList = ({navigation,OnChangeButton}) => {
         
        
       </View>
-      <View style={styles.pagination}>
-      <View style={{marginHorizontal:10}}>
-        <Text>Hesap Düzenle</Text>
-         <Buttonx label="-" OnChangeButton={OnChangeButton} navigation={navigation}/>
-       </View>
-       <View style={{marginHorizontal:10}}>
-        <Text>Hesap Ekle</Text>
-         <Buttonx label="+" OnChangeButton={OnChangeButton} navigation={navigation}/>
-         </View>
-         <View  style={{marginHorizontal:10}}>
-        <Text>Son İşlemler</Text>
-         <Buttonx label="islemler" OnChangeButton={OnChangeButton} navigation={navigation}/>
-       </View>
-         </View>
+      <View style={styles.paginationn}>
+      <View style={{flex:1,flexDirection:"column",justifyContent:"center"}}>
+            <View>
+               <Text style={{textAlign:"center"}}>{t('EditAccount')} </Text>
+            </View>
+            <View>
+                <Buttonx label="-" OnChangeButton={OnChangeButton} navigation={navigation}/>
+            </View>
+            </View>
+      <View style={{flex:1,flexDirection:"column",justifyContent:"center"}}>
+            <View>
+              <Text style={{textAlign:"center"}}>{t('AddAccount')} </Text>
+            </View>
+            <View>
+              <Buttonx label="+" OnChangeButton={OnChangeButton} navigation={navigation}/>
+            </View>
+      </View>
+      <View  style={{flex:1,flexDirection:"column",justifyContent:"center"}}>
+           <View style={{}}>
+              <Text style={{textAlign:"center"}}>{t('Transactions')}</Text>
+           </View>
+           <View>
+              <Buttonx label="islemler" OnChangeButton={OnChangeButton} navigation={navigation}/>
+           </View>
+           </View>
+      </View>
         
      
     </View>
@@ -153,7 +166,7 @@ const styles = StyleSheet.create({
   },
   pagination: {
     flexDirection: 'row',
-    justifyContent: 'center',
+   justifyContent:"center",
     marginTop: 10,
     alignItems:"center",
 
@@ -168,6 +181,12 @@ const styles = StyleSheet.create({
   paginationDotActive: {
     backgroundColor: 'black',
   },
+  paginationn:{
+    flexDirection: 'row',
+    justifyContent:"space-around",
+     marginTop: 10,
+     alignItems:"center",
+  }
 });
 
 export default MyFlatList;

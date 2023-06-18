@@ -7,8 +7,9 @@ import TextInputC from '../Component/TextInput';
 import Buttonx from '../Component/Button';
 import Constants from 'expo-constants'
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 const HesapEkle = ({ navigation }) => {
-  
+    const {t} = useTranslation()
   function generateRandomNumber() {
     const min = Math.pow(10, 15); // Minimum değer: 10^15
     const max = Math.pow(10, 16) - 1; // Maksimum değer: 10^16 - 1
@@ -47,7 +48,7 @@ const HesapEkle = ({ navigation }) => {
   
 
   const OnChangeButton = (text) =>{
-      if(text === 'Hesap Ekle')
+      if(text === `${t('AddAccount')}`)
       {
         const { manifest } = Constants;
         const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
@@ -79,11 +80,7 @@ const HesapEkle = ({ navigation }) => {
   
               navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
               
-            } else {
-              // İstek başarısız oldu, hata mesajını gösterin
-             console.log("hey")
-              console.error(response.data.message);
-            }
+            } 
           })
           .catch((error) => {
             // HTTP isteği hata verdi, hata mesajını gösterin
@@ -101,10 +98,10 @@ const HesapEkle = ({ navigation }) => {
             // HTTP isteği hata verdi, hata mesajını gösterin
             console.error(error);
           });
-      }else if(text ==='Geri'){
+      }else if(text ===`${t('ButtonName4')}`){
         handlePrevStep();
       }
-      else if(text ==='Devam Et'){
+      else if(text ===`${t('Next')}`){
         handleNextStep();
       }
   }
@@ -163,10 +160,7 @@ const HesapEkle = ({ navigation }) => {
         console.error('API veri alınırken bir hata oluştu:', error);
       });
   }, []);
-  const onChangeBox = (text) =>{
-
-
-  }
+  
 
 
   const renderStep = () => {
@@ -175,14 +169,14 @@ const HesapEkle = ({ navigation }) => {
         return (
           <View style={styles.container}>
           <View style={styles.stepContainer}>
-            <Text style={styles.stepText}>Doviz Tipini Seçin:</Text>
+            
             <ComboBox   label="doviztipi"/>
-            <Text style={styles.stepText}>Hesap Türünü Seçin:</Text>
+            
             <ComboBox label="HesapTUR"/>
-            <Text style={styles.stepText}>Şube Seçin:</Text>
+            
             <ComboBox label="sube"/>
             <View style={styles.buttonContainer}>
-              <Buttonx label="Devam Et"  OnChangeButton={OnChangeButton} onPress={handleNextStep} />
+              <Buttonx label={`${t('Next')}`}  OnChangeButton={OnChangeButton} onPress={handleNextStep} />
             </View>
           </View>
           </View>
@@ -191,14 +185,17 @@ const HesapEkle = ({ navigation }) => {
         return (
           <View style={styles.container}>
           <View style={styles.stepContainer}>
-            <Text style={styles.stepText}>TC numaranız:</Text>
+            
             <TextInputC label="TC No"  style={styles.input} />
-            <Text style={styles.stepText}>Parolanız:</Text>
+            
             <TextInputC   label="password" style={styles.input}/>
             <View style={styles.buttonContainer}>
-              <Buttonx  label="Geri" OnChangeButton={OnChangeButton}  onPress={handlePrevStep} />
-              <Buttonx label="Hesap Ekle" OnChangeButton={OnChangeButton} navigation={navigation}/>
-              <Buttonx label="Hesap Ekle" OnChangeButton={OnChangeButton} navigation={navigation}/>
+
+              <Buttonx  label={`${t('ButtonName4')}`} OnChangeButton={OnChangeButton}  onPress={handlePrevStep} />
+               <Buttonx label="Hesap Ekle" OnChangeButton={OnChangeButton} navigation={navigation}/>
+            </View>
+            <View  style={styles.buttonContainer}>
+            
             </View>
           </View>
           </View>

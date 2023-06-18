@@ -9,7 +9,8 @@ import axios from 'axios';
 const SignUp = ( {navigation} ) => {
   const context = useContext(MyContext);
     const {dogumtarih,tcno, updateSayfa,updatesetDogumtarih,  password, userinfo,selectedOptiondoviz,selectedOptionsube,selectedOptionhesap,selectedIBAN,updateTcno, email, updateEmail,updatePassword,telno,updatesetTelno,   fullname,updateFullname, } = context;
-  
+    const [error, setError] = useState('');
+    const [errorPassword, setErrorPassword] = useState('');
    const [step,setStep] = useState(1);
  
   const handleNextStep = () => {
@@ -23,6 +24,9 @@ const SignUp = ( {navigation} ) => {
  const OnChangeButton = (text) =>{
   if(text ==="Sign Up2")
   {
+    
+
+
     const { manifest } = Constants;
   const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
   axios
@@ -45,6 +49,52 @@ const SignUp = ( {navigation} ) => {
       console.error(error);
     });
   }
+  else if(text === 'Devam Et')
+  {
+    const textLength = tcno.length;
+      if (tcno !== '') {
+        setError('');
+
+        
+      } else {
+        setError('Boş bırakamazsınız');
+        return;
+      }
+      
+      if (!/^\d+$/.test(tcno)) {
+        setError('Sadece sayı giriniz');
+        return; // Exit the function if password validation fails
+      }
+
+      if (textLength === 11) {
+        setError('');
+
+      } else {
+        setError('11 haneli olmalıdır');
+        return;
+      }
+      if (password !== '') {
+        setErrorPassword('');
+
+      } else {
+        setErrorPassword('Boş bırakamazsınız');
+        return;
+      }
+
+      if (!/^\d+$/.test(password)) {
+        setErrorPassword('Sadece sayı giriniz');
+        return; // Exit the function if password validation fails
+      }else{
+        setErrorPassword("");
+      }
+    handleNextStep();
+
+  }
+  else if(text === 'Geri')
+  {
+    handlePrevStep();
+
+  }
   
 
  }
@@ -55,12 +105,12 @@ const SignUp = ( {navigation} ) => {
         return (
           <View style={styles.stepContainer}>
             <Text style={styles.stepText}>Adınız:</Text>
-            <TextInputC onChangeText={updateTcno} label="TC No"/>
+            <TextInputC onChangeText={updateTcno} error={error} label="TC No"/>
             <Text style={styles.stepText}>TC NO:</Text>
-            <TextInputC onChangeText={updatePassword}  label="Password"/>
+            <TextInputC onChangeText={updatePassword} errorPassword={errorPassword}  label="Password"/>
             <Text style={styles.stepText}>TC NO:</Text>
             <TextInputC  onChangeText={updateFullname} label="fullname"/>
-            <Button title="Devam Et" onPress={handleNextStep} />
+            <Buttonx label="Devam Et" OnChangeButton={OnChangeButton}  />
           </View>
         );
       case 2:
@@ -74,7 +124,7 @@ const SignUp = ( {navigation} ) => {
             <TextInputC onChangeText={updatesetDogumtarih}  label="dogumtarih"/>
             <View style={styles.buttonContainer}>
             
-              <Button title="Geri" onPress={handlePrevStep} />
+              <Buttonx label="Geri" OnChangeButton={OnChangeButton} />
               <Buttonx label="Sign Up2" OnChangeButton={OnChangeButton}  navigation={navigation} />
             </View>
           </View>

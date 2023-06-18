@@ -4,12 +4,13 @@ import { Button } from 'react-native-paper';
 import { MyContext } from '../Context/Context';
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from  'react-native-gesture-handler';
-
+import { useTranslation } from 'react-i18next';
 
 const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
   const context = useContext(MyContext);
   const {dogumtarih,tcno, updateSayfa,  password, userinfo,selectedOptiondoviz,selectedOptionsube,selectedOptionhesap,selectedIBAN,updateTcno, email, updateEmail,updatePassword,telno,updatesetTelno,   fullname,updateFullname, } = context;
-  
+  const {t} = useTranslation();
+
   
   const  HandleButton = (text) =>{
       OnChangeButton(text);
@@ -21,11 +22,11 @@ const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
     <View style={styles.container}>
       {label === 'Sign In' ? (
         <Button  icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
-          {"Giriş"}
+          {t('SignIn')}
         </Button>
       ) : label === 'Sign Up' ?(
        <Button  icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
-        {"Kayıt"}
+        {t('SignUp')}
         </Button>
     ) : label === '+' ? (
         <TouchableOpacity  onPress={() => HandleButton(label)}>
@@ -38,7 +39,7 @@ const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
           </TouchableOpacity>
       ):label === 'Sign Up2' ?(
         <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
-        {"Kayıt"}
+        {t('SignIn')}
         </Button>
       ): label === 'Hesap Ekle'? (
         <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
@@ -46,7 +47,7 @@ const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
       </Button>
       ): label === 'Devam Et'?(
         <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
-        {"Devam Et"}
+        {t('Next')}
       </Button>
       ):label === 'Çevir'?
       (

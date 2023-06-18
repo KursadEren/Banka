@@ -6,26 +6,39 @@ import Constants from 'expo-constants'
 import axios from 'axios';
 import { MyContext } from '../Context/Context';
 import TextInputC from '../Component/TextInput';
+import { useTranslation } from 'react-i18next';
 export default function Hesapduzenle({navigation}) {
+
+    const {t} = useTranslation()
     const [step, setStep] = useState(1);
     const context = useContext(MyContext);
-    const {chechdoviz,updateSayfa,updatesetOptions3, updatesetOptions2 ,updatesetOptions, selectedOptionsube , selectedOptiondoviz, selectedOptionhesap} = context
+    const {chechdoviz,updateSayfa,updatesetOptions3,
+         updatesetOptions2 ,updatesetOptions, 
+         selectedOptionsube , selectedOptiondoviz, selectedOptionhesap,
+         tcno,
+         updateTcno,
+         updatePassword} = context
 
 
     const OnChangeButton = (text)=>{
         const { manifest } = Constants;
         const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
         
-        if(text ==='Geri'){
+        if(text ===`${t('ButtonName4')}`){
             handlePrevStep();
           }
-          else if(text ==='Devam Et'){
+          else if(text ===`${t('Next')}`){
             handleNextStep();
           }
-          else if (text ==='Hesap Sil')
+          else if (text ===`${t('ButtonName5')}`)
           {
+            console.log(chechdoviz,tcno,selectedOptiondoviz,selectedOptionhesap,selectedOptionsube)
+            const { manifest } = Constants;
+            const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+            // hesabın silinmesi için tcno ve seçilen dözvivi kontrol eder eğer hesabın bakiyesi 0 a eşitse silme gerçekleşir
+
             axios
-            .post(`${apiAddress}/users/silme`)
+            .post(`${apiAddress}/users/silme`,{tcno,chechdoviz})
             .then((response) => {
              
        
@@ -38,6 +51,22 @@ export default function Hesapduzenle({navigation}) {
           }
           else if (text ==='Hesap Düzenle')
           {
+            const { manifest } = Constants;
+            const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+            console.log(typeof chechdoviz,typeof tcno,typeof selectedOptiondoviz,typeof selectedOptionhesap,typeof selectedOptionsube)
+            axios.post(`${apiAddress}/users/hesapduzenle`   ,{tcno,chechdoviz:parseInt(chechdoviz),selectedOptiondoviz,selectedOptionhesap,selectedOptionsube})
+            .then((response) => {
+             
+       
+             })
+             .catch((error) => {
+                
+               console.error('API veri alınırken bir hata oluştu:', error);
+             });
+            
+
+          }
+          else {
 
           }
     }
@@ -112,16 +141,16 @@ export default function Hesapduzenle({navigation}) {
             return (
               <View style={styles.container}>
               <View style={styles.stepContainer}>
-                <Text style={styles.stepText}>Değişecek Hesap</Text>
-                <ComboBox   label="doviztipicheck"/>
-                <Text style={styles.stepText}>Doviz Tipini Seçin:</Text>
-                <ComboBox   label="doviztipi"/>
-                <Text style={styles.stepText}>Hesap Türünü Seçin:</Text>
+                
+                <ComboBox label="doviztipicheck"/>
+               
+                <ComboBox label="doviztipi"/>
+               
                 <ComboBox label="HesapTUR"/>
-                <Text style={styles.stepText}>Şube Seçin:</Text>
+              
                 <ComboBox label="sube"/>
                 <View style={styles.buttonContainer}>
-                  <Buttonx label="Devam Et"  OnChangeButton={OnChangeButton} onPress={handleNextStep} />
+                  <Buttonx label={`${t('Next')}`}  OnChangeButton={OnChangeButton} onPress={handleNextStep} />
                 </View>
               </View>
               </View>
@@ -131,17 +160,18 @@ export default function Hesapduzenle({navigation}) {
               <View style={styles.container}>
               <View style={styles.stepContainer}>
                 <Text style={styles.stepText}>TC numaranız:</Text>
-                <TextInputC label="TC No"  style={styles.input} />
+                <TextInputC label="TC No"onChangeText={updateTcno}  style={styles.input} />
                 <Text style={styles.stepText}>Parolanız:</Text>
-                <TextInputC   label="password" style={styles.input}/>
+                <TextInputC   label="password" onChangeText={updatePassword} style={styles.input}/>
                 <View style={styles.buttonContainer}>
                  
-                  <Buttonx label="Hesap Sil" OnChangeButton={OnChangeButton} navigation={navigation}/>
-                 <Buttonx label="Hesap Düzenle" OnChangeButton={OnChangeButton} navigation={navigation}/>
-                
+    
+                  <Buttonx label={`${t('ButtonName5')}`} OnChangeButton={OnChangeButton} navigation={navigation}/>
+                 <Buttonx label={`${t('EditAccount')}`} OnChangeButton={OnChangeButton} navigation={navigation}/>
+                 
                 </View>
                 <View style={styles.buttonContainer}>
-                 <Buttonx  label="Geri" OnChangeButton={OnChangeButton}  onPress={handlePrevStep} />
+                 <Buttonx  label={`${t('ButtonName4')}`} OnChangeButton={OnChangeButton}  onPress={handlePrevStep} />
                  </View>
               </View>
               </View>

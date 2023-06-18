@@ -4,8 +4,9 @@ import { Picker } from '@react-native-picker/picker';
 import Constants from 'expo-constants';
 import axios from 'axios';
 import { MyContext } from '../Context/Context';
+import { useTranslation } from 'react-i18next';
 const ComboBox = ({label, navigation,onChangeBox }) => {
- 
+  const {t} = useTranslation()
   const context = useContext(MyContext);
   const {selectedOptiondoviz,
     updateSelectedOptiondoviz,
@@ -53,7 +54,7 @@ const ComboBox = ({label, navigation,onChangeBox }) => {
   if(label === "doviztipi")
   {
     content = (<View style={styles.container}>
-      <Text style={styles.label}>Doviz Tipi</Text>
+      <Text style={styles.label}>{t('CurrencyType')} </Text>
       <View style={styles.pickerContainer}>
         <Picker
           selectedValue={selectedOptiondoviz}
@@ -69,7 +70,7 @@ const ComboBox = ({label, navigation,onChangeBox }) => {
       )
   } else if (label === "HesapTUR" ){
     content = (<View style={styles.container}>
-    <Text style={styles.label}>Hesap Tür</Text>
+    <Text style={styles.label}>{t('AccountType')} </Text>
     <View style={styles.pickerContainer}>
       <Picker
         selectedValue={selectedOptionhesap}
@@ -89,7 +90,7 @@ const ComboBox = ({label, navigation,onChangeBox }) => {
    
       content = (
         <View style={styles.container}>
-          <Text style={styles.label}>Şubeler</Text>
+          <Text style={styles.label}>{t('Branches')} </Text>
           <View style={styles.pickerContainer}>
             <Picker
               selectedValue={selectedOptionsube} // selectedOption3 doğru şekilde ayarlandı
@@ -106,7 +107,7 @@ const ComboBox = ({label, navigation,onChangeBox }) => {
   }else if(label === "doviztipicheck")
   {
     content = (<View style={styles.container}>
-      <Text style={styles.label}>Seçenekleri Seçin:</Text>
+      <Text style={styles.label}>{t('Selectoptions')} </Text>
       <View style={styles.pickerContainer}>
         <Picker
           selectedValue={chechdoviz}
@@ -124,7 +125,7 @@ const ComboBox = ({label, navigation,onChangeBox }) => {
   else if(label === "doviztipialis")
   {
     content = (<View style={styles.container}>
-      <Text style={styles.label}>Dönüştürülecek Tip</Text>
+      <Text style={styles.label}>{t('ConvertType')} </Text>
       <View style={styles.pickerContainer}>
         <Picker
           selectedValue={chechdoviz2}

@@ -7,20 +7,26 @@ import MyFlatList from '../Component/FlatList';
 import Constants from 'expo-constants';
 import axios from 'axios';
 import ErrorBubble from '../Component/ErrorBuble';
-
+import { useTranslation } from 'react-i18next';
+import i18n from '../i18n';
 const HomeScreen = ({ navigation }) => {
+
+  const {t,i18n} = useTranslation();
+
   const context = useContext(MyContext);
-  const { tcno, updateSayfa, updateUserinfo, updatesetoptiondoviz, userinfo } = context;
+  const { tcno, updateSayfa, updateUserinfo, updatesetoptiondoviz,Language, userinfo } = context;
   useEffect(() => {
+      i18n.changeLanguage(Language);
+
     const { manifest } = Constants;
     const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
 
+      // dovizlerin değerleri 
     axios
       .get(`${apiAddress}/users/dovizsatis/${tcno}`)
       .then((response) => {
         updatesetoptiondoviz(response.data);
-        console.log('response.data');
-        console.log(response.status);
+      
       })
       .catch((error) => {
         console.error('API veri alınırken bir hata oluştu:', error);
@@ -48,7 +54,7 @@ const HomeScreen = ({ navigation }) => {
 
     return () => backHandler.remove();
   }, []);
-
+      // çıkış işlemi için 
   const backAction = () => {
     Alert.alert('Çıkış yapmak istiyor musunuz?', '', [
       { text: 'Hayır', style: 'cancel' },
@@ -94,10 +100,10 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <AppBar navigation={navigation} />
+      <AppBar title={t('HomeScreen')} navigation={navigation} />
       <View style={styles.contentContainer}>
         <View style={styles.headerContainer}>
-          <Text style={styles.headerText}> Hesaplarınız </Text>
+          <Text style={styles.headerText}> {t('Account')} </Text>
         </View>
         <View style={styles.listItemContainer}>
           <MyFlatList OnChangeButton={OnChangeButton} navigation={navigation} />

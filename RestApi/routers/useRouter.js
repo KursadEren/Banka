@@ -51,6 +51,9 @@ router.get('/doviztipiF',async (req,res) =>{
   }
 })
 
+
+
+
 router.get('/dovizsatis/:tcno',async (req,res) =>{
     try{
         const { tcno } = req.params;
@@ -309,7 +312,7 @@ router.post('/dovizozet', async (req,res) =>{
 */
 router.post('/silme', async (req,res) =>{
   try {
-    console.log(typeof req.body.tcno,typeof req.body.chechdoviz)
+   
       const text = `DELETE FROM usershesap
       WHERE usersid = (
         SELECT userid
@@ -319,7 +322,7 @@ router.post('/silme', async (req,res) =>{
         AND doviztipiid = $2
         AND hesapbakiye = 0;
       `
-      const values = []
+      const values = [req.body.tcno,req.body.chechdoviz]
       const {rows} = await postgresClient.query(text,values)
       console.log(rows)
       
@@ -337,8 +340,8 @@ router.post('/silme', async (req,res) =>{
 
 router.post('/hesapekle', async (req, res) => {
     try {
-      const Text1 = "SELECT * FROM usershesap WHERE usersid = $2 AND doviztipiid = $3 AND hesapbakiye >= $1 "
-      const values = [req.body.dolarmiktar, req.body.userid, req.body.chechdoviz]
+      const Text1 = "SELECT * FROM usershesap WHERE usersid = $1 AND doviztipiid = $2 "
+      const values = [ req.body.userid, req.body.chechdoviz]
       const result = await postgresClient.query(Text1, values)
       
       if (result.rows.length <= 0) {
@@ -365,8 +368,9 @@ router.post('/hesapekle', async (req, res) => {
   //satiş 
   router.post('/hesapekleSatis', async (req, res) => {
     try {
-      const Text1 = "SELECT * FROM usershesap WHERE usersid = $2 AND doviztipiid = $3 AND hesapbakiye >= $1 "
-      const values = [req.body.hesaplananpara, req.body.userid, req.body.chechdoviz2]
+      console.log(req.body.hesaplananpara, req.body.userid, req.body.chechdoviz2)
+      const Text1 = "SELECT * FROM usershesap WHERE usersid = $1 AND doviztipiid = $2 "
+      const values = [ req.body.userid, req.body.chechdoviz2]
       const result = await postgresClient.query(Text1, values)
       
       if (result.rows.length <= 0) {
@@ -563,6 +567,74 @@ router.get('/ozetbilgi/:tcno', async (req,res) =>{
    
     
 })
+
+
+router.post('/hesapduzenle', async (req, res) => {
+  try {
+      
+      const Text1 = `select 
+      * from users u 
+      INNER JOIN usershesap h on  u.userid = h.usersid
+      where u.tcno = $1  AND h.doviztipiid = $2 `
+      const values = [req.body.tcno, req.body.chechdoviz];
+      const result = await postgresClient.query( Text1 , values)
+      
+
+      console.log(result.rows)
+      
+      if (!result.rows.length) {
+       
+        return res.status(404).json({ message:  "Kaynak bulunamadı" })
+      }
+      const text = `UPDATE usershesap
+      SET doviztipiid = $3,
+          subeid = $5,
+          hesapturid = $4
+       WHERE usersid = (SELECT userid FROM users WHERE tcno = $1) AND doviztipiid = (select doviztipiid from usershesap where doviztipiid = $2 )
+`
+      
+      const updateValues =  [req.body.tcno, req.body.chechdoviz,req.body.selectedOptiondoviz,req.body.selectedOptionhesap,req.body.selectedOptionsube];
+      await postgresClient.query(text, updateValues)
+      
+       
+      
+      
+      return res.status(200).json({ message: 'Hesap güncelleme işlemi başarılı' })
+    
+    
+
+  } catch (error) {
+   
+    return res.status(400).json({ message: error })
+  }
+})
+
+
+/*const text = `BEGIN;
+
+SELECT *
+FROM users u
+INNER JOIN usershesap h ON u.userid = h.usersid
+WHERE u.tcno = $1 AND h.doviztipiid = $2;
+
+
+IF FOUND THEN
+   
+    ROLLBACK;
+ELSE
+    
+    UPDATE usershesap
+    SET doviztipiid = $3,
+        subeid = $5,
+        hesapturid = $4
+    WHERE usersid = (SELECT userid FROM users WHERE tcno = $1);
+END IF;
+
+COMMIT;
+`
+      
+      const updateValues =  [req.body.tcno, req.body.chechdoviz,req.body.selectedOptiondoviz,req.body.selectedOptionhesap,req.body.selectedOptionsube];
+      await postgresClient.query(text, updateValues)*/
 
 
 export default router;

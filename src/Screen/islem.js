@@ -7,8 +7,10 @@ import Buttonx from '../Component/Button';
 import axios from 'axios';
 import Constants from 'expo-constants';
 import BilgiKarti from '../Component/Bilgi';
+import { useTranslation } from 'react-i18next';
 
 const Islem = ({ navigation }) => {
+  const {t} = useTranslation()
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
   const context = useContext(MyContext);
@@ -31,6 +33,12 @@ const Islem = ({ navigation }) => {
      alisSatisSterlin,
      alisSatisddolar,
      alisSatisfrang,
+     
+     selectedOptiondoviz,
+    
+    selectedOptionhesap,
+   
+    selectedOptionsube,
 
   } = context;
   const [dolarmiktar, setdolarmiktar] = useState('');
@@ -59,7 +67,7 @@ const Islem = ({ navigation }) => {
       clearInterval(sayaç);
     };
   }, [navigation, sure]);
-
+ // geri tuşuna basıldığında alğılanacak yer 
   useEffect(() => {
     const backAction = () => {
       updatesetHesaplananParaDegeri('0');
@@ -73,10 +81,12 @@ const Islem = ({ navigation }) => {
     return () => backHandler.remove();
   }, []);
 
+  // hangi sayfada olduğunun gösteren güncellee işlemi
   useEffect(() => {
     updateSayfa("islem");
   }, []);
 
+    // Combobox ın içini dolduran axios isteği
   useEffect(() => {
     const { manifest } = Constants;
     const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
@@ -86,17 +96,17 @@ const Islem = ({ navigation }) => {
       .get(`${apiAddress}/users/dovizsatis/${tcno}`)
       .then((response) => {
         updatesetoptiondoviz(response.data);
-        console.log('response.data')
-        console.log(response.status)
+       
       })
       .catch((error) => {
         console.error('API veri alınırken bir hata oluştu:', error);
       });
   }, []);
 
+  //text boxa ve combbox taki değer değişirse bura tetiklenir 
   useEffect(() => {
-    console.log(secilendovizAdi)
-    if(islemtipi === 'Satış'){
+    
+    if(islemtipi === 'Satış' ||islemtipi === 'Sell'){
 
       if(cevirilecekdovizadi === 'Amerikan Doları' && secilendovizAdi != 'Amerikan Doları')
       { const hesaplananParaDegeri = dolarmiktar * secilenDoviz;
@@ -121,7 +131,7 @@ const Islem = ({ navigation }) => {
       // girilen para değerini seçilenden çıkar çıkan sonucu gerekli yere ekle
        
     }
-    else if(islemtipi === 'Alım'){
+    else if(islemtipi === 'Alış' || islemtipi === 'Buy'){
 
       
       if(cevirilecekdovizadi === 'Amerikan Doları' && secilendovizAdi != 'Amerikan Doları')
@@ -146,22 +156,24 @@ const Islem = ({ navigation }) => {
     
   }, [dolarmiktar,chechdoviz2]);
 
+    // sayfadaki bütün butonların bulunduğu fonksiyon
+
   const OnChangeButton = (label) => {
     
-    if(label ==='Çevir'){
+    if(label ===`${t('ButtonName2')}`){
       
       if(cevirilecekdovizadi===secilendovizAdi){
         setShowConfirmation(false);
-        setErrorMessage('Aynı Tipe dönüştüremezsiniz.');
+        setErrorMessage(`${t('Error4')}`);
         return;
       }
       if(dolarmiktar === '')
       {
         setShowConfirmation(false);
-        setErrorMessage('Bakiye değeri giriniz.');
+        setErrorMessage(`${t('Error5')}`);
         return;
       }
-        if(islemtipi === 'Satış')
+        if(islemtipi === 'Satış' || islemtipi === 'Sell')
         {
           const doviztipiid=chechdoviz;
           //satış kısmındaki ana sayfdan seçilen hesap varmı yada hesap bakiyesi yeterli mi diye kontol edilir
@@ -177,12 +189,11 @@ const Islem = ({ navigation }) => {
             })
             .then((response) => {
               if (response.status === 200) {
-
+                // kullanıcın bütün bilgilerini getirir
                 axios
                   .get(`${apiAddress}/users/ozetbilgi/${tcno}`)
                   .then((response) => {
                     setUserbilgi(response.data.rows[0]);
-                    console.log(response.data.rows[0]);
                     setShowConfirmation(true);
                   })
                   .catch((error) => {
@@ -196,11 +207,11 @@ const Islem = ({ navigation }) => {
             })
             .catch((error) => {
               setShowConfirmation(false);
-              setErrorMessage('Hesap bulunamadı veya bakiye yetersiz');
+              setErrorMessage(`${t('Error1')}`);
               return;
             });
         }
-        else  if(islemtipi === 'Alım')
+        else  if(islemtipi === 'Alış' || islemtipi === 'Buy')
         {
           const doviztipiid=chechdoviz2;
           // DOVİZ KONTROL ALIM KISMINDAKİ SEÇİLEN HESABIN BAKİYESİ VEYA HESAP VARMI DİYE KONTOL EDER
@@ -220,40 +231,30 @@ const Islem = ({ navigation }) => {
                   .get(`${apiAddress}/users/ozetbilgi/${tcno}`)
                   .then((response) => {
                     setUserbilgi(response.data.rows[0]);
-                    console.log(response.data.rows[0]);
+                   
                     setShowConfirmation(true);
                   })
                   .catch((error) => {
                     console.error('API veri alınırken bir hata oluştu:', error);
                   });
               } else {
-                console.log('hey');
+                
                 console.error(response.data.message);
               }
             })
             .catch((error) => {
               setShowConfirmation(false);
-              setErrorMessage('Hesap bulunamadı veya bakiye yetersiz');
+              setErrorMessage(`${t('Error1')}`);
               return;
             });
         }
     
    
-    }else if(label==='Onayla')
+    }else if(label===`${t('ButtonName3')}`)
     {
-      
-
-      // bu kontrol kullanıcın aynı tipte doviz seçtiğini söyler
-     
-
-      // en son islem tablosuna kayıt ekleyeceksin alım ve satım işini yaptıktan sonra içlerinden gönder 
-
-      
-
-
 
           // kontrol için
-        if(islemtipi === 'Alım')
+        if(islemtipi === 'Alış'|| islemtipi === 'Buy')
         {
           
           const userid=userinfo[0].userid
@@ -277,12 +278,12 @@ const Islem = ({ navigation }) => {
                          }
                        })
                        .catch((error) => {
-                         // HTTP isteği hata verdi, hata mesajını gösterin
-                        console.log('hey')
                         
+                        setShowConfirmation(false);
+                        setErrorMessage(`${t('Error3')}`);
                          console.error(error);
                        });
-                
+                      
                 
                        // para çekilecek hesap için  
                      
@@ -300,7 +301,8 @@ const Islem = ({ navigation }) => {
                        }
                      })
                      .catch((error) => {
-                       // HTTP isteği hata verdi, hata mesajını gösterin
+                      setShowConfirmation(false);
+                      setErrorMessage(`${t('Error1')}`);
                        
                        console.error(error);
                      });
@@ -323,7 +325,8 @@ const Islem = ({ navigation }) => {
                   }
                 })
                 .catch((error) => {
-                  // HTTP isteği hata verdi, hata mesajını gösterin
+                  setShowConfirmation(false);
+                  setErrorMessage(`${t('Error2')}`);
                  
                   console.error(error);
                 });
@@ -334,8 +337,8 @@ const Islem = ({ navigation }) => {
 
 
 
-        
-        else if(islemtipi=== 'Satış')
+
+        else if(islemtipi=== 'Satış' , islemtipi=== 'Sell')
         {
           
           const userid=userinfo[0].userid
@@ -347,8 +350,8 @@ const Islem = ({ navigation }) => {
          const { manifest } = Constants;
           const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
 
-
-               // chechdoviz2   usd tl 1  hesaplanapara  satış 
+            // para eklenecek hesap 
+               console.log(hesaplananpara,userid,chechdoviz2)
           axios
            .post(`${apiAddress}/users/hesapekleSatis`, {hesaplananpara,userid,chechdoviz2})
            .then((response) => {
@@ -358,8 +361,9 @@ const Islem = ({ navigation }) => {
               
              } else {
                // İstek başarısız oldu, hata mesajını gösterin
+                     setShowConfirmation(false);
+                      setErrorMessage(`${t('Error3')}`);
               
-               console.error(response.data.message);
              }
            })
            .catch((error) => {
@@ -368,9 +372,7 @@ const Islem = ({ navigation }) => {
              console.error(error);
            });
  
-          // sayfada seçilene para aktar 
-       
-                // satış işlemleri
+         
 
             // seçilen hesaptan para eksilt
              // chechdoviz   usd tl 1  dolarmiktar  satış 
@@ -384,7 +386,8 @@ const Islem = ({ navigation }) => {
               } else {
                 // İstek başarısız oldu, hata mesajını gösterin
                 
-                console.error(response.data.message);
+                      setShowConfirmation(false);
+                      setErrorMessage(`${t('Error1')}`);
               }
             })
             .catch((error) => {
@@ -413,9 +416,8 @@ const Islem = ({ navigation }) => {
                 })
                 .catch((error) => {
                   // HTTP isteği hata verdi, hata mesajını gösterin
-                 console.log('dovizozet')
-                  console.error(error);
-                  console.log('dovizozet')
+                  setShowConfirmation(false);
+                  setErrorMessage(`${t('Error2')}`);
                 });
         }
 
@@ -428,7 +430,7 @@ const Islem = ({ navigation }) => {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.sureContainer}>
         <Text style={styles.sureText}>{sure}</Text>
-        <Text>Saniye sonra Ana Sayfaya yönlendirileceksiniz</Text>
+        <Text>{t('Timeinformation')} </Text>
       </View>
       <View style={styles.formContainer}>
         <BilgiKarti />
@@ -441,20 +443,20 @@ const Islem = ({ navigation }) => {
       )}
         </View>
         <View style={styles.textInputContainer}>
-          <TextInputC onChangeText={setdolarmiktar} label="Miktar" />
+          <TextInputC onChangeText={setdolarmiktar} label={`${t('ButtonName1')}`} />
         </View>
       </View>
-      <Text> Hesaplanan Değer: </Text>
+      <Text> {t('Information3')} </Text>
       <Text>{hesaplananpara}</Text>
       <View style={styles.buttonContainer}>
-        <Buttonx label="Çevir" OnChangeButton={ OnChangeButton } navigation={navigation} />
+        <Buttonx label={`${t('ButtonName2')}`} OnChangeButton={ OnChangeButton } navigation={navigation} />
       </View>
       {showConfirmation && (
         <View style={styles.overlay}>
           <View style={styles.confirmationContainer}>
-            <Text style={styles.confirmationText}>İşlemi onaylıyor musunuz?</Text>
+            <Text style={styles.confirmationText}>{t('Information2')} </Text>
              <View style={styles.confirmationButtonContainer}>
-              <Buttonx label="Onayla" OnChangeButton={ OnChangeButton} />
+              <Buttonx label={`${t('ButtonName3')}`} OnChangeButton={ OnChangeButton} />
              </View>
           </View>
         </View>
