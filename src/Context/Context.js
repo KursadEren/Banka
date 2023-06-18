@@ -4,7 +4,7 @@ export const MyContext = createContext();
 
 export const MyContextProvider = ({ children }) => {
   const [theme, setTheme] = useState('light');
-  const [Language, setLanguage] = useState('');
+  const [Language, setLanguage] = useState('tr');
   const [fullname, setFullname] = useState('');
   const [email, setEmail] = useState('');
   const [sayfa, setSayfa] = useState('');
@@ -51,7 +51,10 @@ export const MyContextProvider = ({ children }) => {
    const[islemtipi,setIslemtipi] = useState('');
    const [errortext, setErrorText] = useState("");
    const [error, setError] = useState('');
-
+   
+   const updatsetLanguage= (newsetLanguage ) => {
+    setLanguage(newsetLanguage);
+  };
    const updatesetError= (newerror ) => {
     setError(newerror);
   };
@@ -185,7 +188,7 @@ export const MyContextProvider = ({ children }) => {
       password,
       updatePassword,
       Language,
-      setLanguage,
+      updatsetLanguage,
       userinfo,
       updateUserinfo,
       tcno,

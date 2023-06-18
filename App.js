@@ -10,8 +10,10 @@ import HesapEkle from './src/Screen/HesapEkle';
 import Islem from './src/Screen/islem';
 import OzetSayfasi from './src/Screen/OzetSayfası';
 import Hesapduzenle from './src/Screen/Hesapduzenle';
+
 const Stack = createNativeStackNavigator();
 const BetweenNavigator = () =>{
+  
  
   
   const transitionAnimation = (props) => {

@@ -5,10 +5,12 @@ import Constants from 'expo-constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MyContext } from '../Context/Context';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useTranslation } from 'react-i18next';
 
 const { width } = Dimensions.get('window');
 
 const SeeWatchList = ({ navigation }) => {
+  const {t} = useTranslation()
   const [exchangeRates, setExchangeRates] = useState({});
   const [selectedCurrencies, setSelectedCurrencies] = useState([]);
   const context = useContext(MyContext);
@@ -92,7 +94,7 @@ const SeeWatchList = ({ navigation }) => {
       updatesetErrorText("Belirtilen döviz hesabı bulunamadı.");
       return
     }
-    updatesetIslemtipi('Alım')
+    updatesetIslemtipi(`${t('Buy')}`)//
 
     if (currency === 'Amerikan Doları') {
       
@@ -146,7 +148,7 @@ const SeeWatchList = ({ navigation }) => {
       return
     }
   
-    updatesetIslemtipi('Satış')
+    updatesetIslemtipi(`${t('Sell')}`)
     if (currency === 'Amerikan Doları') {
       console.log(currency)
       updatesetsecilendovizAdi(currency);
@@ -195,9 +197,9 @@ const SeeWatchList = ({ navigation }) => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.headerRow}>
-        <Text style={styles.headerCell}>Döviz</Text>
-        <Text style={styles.headerCell}>Alış</Text>
-        <Text style={styles.headerCell}>Satış</Text>
+        <Text style={styles.headerCell}>{t('Currency')} </Text>
+        <Text style={styles.headerCell}>{t('Sell')} </Text>
+        <Text style={styles.headerCell}>{t('Buy')}</Text>
       </View>
       {selectedCurrencies.includes('usd') && (
         <View style={styles.row}>

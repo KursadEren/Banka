@@ -4,7 +4,10 @@ import { Appbar,Avatar,Switch,Snackbar,Subheading,snackbarVisible,handleSnackbar
 import { MyContext } from '../Context/Context';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { DrawerActions } from '@react-navigation/native';
-const AppBar = ({navigation}) => {
+import { useTranslation } from 'react-i18next';
+import i18n from '../i18n';
+const AppBar = ({navigation,title}) => {
+  const { t,i18n } = useTranslation();
     const context = useContext(MyContext);
     const {sayfa,updatesayfa,userinfo} = context;
 
@@ -24,19 +27,19 @@ const AppBar = ({navigation}) => {
     const handleMenuToggle = () => {
       navigation.dispatch(DrawerActions.toggleDrawer()); // Drawer'ı açmak için DrawerActions.toggleDrawer() kullanın
     };
-
+    const localizedSayfa = t(sayfa);
   return (
     <View>
     <Appbar.Header style={{backgroundColor:"rgb(6, 70, 130)"}}>
       {sayfa === 'Sign In' ? (
-        <Appbar.Content  title={sayfa} titleStyle={{ flex: 1, textAlign: 'center',color:'rgb(218, 231, 237)' }} />
+        <Appbar.Content  title={title } titleStyle={{ flex: 1, textAlign: 'center',color:'rgb(218, 231, 237)' }} />
         
       ) : (
         <>
         <Appbar.Action icon="menu" color='white' onPress={handleMenuToggle} />
             <Appbar.Action icon={() => <Icon name="globe" size={24} color="white" />} onPress={() => DraverNavigator()} />
 
-            <Appbar.Content title={sayfa} titleStyle={{ flex: 1, textAlign: 'center', marginHorizontal: '10%',color:"white"  }} />
+            <Appbar.Content title={title} titleStyle={{ flex: 1, textAlign: 'center', marginHorizontal: '10%',color:"white"  }} />
             <Switch color='white' value={switchValue} onValueChange={handleSwitchToggle} />
             <Appbar.Action icon={() => <Avatar.Image size={24} label=""   />} />
             

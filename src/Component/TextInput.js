@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { TextInput, HelperText } from 'react-native-paper';
-
+import { useTranslation } from 'react-i18next';
 const TextInputC = ({ label, onChangeText, error, errorPassword }) => {
   const [text, setText] = useState("");
   const [isFocused, setIsFocused] = useState(false);
-
+  const { t,i18n } = useTranslation();
   const handleFocus = () => {
     setIsFocused(true);
   };

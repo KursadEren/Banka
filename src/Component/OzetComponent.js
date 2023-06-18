@@ -3,8 +3,9 @@ import { View, FlatList, Text, StyleSheet, ActivityIndicator, TouchableOpacity, 
 import axios from 'axios';
 import { MyContext } from '../Context/Context';
 import Constants from 'expo-constants';
-
-const Ozet = () => {
+import { useTranslation } from 'react-i18next';
+const Ozet = ({title}) => {
+  const {t} = useTranslation();
   const context = useContext(MyContext);
   const { tcno } = context;
   const perPage = 10; // Sayfa başına gösterilecek veri sayısı
@@ -106,7 +107,7 @@ const Ozet = () => {
     <View style={styles.container}>
       <TouchableOpacity onPress={toggleVisibility}>
         <View style={styles.header}>
-          <Text style={styles.headerText}>Son İşlemler</Text>
+          <Text style={styles.headerText}>{title} </Text>
           <Text style={styles.headerIcon}>{visible ? '-' : '+'}</Text>
         </View>
       </TouchableOpacity>

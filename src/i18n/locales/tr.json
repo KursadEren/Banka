@@ -1,0 +1,41 @@
+{
+    "welcome": "Hoş Geldiniz",
+    "HomeScreen":"Ana Sayfa",
+    "Account": "Hesaplar",
+    "Buy" : "Satış",
+    "Sell": "Alış",
+    "Currency":"Para Birimi",
+    "SignIn" : "Giriş",
+    "SignUp":"Kayıt",
+    "Next": "Devam Et",
+    "Password":"Şifre",
+    "Summary":"Özet",
+    "Transactions":"Son İşlemler",
+    "EditAccount" : "Hesap Düzenle",
+    "AddAccount":"Hesap Ekle",
+    "Timeinformation":"Saniye sonra Ana Sayfaya yönlendirileceksiniz",
+    "Error1":"Hesap bulunamadı veya bakiye yetersiz",
+    "Error2" : "işlem gerçekleşirken bir hata oluştu",
+    "Error3":"Hesap bulunamadı",
+    "Error4": "Aynı Tipe dönüştüremezsiniz.",
+    "Error5":"Bakiye değeri giriniz.",
+    "Information1":"İşlemler için dönüştürülecek para birimini ve miktarı giriniz",
+    "Branches":"Şubeler",
+    "Selectoptions":"Seçeekleri Seçin",
+    "ConvertType":"Dönüştürülecek Tip",
+    "AccountType":"Hesap Tur",
+    "CurrencyType":"Doviz Tipi",
+    "CurrencyTransaction":"İşlem Yapılacak Kur",
+    "Information2":"İşlemi onaylıyor musunuz?",
+    "Information3":"Hesaplanan Değer",
+    "ButtonName1":"Miktar",
+    "ButtonName2":"Çevir",
+    "ButtonName3":"Onayla",
+    "ButtonName4":"Geri",
+    "ButtonName5":"Hesap Sil"
+    
+    
+    
+    
+  }
+  
