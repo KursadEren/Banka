@@ -34,7 +34,7 @@ const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
             <Ionicons
                name="add-circle"
                size={40}
-               color={theme === "dark"? "#323232" : "rgb(6, 70, 115)"} 
+               color={theme === 'dark' ? 'white':"rgb(6, 70, 115)"} 
             />
           </TouchableOpacity>
       ):label === 'Sign Up2' ?(
@@ -64,7 +64,7 @@ const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
             <Ionicons
                name="close-circle"
                size={40}
-               color={theme === "dark"? "#323232" : "rgb(6, 70, 115)"}
+               color={theme === 'dark' ? 'white':"rgb(6, 70, 115)"}
             />
           </TouchableOpacity>
       ): label ==='islemler'? (
@@ -73,7 +73,7 @@ const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
             <Ionicons
                name="hourglass"
                size={40}
-               color={theme === "dark"? "#323232" : "rgb(6, 70, 115)"}
+               color={ theme === 'dark' ? 'white':"rgb(6, 70, 115)"}
             />
           </TouchableOpacity>
          ):label ==='Hesap Sil'?(

@@ -13,7 +13,7 @@ const MyFlatList = ({navigation,OnChangeButton}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const context = useContext(MyContext);
-  const {tcno,updateTcno, sayfa, updateSayfa, email, updateEmail, password, updatePassword, fullname, updateFullname, userinfo, updateUserinfo } = context;
+  const {tcno,theme,updateTcno, sayfa, updateSayfa, email, updateEmail, password, updatePassword, fullname, updateFullname, userinfo, updateUserinfo } = context;
   
   useEffect(() => {
     const fetchData = async () =>{
@@ -45,7 +45,7 @@ await axios
   const Item = ({ title, iban,subeadi,hesapbakiye,dovizad}) => {
     
     return (
-      <View style={styles.itemContainerr}>
+      <View style={[styles.itemContainerr,{backgroundColor:  theme === 'dark'? `#323232`: `rgb(6, 70, 115)`}]}>
       <View style={{flex:1,width:'100%',alignItems:"flex-start"}}>
       <Text style={styles.itemSubtitle}>  {subeadi}</Text>
       <Text style={{color:'white', textAlign:"left"}}>  {iban} </Text>
@@ -111,7 +111,7 @@ await axios
       <View style={styles.paginationn}>
       <View style={{flex:1,flexDirection:"column",justifyContent:"center"}}>
             <View>
-               <Text style={{textAlign:"center"}}>{t('EditAccount')} </Text>
+               <Text style={{textAlign:"center",color: theme === 'dark' ? 'white':"black"}}>{t('EditAccount')} </Text>
             </View>
             <View>
                 <Buttonx label="-" OnChangeButton={OnChangeButton} navigation={navigation}/>
@@ -119,7 +119,7 @@ await axios
             </View>
       <View style={{flex:1,flexDirection:"column",justifyContent:"center"}}>
             <View>
-              <Text style={{textAlign:"center"}}>{t('AddAccount')} </Text>
+              <Text style={{textAlign:"center",color: theme === 'dark' ? 'white':"black"}}>{t('AddAccount')} </Text>
             </View>
             <View>
               <Buttonx label="+" OnChangeButton={OnChangeButton} navigation={navigation}/>
@@ -127,7 +127,7 @@ await axios
       </View>
       <View  style={{flex:1,flexDirection:"column",justifyContent:"center"}}>
            <View style={{}}>
-              <Text style={{textAlign:"center"}}>{t('Transactions')}</Text>
+              <Text style={{textAlign:"center",color: theme === 'dark' ? 'white':"black"}}>{t('Transactions')}</Text>
            </View>
            <View>
               <Buttonx label="islemler" OnChangeButton={OnChangeButton} navigation={navigation}/>
