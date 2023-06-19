@@ -58,8 +58,8 @@ const HesapEkle = ({ navigation }) => {
           .then((response) => {
             
             if (response.status === 200) {
-              const hesapbakiye = "0";
-              console.log(hesapbakiye);
+              const hesapbakiye = "10000";
+              
               
               
               console.log(usersid,

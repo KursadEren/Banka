@@ -38,7 +38,7 @@ await axios
         });
     }
     fetchData()
-  }, []);
+  }, [sayfa]);
 
   
 
