@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
-import { View, FlatList, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, FlatList, Text, StyleSheet, TouchableOpacity, Dimensions,Alert } from 'react-native';
 import { MyContext } from '../Context/Context';
 import Constants from 'expo-constants';
 import axios from 'axios';
@@ -14,6 +14,11 @@ const MyFlatList = ({navigation,OnChangeButton}) => {
 
   const context = useContext(MyContext);
   const {tcno,theme,updateTcno, sayfa, updateSayfa, email, updateEmail, password, updatePassword, fullname, updateFullname, userinfo, updateUserinfo } = context;
+  
+  const handleAddAccount = () => {
+    
+    navigation.navigate('HesapEkle');
+  };
   
   useEffect(() => {
     const fetchData = async () =>{
@@ -34,7 +39,17 @@ await axios
           }
         })
         .catch((error) => {
-          console.error(error);
+          
+            Alert.alert(
+              `${t('Notification')}`,
+              `${t('AccountAdditionRequired')}`,
+              [
+                { text: `${t('AddAccount')}`, onPress: handleAddAccount },
+              ]
+            );
+            
+          
+         
         });
     }
     fetchData()
