@@ -12,6 +12,7 @@ const SignUp = ( {navigation} ) => {
     const {dogumtarih,tcno, updateSayfa,updatesetDogumtarih,  password, userinfo,selectedOptiondoviz,selectedOptionsube,selectedOptionhesap,selectedIBAN,updateTcno, email, updateEmail,updatePassword,telno,updatesetTelno,   fullname,updateFullname, } = context;
     const [error, setError] = useState('');
     const [errorPassword, setErrorPassword] = useState('');
+    const [errorEmail, setErrorEmail] = useState('');
    const [step,setStep] = useState(1);
   const {t} = useTranslation()
   const handleNextStep = () => {
@@ -26,7 +27,10 @@ const SignUp = ( {navigation} ) => {
   if(text ==="Sign Up2")
   {
     
-
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+      setErrorEmail('Geçerli bir e-posta adresi giriniz');
+      return;
+    }
 
     const { manifest } = Constants;
   const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
@@ -36,8 +40,8 @@ const SignUp = ( {navigation} ) => {
       
       if (response.status === 201) {
         
-        console.log("hey")
-        navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
+        
+        navigation.navigate('Sign In')
         
       } else {
         // İstek başarısız oldu, hata mesajını gösterin
@@ -100,6 +104,9 @@ const SignUp = ( {navigation} ) => {
 
  }
 
+
+
+
   const renderStep = () => {
     switch (step) {
       case 1:
@@ -117,11 +124,11 @@ const SignUp = ( {navigation} ) => {
       case 2:
         return (
           <View style={styles.stepContainer}>
-            <Text style={styles.stepText}>E-posta Adresiniz:</Text>
-            <TextInputC onChangeText={updateEmail}  label="email"/>
-            <Text style={styles.stepText}>Telefon Numaranız:</Text>
-            <TextInputC onChangeText={updatesetTelno}  label={`${t('TelephoneNumber')}`} />
-            <Text style={styles.stepText}>Telefon Numaranız:</Text>
+           
+            <TextInputC onChangeText={updateEmail} errorEmail={errorEmail}  label="email"/>
+            
+            <TextInputC onChangeText={updatesetTelno}   label={`${t('TelephoneNumber')}`} />
+            
             <TextInputC onChangeText={updatesetDogumtarih}  label="dogumtarih"/>
             <View style={styles.buttonContainer}>
             

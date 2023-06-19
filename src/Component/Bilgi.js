@@ -13,7 +13,7 @@ const BilgiKarti = () => {
   const containerHeight = containerWidth * 0.55;
 
   return (
-    <View style={[styles.container, { width: containerWidth, height: containerHeight }]}>
+    <View style={[styles.container, { width: containerWidth, height: containerHeight,borderColor: theme === 'dark'? '#323232': "rgb(6, 70, 130)" }]}>
       <Text style={[styles.baslik,{color: theme ==='dark' ? 'white': 'black'}]}>{t('CurrencyTransaction')} </Text>
       <Text style={[styles.baslik,{color: theme ==='dark' ? 'white': 'black'}]}>{islemtipi}</Text>
       <View style={styles.veriContainer}>
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     alignSelf: 'center',
-    borderColor:"rgb(6, 70, 130)"
+    
   },
   baslik: {
     textAlign: 'center',

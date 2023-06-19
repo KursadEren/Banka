@@ -1,8 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext,useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { MyContext } from '../Context/Context';
 
 const ErrorBubble = ({ message }) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      updatesetErrorText(''); // Zamanlayıcı süresi sonunda hata mesajını temizle
+    }, 3000);
+
+    return () => clearTimeout(timer); // Bileşenin unmount edildiğinde zamanlayıcıyı temizle
+  }, [errortext, updatesetErrorText]);
 
     const context = useContext(MyContext)
     const {errortext,

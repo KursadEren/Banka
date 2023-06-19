@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { TextInput, HelperText } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
-const TextInputC = ({ label, onChangeText, error, errorPassword }) => {
+const TextInputC = ({ label, onChangeText, error, errorPassword,errorEmail }) => {
   const [text, setText] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const { t,i18n } = useTranslation();
@@ -33,6 +33,7 @@ const TextInputC = ({ label, onChangeText, error, errorPassword }) => {
       />
       {error && <HelperText type="error" visible={true}>{error}</HelperText>}
       {errorPassword && <HelperText type="error" visible={true}>{errorPassword}</HelperText>}
+      {errorEmail && <HelperText type="error" visible={true}>{errorEmail}</HelperText>}
     </View>
   );
 };

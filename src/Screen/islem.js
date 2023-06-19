@@ -458,7 +458,7 @@ const Islem = ({ navigation }) => {
         {showConfirmation && (
           <View style={styles.overlay}>
             <View style={styles.confirmationContainer}>
-              <Text style={[styles.confirmationText,{color: theme ==='dark' ? 'white': 'black'}]}>{t('Information2')}</Text>
+              <Text style={[styles.confirmationText,{color: theme ==='dark' ? 'black': 'black'}]}>{t('Information2')}</Text>
               <View style={styles.confirmationButtonContainer}>
                 <Buttonx label={`${t('ButtonName3')}`} OnChangeButton={OnChangeButton} />
               </View>

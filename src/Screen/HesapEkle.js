@@ -80,7 +80,7 @@ const HesapEkle = ({ navigation }) => {
           })   .then((response) => {
             
             if (response.status === 201) {
-              
+              updateSayfa("Hesapekle");
               updateSayfa("HomeScreen");
   
               navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
