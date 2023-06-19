@@ -6,7 +6,7 @@ import { MyContext } from '../Context/Context'
 import { useTranslation } from 'react-i18next'
 export default function OzetSayfasi({navigation}) {
     const context = useContext(MyContext)
-    const {updateSayfa} = context;
+    const {updateSayfa,theme} = context;
     const { t,i18n } = useTranslation();
     useEffect(() => {
 
@@ -19,12 +19,12 @@ export default function OzetSayfasi({navigation}) {
         return () => backHandler.remove();
     }, []);
   return (
-    <View style={{flex:1,backgroundColor:"rgb(218, 231, 237)"}}>
-      <View style={{}}>
+    <View style={{flex:1,backgroundColor: theme === 'dark' ? '#1e1e1e':"rgb(218, 231, 237)"}}>
+      <View style={{backgroundColor: theme === 'dark' ? '#1e1e1e':"rgb(218, 231, 237)"}}>
       <AppBar title={t('Summary')} navigation={navigation}/>
       </View>
         
-        <View style={{flex:1, marginHorizontal:"10%"}}>
+        <View style={{flex:1, marginHorizontal:"10%",backgroundColor: theme === 'dark' ? '#1e1e1e':"rgb(218, 231, 237)"}}>
       <Ozet title={t('Transactions')} />
       </View>
     </View>
