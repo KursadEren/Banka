@@ -146,15 +146,16 @@ const styles = StyleSheet.create({
     marginTop: '10%',
     
   },
+  container:{flex:1},
   flatList: {
     flexGrow: 0,
     width: Dimensions.get('window').width,
-    height: 180,
+    height: Dimensions.get('window').height * 0.18,
     
   },
   itemContainerr: {
     width: Dimensions.get('window').width - 40,
-    height: 170,
+    height: '100%',
     marginHorizontal: 20,
     borderRadius: 10,
     backgroundColor: '#FFFFFF',
@@ -182,7 +183,8 @@ const styles = StyleSheet.create({
    justifyContent:"center",
     marginTop: 10,
     alignItems:"center",
-
+    
+    flex:0.1
   },
   paginationDot: {
     width: 8,
@@ -190,15 +192,19 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: 'gray',
     marginHorizontal: 4,
+    
   },
   paginationDotActive: {
     backgroundColor: 'black',
+    
   },
   paginationn:{
     flexDirection: 'row',
     justifyContent:"space-around",
      marginTop: 10,
      alignItems:"center",
+     
+     flex:1
   }
 });
 

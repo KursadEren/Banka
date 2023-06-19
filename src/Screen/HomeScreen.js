@@ -111,9 +111,11 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.listItemContainer}>
           <MyFlatList OnChangeButton={OnChangeButton} navigation={navigation} />
         </View>
+        <View style={{flex:1.5}}>
         <ErrorBubble />
+        </View>
         <ExpandableScreen navigation={navigation} onExpand={handleExpand} onCollapse={handleCollapse} />
-      </ScrollView>
+        </ScrollView>
     </View>
   );
 };
@@ -128,15 +130,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   listItemContainer: {
-    marginTop: height * 0.01,
-    marginHorizontal: width * 0.1,
+   
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+   flex:1,
+   
   },
   headerContainer: {
     backgroundColor: 'rgb(218, 231, 237)',
-    margin: 10,
+    margin:"1%",
     borderRadius: 10,
   },
   headerText: {

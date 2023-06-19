@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, BackHandler, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, BackHandler, ScrollView, StyleSheet,Alert,Dimensions } from 'react-native';
 import { MyContext } from '../Context/Context';
 import ComboBox from '../Component/Combobox';
 import TextInputC from '../Component/TextInput';
@@ -8,7 +8,7 @@ import axios from 'axios';
 import Constants from 'expo-constants';
 import BilgiKarti from '../Component/Bilgi';
 import { useTranslation } from 'react-i18next';
-
+const { width } = Dimensions.get('window');
 const Islem = ({ navigation }) => {
   const {t} = useTranslation()
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -317,8 +317,9 @@ const Islem = ({ navigation }) => {
                 .then((response) => {
                   
                   if (response.status === 201) {
-                    
                    
+                            navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
+                        
                   } else {
                     // İstek başarısız oldu, hata mesajını gösterin
                    
@@ -407,8 +408,9 @@ const Islem = ({ navigation }) => {
                 .then((response) => {
                   
                   if (response.status === 201) {
-                    
                    
+                            navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
+                          
                   } else {
                     // İstek başarısız oldu, hata mesajını gösterin
                    
@@ -427,67 +429,59 @@ const Islem = ({ navigation }) => {
   
 
   return (
-    <View style={{flex:1,backgroundColor:"rgb(218, 231, 237)"}}>
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.sureContainer}>
-        <Text style={styles.sureText}>{sure}</Text>
-        <Text>{t('Timeinformation')} </Text>
-      </View>
-      <View style={styles.formContainer}>
-        <BilgiKarti />
-        <View style={styles.comboboxContainer}>
-          <ComboBox label="doviztipialis" />
-          {errorMessage && (
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>{errorMessage}</Text>
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.sureContainer}>
+          <Text style={styles.sureText}>{sure}</Text>
+          <Text>{t('Timeinformation')}</Text>
         </View>
-      )}
-        </View>
-        <View style={styles.textInputContainer}>
-          <TextInputC onChangeText={setdolarmiktar} label={`${t('ButtonName1')}`} />
-        </View>
-      </View>
-      <Text> {t('Information3')} </Text>
-      <Text>{hesaplananpara}</Text>
-      <View style={styles.buttonContainer}>
-        <Buttonx label={`${t('ButtonName2')}`} OnChangeButton={ OnChangeButton } navigation={navigation} />
-      </View>
-      {showConfirmation && (
-        <View style={styles.overlay}>
-          <View style={styles.confirmationContainer}>
-            <Text style={styles.confirmationText}>{t('Information2')} </Text>
-             <View style={styles.confirmationButtonContainer}>
-              <Buttonx label={`${t('ButtonName3')}`} OnChangeButton={ OnChangeButton} />
-             </View>
+        <View style={styles.formContainer}>
+          <BilgiKarti />
+          <View style={styles.comboboxContainer}>
+            <ComboBox label="doviztipialis" />
+            {errorMessage && (
+              <View style={styles.errorContainer}>
+                <Text style={styles.errorText}>{errorMessage}</Text>
+              </View>
+            )}
+          </View>
+          <View style={styles.textInputContainer}>
+            <TextInputC onChangeText={setdolarmiktar} label={`${t('ButtonName1')}`} />
           </View>
         </View>
-      )}
-      
-    </ScrollView>
+        <Text>{t('Information3')}</Text>
+        <Text>{hesaplananpara}</Text>
+        <View style={styles.buttonContainer}>
+          <Buttonx label={`${t('ButtonName2')}`} OnChangeButton={OnChangeButton} navigation={navigation} />
+        </View>
+        {showConfirmation && (
+          <View style={styles.overlay}>
+            <View style={styles.confirmationContainer}>
+              <Text style={styles.confirmationText}>{t('Information2')}</Text>
+              <View style={styles.confirmationButtonContainer}>
+                <Buttonx label={`${t('ButtonName3')}`} OnChangeButton={OnChangeButton} />
+              </View>
+            </View>
+          </View>
+        )}
+        <View style={styles.bottomSpace} /> 
+      </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  errorContainer: {
-    backgroundColor: 'red',
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 10,
-    alignSelf: 'center',
-    position:"absolute"
-  },
-  errorText: {
-    color: 'white',
-    fontWeight: 'bold',
-    
-  },
   container: {
+    flex: 1,
+    backgroundColor: 'rgb(218, 231, 237)',
+  },
+  scrollContainer: {
     flexGrow: 1,
-    marginTop: '35%',
-    width: '100%',
+    width: width,
+    marginTop:"10%",
     alignItems: 'center',
-    
+    paddingVertical: '3%',
+    paddingBottom: '10%',
   },
   sureContainer: {
     marginBottom: '5%',
@@ -540,6 +534,24 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '60%',
   },
+  errorContainer: {
+    backgroundColor: 'red',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+    alignSelf: 'center',
+    position: 'absolute',
+    zIndex: 1,
+  },
+  errorText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  bottomSpace: {
+    height: '10%', // Yeni eklenen stil
+  },
 });
+
+
 
 export default Islem;
