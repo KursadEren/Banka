@@ -53,7 +53,9 @@
     "Notification":"Do you want to exit",
     "Notification1":"The operation was successfully completed",
     "Alright":"Alright",
-    "CurrencyName":"Currency Name"
+    "CurrencyName":"Currency Name",
+    "Unchecked":"Unchecked",
+    "Checked":"Checked"
     
 }
   
