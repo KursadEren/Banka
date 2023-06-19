@@ -1,4 +1,4 @@
-import HomeScreen from "../Screen/HomeScreen"
+import HomeScreen from "../Screen/HomeScreen";
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -6,18 +6,35 @@ import {
 } from '@react-navigation/drawer';
 import Profile from '../Screen/Profile';
 import WatchList from "../Screen/WatchList";
-import Islem from '../Screen/islem'
+import Islem from '../Screen/islem';
+import React, { useContext } from "react";
+import { MyContext } from "../Context/Context";
+import { useTranslation } from "react-i18next";
+
 const Drawer = createDrawerNavigator();
 
 function CustomDrawerContent(props) {
+  const { theme } = useContext(MyContext);
+ 
+  const { state, ...rest } = props;
+
   return (
-    <DrawerContentScrollView {...props}>
-      <DrawerItemList {...props} />
+    <DrawerContentScrollView {...rest} style={{ backgroundColor: theme === 'dark' ? '#1e1e1e' : 'rgb(218, 231, 237)' }}>
+      <DrawerItemList
+        {...rest}
+        state={state}
+        labelStyle={{
+          color: theme === 'dark' ? 'white' : 'black'
+        }}
+      />
     </DrawerContentScrollView>
   );
 }
 
 const DraverNavigator = () => {
+  const { theme } = useContext(MyContext);
+  const { t } = useTranslation();
+
   return (
     <Drawer.Navigator
       initialRouteName="HomeScreen"
@@ -25,10 +42,23 @@ const DraverNavigator = () => {
       useLegacyImplementation
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
-      <Drawer.Screen name="HomeScreen" component={HomeScreen} />
-      <Drawer.Screen name="Profile" component={Profile} />
-      <Drawer.Screen name="WatchList" component={WatchList} />
+      <Drawer.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={({ navigation }) => ({
+          drawerLabel: t('HomeScreen'), // Çevrilen metni burada alın
+          drawerLabelStyle: { color: theme === 'dark' ? 'white' : 'black' },
+        })}
+      />
       
+      <Drawer.Screen
+        name="WatchList"
+        component={WatchList}
+        options={{
+          drawerLabel: t('Watchlist'),
+          drawerLabelStyle: { color: theme === 'dark' ? 'white' : 'black' },
+        }}
+      />
     </Drawer.Navigator>
   );
 };

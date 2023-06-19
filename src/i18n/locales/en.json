@@ -15,7 +15,7 @@
     "Summary":"Summary",
     "Transactions":"Recent",
     "Timeinformation":"You will be redirected to the Home Page in seconds",
-   
+    "Watchlist":"Watchlist",
     "Information1": "Please enter the currency and amount to be converted for transactions",
     "Branches":"Branches",
     "Selectoptions":"Select options",
@@ -52,7 +52,8 @@
     "No":"No",
     "Notification":"Do you want to exit",
     "Notification1":"The operation was successfully completed",
-    "Alright":"Alright"
+    "Alright":"Alright",
+    "CurrencyName":"Currency Name"
     
 }
   
