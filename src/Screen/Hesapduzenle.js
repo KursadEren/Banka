@@ -151,7 +151,7 @@ export default function Hesapduzenle({navigation}) {
         switch (step) {
           case 1:
             return (
-              <View style={styles.container}>
+              <View style={[styles.container,{backgroundColor:theme === 'dark'? "#1e1e1e" :'rgb(218, 231, 237)'}]}>
               <View style={styles.stepContainer}>
                 
                 <ComboBox label="doviztipicheck"/>
@@ -169,7 +169,7 @@ export default function Hesapduzenle({navigation}) {
             );
           case 2:
             return (
-              <View style={styles.container}>
+              <View style={[styles.container,{backgroundColor:theme === 'dark'? "#1e1e1e" :'rgb(218, 231, 237)'}]}>
               <View style={styles.stepContainer}>
                 <Text style={styles.stepText}>TC numaranız:</Text>
                 <TextInputC label="TC No"onChangeText={updateTcno}  style={styles.input} />
@@ -200,9 +200,10 @@ export default function Hesapduzenle({navigation}) {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
+      width:"'100%",
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor:'rgb(218, 231, 237)'
+      
     },
     stepContainer: {
       flex: 1,
