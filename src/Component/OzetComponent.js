@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 const Ozet = ({title}) => {
   const {t} = useTranslation();
   const context = useContext(MyContext);
-  const { tcno } = context;
+  const { tcno,theme } = context;
   const perPage = 10; // Sayfa başına gösterilecek veri sayısı
   const [transactions, setTransactions] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -61,10 +61,10 @@ const Ozet = ({title}) => {
     const formattedTarih = `${day}/${month}/${year} `;
 
     return (
-      <View style={styles.transactionItem}>
-        <Text style={styles.transactionText}>{formattedTarih}</Text>
-        <Text style={styles.transactionText}> -{item.satilanparatutari}  </Text>
-        <Text style={styles.transactionText}>{item.alinacakparatutari}</Text>
+      <View style={[styles.transactionItem,{backgroundColor: theme === 'dark' ? '#323232':"white",borderWidth:1,borderColor: theme ==='dark'? "white" :"black"}]}>
+        <Text style={[styles.transactionText,{color: theme === 'dark' ? "white":"black"}]}>{formattedTarih}</Text>
+        <Text style={[styles.transactionText,{color: theme === 'dark' ? "white":"black"}]}> -{item.satilanparatutari}  </Text>
+        <Text style={[styles.transactionText,{color: theme === 'dark' ? "white":"black"}]}>{item.alinacakparatutari}</Text>
       </View>
     );
   };
@@ -104,11 +104,11 @@ const Ozet = ({title}) => {
   };
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={toggleVisibility}>
-        <View style={styles.header}>
-          <Text style={styles.headerText}>{title} </Text>
-          <Text style={styles.headerIcon}>{visible ? '-' : '+'}</Text>
+    <View style={[styles.container,{backgroundColor: theme === 'dark' ? '#1e1e1e':"rgb(218, 231, 237)"}]}>
+      <TouchableOpacity  onPress={toggleVisibility}>
+        <View style={[styles.header,{backgroundColor:theme === 'dark' ? '#323232':"white",borderWidth:1,borderColor: theme ==='dark'? "white" :"black" }]}>
+          <Text style={[styles.headerText,{color: theme === 'dark' ? "white": "black"}]}>{title} </Text>
+          <Text style={[styles.headerText,{color: theme === 'dark' ? "white": "black"}]}>{visible ? '-' : '+'}</Text>
         </View>
       </TouchableOpacity>
 
