@@ -54,7 +54,9 @@
     "Notification1":"İşelem Başarıyla Gerçekleştirildi",
     "Alright":"Tamam",
     "Watchlist":"İzleme Listesi",
-    "CurrencyName":"Doviz isimleri"
-   
+    "CurrencyName":"Doviz isimleri",
+    "Checked":"İşaretlendi",
+    "Unchecked":"İşaretlenmedi"
+    
   }
   

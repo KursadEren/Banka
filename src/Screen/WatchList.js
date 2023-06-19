@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, BackHandler } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MyContext } from '../Context/Context';
+import { useTranslation } from 'react-i18next';
 
 const currencies = [
   { id: 'usd', name: 'Amerikan Doları' },
@@ -11,10 +12,11 @@ const currencies = [
 ];
 
 const WatchList = ({ navigation }) => {
-  const context = useContext(MyContext);
-  const { sayfa, updateSayfa } = context;
+  
+   const context = useContext(MyContext);
+  const { sayfa, updateSayfa,theme } = context;
   const [selectedCurrencies, setSelectedCurrencies] = useState([]);
-
+ const {t} = useTranslation()
   useEffect(() => {
     const backAction = () => {
       navigation.navigate('HomeScreen');
@@ -69,9 +71,9 @@ const WatchList = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Döviz İsimleri</Text>
+    <View style={[styles.container,{backgroundColor: theme === 'dark'? '#1e1e1e':'rgb(218, 231, 237)  ' }]}>
+      <View style={[styles.header,{backgroundColor:theme ==='dark'? '#1e1e1e':'rgb(218, 231, 237)'}]}>
+        <Text style={[styles.headerText,{color:theme === 'dark' ? '#ccc': 'black' }]}>{t('CurrencyName')} </Text>
       </View>
       <View style={styles.content}>
         {currencies.map((currency) => (
@@ -91,14 +93,14 @@ const WatchList = ({ navigation }) => {
               ]}
             >
               <Text style={styles.buttonText}>
-                {selectedCurrencies.includes(currency.id) ? 'İşaretlendi' : 'İşaretlenmedi'}
+                {selectedCurrencies.includes(currency.id) ? `${t('Checked')}` : `${t('Unchecked')}`}
               </Text>
             </View>
           </TouchableOpacity>
         ))}
       </View>
       <View style={styles.footer}>
-        <Text style={styles.footerText}>{sayfa}</Text>
+        <Text style={[styles.footerText,{color: theme ==='dark'? '#ccc':'black' }]}>{t('Watchlist')} </Text>
       </View>
     </View>
   );
