@@ -18,7 +18,7 @@ const HesapEkle = ({ navigation }) => {
   }
  
   const context = useContext(MyContext);
-  const {selectedIBAN,usersid,tcno,password,updateTcno,updatePassword,selectedOptiondoviz,  selectedOptionhesap, selectedOptionsube, sayfa, updateSayfa,updateSelectedIBAN,updatesetOptions,updatesetOptions2,updatesetOptions3 } = context;
+  const {theme,selectedIBAN,usersid,tcno,password,updateTcno,updatePassword,selectedOptiondoviz,  selectedOptionhesap, selectedOptionsube, sayfa, updateSayfa,updateSelectedIBAN,updatesetOptions,updatesetOptions2,updatesetOptions3 } = context;
  
   
   
@@ -172,8 +172,8 @@ const HesapEkle = ({ navigation }) => {
     switch (step) {
       case 1:
         return (
-          <View style={styles.container}>
-          <View style={styles.stepContainer}>
+          <View style={[styles.container,{backgroundColor:theme === 'dark'? "#1e1e1e" :'rgb(218, 231, 237)'}]}>
+          <View style={[styles.stepContainer]}>
             
             <ComboBox   label="doviztipi"/>
             
@@ -188,7 +188,7 @@ const HesapEkle = ({ navigation }) => {
         );
       case 2:
         return (
-          <View style={styles.container}>
+          <View style={[styles.container,{backgroundColor:theme === 'dark'? "#1e1e1e" :'rgb(218, 231, 237)'}]}>
           <View style={styles.stepContainer}>
             
             <TextInputC onChangeText={updateTcno} label="TC No"  style={styles.input} />
@@ -217,9 +217,9 @@ const HesapEkle = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    width:'100%',
     justifyContent: 'center',
-    backgroundColor:'rgb(218, 231, 237)'
+    alignItems:"center"
   },
   stepContainer: {
     flex: 1,
