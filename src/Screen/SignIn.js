@@ -18,6 +18,7 @@ const SignIn = ({ navigation }) => {
   const [errorPassword, setErrorPassword] = useState('');
   const context = useContext(MyContext);
   const {
+    renk1,
     tcno,
     updateSayfa,
     password,
@@ -26,7 +27,9 @@ const SignIn = ({ navigation }) => {
     updateTcno,
     updatePassword,
     updatsetLanguage,
-    updatsetsetuserid
+    updatsetsetuserid,
+    theme,
+      updateTheme,
   } = context;
 
   useEffect(() => {
@@ -115,17 +118,18 @@ const SignIn = ({ navigation }) => {
           Alert.alert('hata');
         }
       };
-      const handeldeneme = (text) =>{
-        updatsetLanguage(text)
-        i18n.changeLanguage(text)
+      const handeldeneme = async () =>{
+        console.log(theme)
+        await  theme === 'light' ?updateTheme('dark') : updateTheme('light')
+        console.log(theme)
       }
  
   return (
-    <View style={{ flex: 1, backgroundColor: 'rgb(218, 231, 237)' }}>
+    <View style={{ flex: 1, backgroundColor: theme === 'dark'? `#1e1e1e`: `rgb(218, 231, 237)` }}>
       <View style={style.con}>
         <View style={style.appBarr}>
           <AppBar title={t('SignIn')} />
-          <Text style={{ textAlign: 'center', marginTop: height * 0.05, fontSize: 20 }}>{t('welcome')}</Text>
+          <Text style={{ textAlign: 'center', marginTop: height * 0.05, fontSize: 20, color: theme === 'dark'? `white`: `#1e1e1e`  }}>{t('welcome')}</Text>
         </View>
         <View style={style.Body}>
           <View style={style.TextInput}>
@@ -135,7 +139,7 @@ const SignIn = ({ navigation }) => {
             <TextInputC onChangeText={updatePassword} errorPassword={errorPassword} label={t('Password')} />
           </View>
           <View style={style.ButtonContainer}>
-            <Buttonx label="Sign In" OnChangeButton={OnChangeButton} navigation={navigation} />
+            <Buttonx  label="Sign In" OnChangeButton={OnChangeButton} navigation={navigation} />
             <Buttonx label="Sign Up" OnChangeButton={OnChangeButton} navigation={navigation} />
           </View>
           <View style={style.or}>
@@ -147,7 +151,7 @@ const SignIn = ({ navigation }) => {
         <View style={style.ButtonContainer}></View>
       </View>
       <View>
-      
+        <Button title="tıkla" onPress={handeldeneme}/>
       </View>
     </View>
   );

@@ -18,7 +18,9 @@ export const MyContextProvider = ({ children }) => {
   const [cevirilecekdovizadi , setCevirilecekdovizadi] = useState('');
   
 
-  
+  const  renk1 = theme === 'dark'? `#1e1e1e`: `rgb(218, 231, 237)`
+  const  renk2 = theme === 'dark'? `#323232`: `rgb(6, 70, 115)`
+  const  renk3 = theme === 'dark'? `#323232`: `rgb(218, 231, 237)`
 
    //hesap ekle SAYFASI
    const [selectedOptiondoviz, setSelectedOptiondoviz] = useState('');
@@ -182,9 +184,13 @@ export const MyContextProvider = ({ children }) => {
 
 
   return (
-    <MyContext.Provider value={{ theme,
-      
+    <MyContext.Provider value={{ 
+      theme,
       updateTheme,
+      renk1,
+      renk2,
+
+
       fullname,
       updateFullname,
       email,

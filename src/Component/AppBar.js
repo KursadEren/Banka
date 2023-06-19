@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 const AppBar = ({ navigation, title }) => {
   const { t, i18n } = useTranslation();
   const context = useContext(MyContext);
-  const { sayfa, updatsetLanguage, Language } = context;
+  const { sayfa,theme, updatsetLanguage, Language } = context;
 
   const [switchValue, setSwitchValue] = useState(false);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
@@ -39,7 +39,7 @@ const AppBar = ({ navigation, title }) => {
 
   return (
     <View>
-      <Appbar.Header style={{ backgroundColor: 'rgb(6, 70, 130)' }}>
+      <Appbar.Header style={{ backgroundColor: theme === 'dark'? `#323232`: `rgb(6, 70, 115)` }}>
         {sayfa === 'Sign In' ? (
           <Appbar.Content title={title} titleStyle={{ flex: 1, textAlign: 'center', color: 'rgb(218, 231, 237)' }} />
         ) : (

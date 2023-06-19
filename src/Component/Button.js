@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
   const context = useContext(MyContext);
-  const {dogumtarih,tcno, updateSayfa,  password, userinfo,selectedOptiondoviz,selectedOptionsube,selectedOptionhesap,selectedIBAN,updateTcno, email, updateEmail,updatePassword,telno,updatesetTelno,   fullname,updateFullname, } = context;
+  const { theme } = context;
   const {t} = useTranslation();
 
   
@@ -21,11 +21,11 @@ const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
   return (
     <View style={styles.container}>
       {label === 'Sign In' ? (
-        <Button  icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
+        <Button  icon="send" mode="contained" onPress={() => HandleButton(label)} style={[styles.button,{ backgroundColor: theme === "dark"? "#323232" : "rgb(6, 70, 115)"}]}>
           {t('SignIn')}
         </Button>
       ) : label === 'Sign Up' ?(
-       <Button  icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
+       <Button  icon="send" mode="contained" onPress={() => HandleButton(label)} style={[styles.button,{ backgroundColor: theme === "dark"? "#323232" : "rgb(6, 70, 115)"}]}>
         {t('SignUp')}
         </Button>
     ) : label === '+' ? (
@@ -34,28 +34,28 @@ const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
             <Ionicons
                name="add-circle"
                size={40}
-               color="rgb(6, 70, 130)"
+               color={theme === "dark"? "#323232" : "rgb(6, 70, 115)"} 
             />
           </TouchableOpacity>
       ):label === 'Sign Up2' ?(
-        <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
+        <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={[styles.button,{ backgroundColor: theme === "dark"? "#323232" : "rgb(6, 70, 115)"}]}>
         {t('SignUp')}
         </Button>
       ): label === `${t('AddAccount')}`? (
-        <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
+        <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={[styles.button,{ backgroundColor: theme === "dark"? "#323232" : "rgb(6, 70, 115)"}]}>
         {`${t('AddAccount')}`}
       </Button>
       ): label === 'Devam Et'?(
-        <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
+        <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={[styles.button,{ backgroundColor: theme === "dark"? "#323232" : "rgb(6, 70, 115)"}]}>
         {t('Next')}
       </Button>
       ):label === 'Çevir'?
       (
-        <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
+        <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={[styles.button,{ backgroundColor: theme === "dark"? "#323232" : "rgb(6, 70, 115)"}]}>
         {label}
       </Button>
       ):label === 'Geri'?(
-        <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={styles.button}>
+        <Button icon="send" mode="contained" onPress={() => HandleButton(label)} style={[styles.button,{ backgroundColor: theme === "dark"? "#323232" : "rgb(6, 70, 115)"}]}>
         {"Geri"}
       </Button>
       ): label === '-'? (
@@ -64,7 +64,7 @@ const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
             <Ionicons
                name="close-circle"
                size={40}
-               color="rgb(6, 70, 130)"
+               color={theme === "dark"? "#323232" : "rgb(6, 70, 115)"}
             />
           </TouchableOpacity>
       ): label ==='islemler'? (
@@ -73,19 +73,19 @@ const Buttonx = ({label2, label, navigation,OnChangeButton }) => {
             <Ionicons
                name="hourglass"
                size={40}
-               color="rgb(6, 70, 130)"
+               color={theme === "dark"? "#323232" : "rgb(6, 70, 115)"}
             />
           </TouchableOpacity>
          ):label ==='Hesap Sil'?(
-         <Button icon="send" mode="contained"  onPress={() => HandleButton(label)} style={styles.button}>
+         <Button icon="send" mode="contained"  onPress={() => HandleButton(label)} style={[styles.button,{ backgroundColor: theme === "dark"? "#323232" : "rgb(6, 70, 115)"}]}>
              {label}
            </Button>
            ):label ==='Hesap Sil'? (
-              <Button icon="send" mode="contained"  onPress={() => HandleButton(label)} style={styles.button}>
+              <Button icon="send" mode="contained"  onPress={() => HandleButton(label)} style={[styles.button,{ backgroundColor: theme === "dark"? "#323232" : "rgb(6, 70, 115)"}]}>
                {label}
              </Button>
           ): (
-        <Button icon="send" mode="contained"  onPress={() => HandleButton(label)} style={styles.button}>
+        <Button icon="send" mode="contained"  onPress={() => HandleButton(label)} style={[styles.button,{ backgroundColor: theme === "dark"? "#323232" : "rgb(6, 70, 115)"}]}>
         {label}
          </Button>
       )}
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginBottom: 10,
-    backgroundColor: 'rgb(6, 70, 130)'
+    
   },
   customLabel: {
     fontSize: 16,
