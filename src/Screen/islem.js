@@ -16,6 +16,7 @@ const Islem = ({ navigation }) => {
   const context = useContext(MyContext);
   const {
     updateSayfa,
+    theme,
     sayfa,
     updatesetoptiondoviz,
     chechdoviz,
@@ -429,11 +430,11 @@ const Islem = ({ navigation }) => {
   
 
   return (
-    <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
+    <View style={[styles.container,{backgroundColor: theme === 'dark'? `#1e1e1e`: `rgb(218, 231, 237)`}]}>
+      <ScrollView contentContainerStyle={[styles.scrollContainer]}>
         <View style={styles.sureContainer}>
-          <Text style={styles.sureText}>{sure}</Text>
-          <Text>{t('Timeinformation')}</Text>
+          <Text style={[styles.sureText,{color: theme === 'dark' ? 'white': 'black'}]}>{sure}</Text>
+          <Text style={[{color: theme === 'dark' ? 'white': 'black'}]}>{t('Timeinformation')}</Text>
         </View>
         <View style={styles.formContainer}>
           <BilgiKarti />
@@ -449,15 +450,15 @@ const Islem = ({ navigation }) => {
             <TextInputC onChangeText={setdolarmiktar} label={`${t('ButtonName1')}`} />
           </View>
         </View>
-        <Text>{t('Information3')}</Text>
-        <Text>{hesaplananpara}</Text>
+        <Text style={[{color: theme ==='dark' ? 'white': 'black'}]}>{t('Information3')}</Text>
+        <Text style={[{color: theme ==='dark' ? 'white': 'black'}]}>{hesaplananpara}</Text>
         <View style={styles.buttonContainer}>
           <Buttonx label={`${t('ButtonName2')}`} OnChangeButton={OnChangeButton} navigation={navigation} />
         </View>
         {showConfirmation && (
           <View style={styles.overlay}>
             <View style={styles.confirmationContainer}>
-              <Text style={styles.confirmationText}>{t('Information2')}</Text>
+              <Text style={[styles.confirmationText,{color: theme ==='dark' ? 'white': 'black'}]}>{t('Information2')}</Text>
               <View style={styles.confirmationButtonContainer}>
                 <Buttonx label={`${t('ButtonName3')}`} OnChangeButton={OnChangeButton} />
               </View>

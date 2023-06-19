@@ -9,6 +9,7 @@ const ComboBox = ({label, navigation,onChangeBox }) => {
   const {t} = useTranslation()
   const context = useContext(MyContext);
   const {selectedOptiondoviz,
+    theme,
     updateSelectedOptiondoviz,
     selectedOptionhesap,
     updateSelectedOptionhesap,
@@ -54,7 +55,7 @@ const ComboBox = ({label, navigation,onChangeBox }) => {
   if(label === "doviztipi")
   {
     content = (<View style={styles.container}>
-      <Text style={styles.label}>{t('CurrencyType')} </Text>
+      <Text style={[styles.label,{ color: theme ==='dark' ? 'white': 'black'}]}>{t('CurrencyType')} </Text>
       <View style={styles.pickerContainer}>
         <Picker
           selectedValue={selectedOptiondoviz}
@@ -70,7 +71,7 @@ const ComboBox = ({label, navigation,onChangeBox }) => {
       )
   } else if (label === "HesapTUR" ){
     content = (<View style={styles.container}>
-    <Text style={styles.label}>{t('AccountType')} </Text>
+    <Text style={[styles.label,{ color: theme ==='dark' ? 'white': 'black'}]}>{t('AccountType')} </Text>
     <View style={styles.pickerContainer}>
       <Picker
         selectedValue={selectedOptionhesap}
@@ -90,7 +91,7 @@ const ComboBox = ({label, navigation,onChangeBox }) => {
    
       content = (
         <View style={styles.container}>
-          <Text style={styles.label}>{t('Branches')} </Text>
+          <Text style={[styles.label,{ color: theme ==='dark' ? 'white': 'black'}]}>{t('Branches')} </Text>
           <View style={styles.pickerContainer}>
             <Picker
               selectedValue={selectedOptionsube} // selectedOption3 doğru şekilde ayarlandı
@@ -107,7 +108,7 @@ const ComboBox = ({label, navigation,onChangeBox }) => {
   }else if(label === "doviztipicheck")
   {
     content = (<View style={styles.container}>
-      <Text style={styles.label}>{t('Selectoptions')} </Text>
+      <Text style={[styles.label,{ color: theme ==='dark' ? 'white': 'black'}]}>{t('Selectoptions')} </Text>
       <View style={styles.pickerContainer}>
         <Picker
           selectedValue={chechdoviz}
@@ -124,13 +125,13 @@ const ComboBox = ({label, navigation,onChangeBox }) => {
   }
   else if(label === "doviztipialis")
   {
-    content = (<View style={styles.container}>
-      <Text style={styles.label}>{t('ConvertType')} </Text>
-      <View style={styles.pickerContainer}>
+    content = (<View style={[styles.container]}>
+      <Text style={[styles.label,{ color: theme ==='dark' ? 'white': 'rgb(218, 231, 237)'}]}>{t('ConvertType')} </Text>
+      <View style={[styles.pickerContainer]}>
         <Picker
           selectedValue={chechdoviz2}
           onValueChange={handleOptionChangealis}
-          style={styles.picker}
+          style={[styles.picker]}
         >
           {optiondoviz.map((option,index) => (
             <Picker.Item key={option.doviztipiid} label={option.dovizadi} value={option.doviztipiid} />
@@ -164,6 +165,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     width: 200,
+    backgroundColor:  'rgb(218, 231, 237)'
+   
   },
   picker: {
     height: 40,
