@@ -48,7 +48,7 @@ const ExpandableScreen = ({ onExpand, onCollapse, navigation }) => {
   const animatedStyle = {
     height: animation.interpolate({
       inputRange: [0, 1],
-      outputRange: ['50%', '100%'],
+      outputRange: ['47%', '100%'],
       extrapolate: 'clamp',
     }),
   };
