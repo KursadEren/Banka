@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 const AppBar = ({ navigation, title }) => {
   const { t, i18n } = useTranslation();
   const context = useContext(MyContext);
-  const { sayfa,theme, updatsetLanguage, Language } = context;
+  const { sayfa,theme, updatsetLanguage, Language,updateTheme } = context;
 
   const [switchValue, setSwitchValue] = useState(false);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
@@ -17,6 +17,7 @@ const AppBar = ({ navigation, title }) => {
   const handleSwitchToggle = () => {
     setSwitchValue(!switchValue);
     setSnackbarVisible(true);
+    updateTheme(theme === 'dark'? 'light' : 'dark')
   };
 
   const handleSnackbarDismiss = () => {
@@ -53,7 +54,7 @@ const AppBar = ({ navigation, title }) => {
         )}
       </Appbar.Header>
       <Snackbar visible={snackbarVisible} onDismiss={handleSnackbarDismiss} duration={3000}>
-        {switchValue ? `${t('lighttheme')}` : `${t('darktheme')}`}
+        {switchValue ?`${t('darktheme')}`  :`${t('lighttheme')}`}
       </Snackbar>
     </View>
   );
