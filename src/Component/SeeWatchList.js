@@ -14,7 +14,7 @@ const SeeWatchList = ({ navigation }) => {
   const [exchangeRates, setExchangeRates] = useState({});
   const [selectedCurrencies, setSelectedCurrencies] = useState([]);
   const context = useContext(MyContext);
-  const {updatesetErrorText,optiondoviz,chechdoviz,updatesetChechdoviz,updatesetIslemtipi,updatesetsecilendovizAdi,   updatesetSecilenDoviz,secilenDoviz, updatesetalisSatisEuro,updatesetalisSatisSterlin,updatesetalisSatisddolar,updatesetalisSatisfrang,} = context;
+  const {updatesetErrorText,optiondoviz,theme,chechdoviz,updatesetChechdoviz,updatesetIslemtipi,updatesetsecilendovizAdi,   updatesetSecilenDoviz,secilenDoviz, updatesetalisSatisEuro,updatesetalisSatisSterlin,updatesetalisSatisddolar,updatesetalisSatisfrang,} = context;
 
   const getSelectedCurrencies = async () => {
     try {
@@ -195,7 +195,7 @@ const SeeWatchList = ({ navigation }) => {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={[styles.container,{backgroundColor: theme ==='dark' ? '#1e1e1e' : 'rgb(6, 70, 115)'}]}>
       <View style={styles.headerRow}>
         <Text style={styles.headerCell}>{t('Currency')} </Text>
         <Text style={styles.headerCell}>{t('Buy')} </Text>
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 16,
     marginHorizontal: 16,
-    backgroundColor: 'rgb(6, 70, 130)',
+    
   },
   headerRow: {
     flexDirection: 'row',

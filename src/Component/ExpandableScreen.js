@@ -1,9 +1,14 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, Dimensions, Animated, PanResponder, TouchableOpacity, ScrollView } from 'react-native';
 import SeeWatchList from './SeeWatchList';
 import Ozet from './OzetComponent';
+import { MyContext } from '../Context/Context';
 
 const ExpandableScreen = ({ onExpand, onCollapse, navigation }) => {
+
+  const context = useContext(MyContext)
+  const {theme} = context
+
   const [expanded, setExpanded] = useState(false);
   const animation = useRef(new Animated.Value(expanded ? 1 : 0)).current;
   const screenHeight = Dimensions.get('window').height;
@@ -58,16 +63,16 @@ const ExpandableScreen = ({ onExpand, onCollapse, navigation }) => {
   };
 
   return (
-    <Animated.View style={[styles.container, animatedStyle]}>
+    <Animated.View style={[styles.container, animatedStyle,{backgroundColor:  theme === 'dark'? `#323232`: `white`}]}>
       <View style={styles.lineContainer}>
         {/* Wrap the line in a TouchableOpacity for touch effect */}
         <TouchableOpacity activeOpacity={1} onPress={animateExpand}>
-          <View style={styles.line} {...panResponder.panHandlers} />
+          <View style={[styles.line,{backgroundColor:theme === 'dark'? `#1e1e1e`: `rgb(6, 70, 115)`}]} {...panResponder.panHandlers} />
         </TouchableOpacity>
       </View>
 
       <View style={styles.expandedContent}>
-        <View style={{ height: expanded ? '100%' : '100%', width: '100%' }}>
+        <View style={{ height: expanded ? '100%' : '100%', width: '100%',backgroundColor:theme === 'dark'? `#1e1e1e`: `rgb(218, 231, 237)` }}>
           <SeeWatchList navigation={navigation} />
         </View>
        
@@ -97,13 +102,13 @@ const styles = StyleSheet.create({
     width: 200,
     borderRadius: 20,
     height: 15,
-    backgroundColor: 'rgb(6, 70, 130)',
+    
   },
   expandedContent: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgb(218, 231, 237)',
+    
     width: '100%',
   },
   expandedText: {

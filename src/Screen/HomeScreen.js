@@ -21,6 +21,7 @@ const HomeScreen = ({ navigation }) => {
     Language,
     updatsetsetuserid,
     usersid,
+    theme
   } = context;
 
   const fetchData = async () => {
@@ -102,11 +103,11 @@ const HomeScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,{backgroundColor:theme === 'dark'? `#1e1e1e`: `rgb(218, 231, 237)`}]}>
       <AppBar title={t('HomeScreen')} navigation={navigation} />
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={styles.headerContainer}>
-          <Text style={styles.headerText}>{t('Account')}</Text>
+          <Text style={[styles.headerText,{color: theme === 'dark' ? 'white':'black'}]}>{t('Account')}</Text>
         </View>
         <View style={styles.listItemContainer}>
           <MyFlatList OnChangeButton={OnChangeButton} navigation={navigation} />
@@ -138,7 +139,7 @@ const styles = StyleSheet.create({
    
   },
   headerContainer: {
-    backgroundColor: 'rgb(218, 231, 237)',
+    
     margin:"1%",
     borderRadius: 10,
   },
