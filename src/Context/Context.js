@@ -55,6 +55,11 @@ export const MyContextProvider = ({ children }) => {
    const [error, setError] = useState('');
    const [usersid, setuserid] = useState('');
 
+   const [dovizFull,setDovizFull]=useState()
+
+   const updatsetDovizFull= (newsetuserid ) => {
+    setDovizFull(newsetuserid);
+  };
    const updatsetsetuserid= (newsetuserid ) => {
     setuserid(newsetuserid);
   };
@@ -267,7 +272,14 @@ export const MyContextProvider = ({ children }) => {
 
 
     usersid,
-    updatsetsetuserid
+    updatsetsetuserid,
+
+
+
+
+
+    updatsetDovizFull,
+    dovizFull
       }}>
       {children}
     </MyContext.Provider>

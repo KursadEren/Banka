@@ -13,6 +13,7 @@ const ComboBox = ({ label, navigation, onChangeBox,onChangeHesap }) => {
   const[secilenDoviz ,setSecilenDoviz ] = useState()
   const[secilenSube   ,setSecilenSube  ] = useState()
   const[secilenHesap ,setSecilenHesap ] = useState()
+  const[secilenDovizFull ,setSecilenDovizFull ] = useState()
 
   const context = useContext(MyContext);
   const {
@@ -28,6 +29,7 @@ const ComboBox = ({ label, navigation, onChangeBox,onChangeHesap }) => {
     updatesetChechdoviz2,
     chechdoviz2,
     optiondoviz,
+    dovizFull,
     updatesetcevirilecekdovizadi,
   } = context;
 
@@ -54,6 +56,9 @@ const ComboBox = ({ label, navigation, onChangeBox,onChangeHesap }) => {
     updatesetChechdoviz2(itemValue);
     updatesetcevirilecekdovizadi(optiondoviz[selectedIndex].dovizadi);
   };
+  const setSecilenDovizFullChange = (itemValue) =>{
+    onChangeHesap(itemValue,label)
+  }
 
   let content;
 
@@ -85,6 +90,35 @@ const ComboBox = ({ label, navigation, onChangeBox,onChangeHesap }) => {
         </View>
       </View>
     );
+  }else if(label==='dovizFull'){
+    content = (
+      <View style={styles.container}>
+        <Text style={[styles.label, { color: theme === 'dark' ? 'white' : 'black' }]}>
+          {t('CurrencyType')}
+        </Text>
+        <View style={styles.pickerContainer}>
+          <Picker
+            selectedValue={secilenDovizFull}
+            onValueChange={(itemValue) => {
+              if (itemValue !== null) {
+                setSecilenDovizFull(itemValue);
+                setSecilenDovizFullChange(itemValue); // Seçilen değeri fonksiyona gönder
+              }
+            }}
+            style={styles.picker}
+          >
+            {dovizFull.map((option) => (
+              <Picker.Item
+                key={option.doviztipiid}
+                label={option.dovizadi}
+                value={option.doviztipiid}
+              />
+            ))}
+          </Picker>
+        </View>
+      </View>
+    );
+    
   } else if (label === 'HesapTUR') {
     content = (
       <View style={styles.container}>

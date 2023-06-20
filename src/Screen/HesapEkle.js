@@ -125,46 +125,7 @@ const HesapEkle = ({ navigation }) => {
 
   
 
-  useEffect(() => {
-    const fetchData = async () =>{
-      const { manifest } = Constants;
-      const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
   
-      axios
-        .get(`${apiAddress}/users/doviztipi/${tcno}`)
-        .then((response) => {
-          // API'den alınan verileri options state'ine ata
-          updatesetOptions(response.data);
-          console.log(response.data)
-        })
-        .catch((error) => {
-          console.error('API veri alınırken bir hata oluştu:', error);
-        });
-  
-        axios
-        .get(`${apiAddress}/users/hesaptur`)
-        .then((response) => {
-          // API'den alınan verileri options state'ine ata
-          updatesetOptions2(response.data);
-         
-        })
-        .catch((error) => {
-          console.error('API veri alınırken bir hata oluştu:', error);
-        });
-  
-        axios
-        .get(`${apiAddress}/users/sube`)
-        .then((response) => {
-          // API'den alınan verileri options state'ine ata
-          updatesetOptions3(response.data);
-         
-        })
-        .catch((error) => {
-          console.error('API veri alınırken bir hata oluştu:', error);
-        });
-    }
-    fetchData();
-  }, []);
   
 
 
