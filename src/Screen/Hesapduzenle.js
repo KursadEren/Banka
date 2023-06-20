@@ -20,6 +20,11 @@ export default function Hesapduzenle({navigation}) {
          updateTcno,
          updatePassword} = context
 
+         const[dovizKontrol ,setDovizKontrol]= useState();
+         const[dovizSecim   ,setDovizSecim]= useState();
+         const[sube         ,setSube]= useState();
+         const[hesapTur   ,setHesapTur]= useState();
+
 
     const OnChangeButton = async (text)=>{
         const { manifest } = Constants;
@@ -163,13 +168,13 @@ export default function Hesapduzenle({navigation}) {
               <View style={[styles.container,{backgroundColor: theme ==='dark' ? "#1e1e1e":'rgb(218, 231, 237)'}]}>
               <View style={styles.stepContainer}>
                 
-                <ComboBox label="doviztipicheck"/>
+                <ComboBox onChangeHesap={setDovizKontrol} label="doviztipicheck"/>
                
-                <ComboBox label="doviztipi"/>
+                <ComboBox onChangeHesap={setDovizSecim} label="doviztipi"/>
                
-                <ComboBox label="HesapTUR"/>
+                <ComboBox onChangeHesap={setSube} label="HesapTUR"/>
               
-                <ComboBox label="sube"/>
+                <ComboBox onChangeHesap={setHesapTur} label="sube"/>
                 <View style={styles.buttonContainer}>
                   <Buttonx label={`${t('Next')}`}  OnChangeButton={OnChangeButton} onPress={handleNextStep} />
                 </View>
