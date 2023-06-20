@@ -26,12 +26,16 @@ export default function Hesapduzenle({navigation}) {
         const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
         
         if(text ===`${t('ButtonName4')}`){
+          //GERİ
             handlePrevStep();
           }
           else if(text ===`${t('Next')}`){
+            // DEVAMET
             handleNextStep();
           }
           else if (text ===`${t('ButtonName5')}`)
+
+          /// HESAP SİL
           {
             console.log(chechdoviz,tcno,selectedOptiondoviz,selectedOptionhesap,selectedOptionsube)
             const { manifest } = Constants;
@@ -50,6 +54,8 @@ export default function Hesapduzenle({navigation}) {
 
           }
           else if (text ===`${t('EditAccount')}`)
+            // HESAP DÜZENLE
+
           {  // bu kısımda bir tane kontrol yap ve içinde para olan hesaplar doviztipi değiştirilemez
             const { manifest } = Constants;
             const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
@@ -59,15 +65,17 @@ export default function Hesapduzenle({navigation}) {
               
               Alert.alert(
                 `${t('Notification1')}`,
+                `${t('Alright')}`,
                 [
                   {
-                    text: `${t('Alright')}`,
+                    text: 'Tamam',
                     onPress: () => {
                       navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
                     },
                   },
                 ]
               );
+              
              })
              .catch((error) => {
                 
