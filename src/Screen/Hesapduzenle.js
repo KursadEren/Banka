@@ -12,17 +12,16 @@ export default function Hesapduzenle({navigation}) {
     const {t} = useTranslation()
     const [step, setStep] = useState(1);
     const context = useContext(MyContext);
-    const {updateSayfa,updatesetOptions3,
-         
+    const {updateSayfa,
          theme,
          } = context
 
-         const[dovizKontrol ,setDovizKontrol]= useState();
-         const[dovizSecim   ,setDovizSecim]= useState();
-         const[sube         ,setSube]= useState();
-         const[hesapTur   ,setHesapTur]= useState();
+         const[dovizKontrol ,setDovizKontrol]= useState(0);
+         const[dovizSecim   ,setDovizSecim]= useState(0);
+         const[sube         ,setSube]= useState(0);
+         const[hesapTur   ,setHesapTur]= useState(0);
 
-         const[tcno,setTcno]=useState()
+         const[tcno,setTcno]=useState('')
          
          
          const hesapSilmeRequest = () => {
@@ -44,31 +43,21 @@ export default function Hesapduzenle({navigation}) {
     const sendHesapDuzenleRequest = () => {
       const { manifest } = Constants;
       const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-    
+      console.log( tcno, dovizKontrol, dovizSecim, hesapTur, sube,)
       axios
         .post(`${apiAddress}/users/hesapduzenle`, {
           tcno,
-          dovizKontrol: parseInt(dovizKontrol),
+          dovizKontrol,
           dovizSecim,
           hesapTur,
           sube,
         })
         .then((response) => {
-          Alert.alert(
-            `${t('Notification1')}`,
-            `${t('Alright')}`,
-            [
-              {
-                text: 'Tamam',
-                onPress: () => {
-                  navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
-                },
-              },
-            ]
-          );
+            console.log(response.data)
         })
         .catch((error) => {
           console.error('API veri alınırken bir hata oluştu:', error);
+          console.log('API yanıtı:', error.response.data);
         });
     };
     
@@ -76,9 +65,9 @@ export default function Hesapduzenle({navigation}) {
     const handleNextStep = () => {
         if (//eklenecek şeyler var 
          
-          dovizSecim !== null &&
-          hesapTur  !== null &&
-          sube !== null
+          dovizSecim !== 0 &&
+          hesapTur  !== 0 &&
+          sube !== 0
         ) {
           setStep(step + 1);
         } else {
@@ -113,9 +102,9 @@ export default function Hesapduzenle({navigation}) {
                
                 <ComboBox onChangeHesap={setDovizSecim} label="dovizFull"/>
                
-                <ComboBox onChangeHesap={setSube} label="HesapTUR"/>
+                <ComboBox onChangeHesap={setHesapTur} label="HesapTUR"/>
               
-                <ComboBox onChangeHesap={setHesapTur} label="sube"/>
+                <ComboBox onChangeHesap={setSube} label="sube"/>
                 <View style={styles.buttonContainer}>
                   <Buttonx label={`${t('Next')}`}  OnChangeButton={handleNextStep} onPress={handleNextStep} />
                 </View>

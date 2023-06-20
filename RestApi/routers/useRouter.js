@@ -597,7 +597,7 @@ router.get('/ozetbilgi/:tcno', async (req,res) =>{
 
 router.post('/hesapduzenle', async (req, res) => {
   try {
-      
+      console.log(typeof req.body.tcno,typeof req.body.dovizKontrol,typeof req.body.dovizSecim,typeof req.body.hesapTur,typeof req.body.sube)
       const Text1 = `select 
       * from users u 
       INNER JOIN usershesap h on  u.userid = h.usersid
@@ -614,10 +614,10 @@ router.post('/hesapduzenle', async (req, res) => {
       }
       const text = `UPDATE usershesap
       SET doviztipiid = $3,
-          subeid = $5,
-          hesapturid = $4
-       WHERE usersid = (SELECT userid FROM users WHERE tcno = $1) AND doviztipiid = (select doviztipiid from usershesap where doviztipiid = $2 )
-`
+      subeid = $5,
+      hesapturid = $4
+      WHERE usersid = (SELECT userid FROM users WHERE tcno = $1) AND doviztipiid = (select doviztipiid from usershesap where doviztipiid = $2 )`
+
       
       const updateValues =  [req.body.tcno, req.body.dovizKontrol,req.body.dovizSecim,req.body.hesapTur,req.body.sube];
       await postgresClient.query(text, updateValues)
