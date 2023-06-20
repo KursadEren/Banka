@@ -25,75 +25,53 @@ export default function Hesapduzenle({navigation}) {
          const[tcno,setTcno]=useState()
          
          
-
-
-    const OnChangeButton = async (text)=>{
-        const { manifest } = Constants;
-        const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+         const hesapSilmeRequest = () => {
+          const { manifest } = Constants;
+          const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
         
-        if(text ===`${t('ButtonName4')}`){
-          //GERİ
-            handlePrevStep();
-          }
-          else if(text ===`${t('Next')}`){
-            // DEVAMET
-            handleNextStep();
-          }
-          else if (text ===`${t('ButtonName5')}`)
-
-          /// HESAP SİL
-          {
-            
-            const { manifest } = Constants;
-            const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-            // hesabın silinmesi için tcno ve seçilen dözvivi kontrol eder eğer hesabın bakiyesi 0 a eşitse silme gerçekleşir
-
-            axios
-            .post(`${apiAddress}/users/silme`,{tcno,dovizKontrol})
+          axios
+            .post(`${apiAddress}/users/silme`, { tcno, dovizKontrol })
             .then((response) => {
-              
-             })
-             .catch((error) => {
-               console.error('API veri alınırken bir hata oluştu:', error);
-             });
+              // İşlemler buraya gelecek
+            })
+            .catch((error) => {
+              console.error('API veri alınırken bir hata oluştu:', error);
+            });
+        };
+        
 
-
-          }
-          else if (text ===`${t('EditAccount')}`)
-            // HESAP DÜZENLE
-
-          {  // bu kısımda bir tane kontrol yap ve içinde para olan hesaplar doviztipi değiştirilemez
-            const { manifest } = Constants;
-            const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-            
-            axios.post(`${apiAddress}/users/hesapduzenle`   ,{tcno,dovizKontrol:parseInt(dovizKontrol),dovizSecim,hesapTur,sube})
-            .then((response) => {
-              
-              Alert.alert(
-                `${t('Notification1')}`,
-                `${t('Alright')}`,
-                [
-                  {
-                    text: 'Tamam',
-                    onPress: () => {
-                      navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
-                    },
-                  },
-                ]
-              );
-              
-             })
-             .catch((error) => {
-                
-               console.error('API veri alınırken bir hata oluştu:', error);
-             });
-            
-
-          }
-          else {
-
-          }
-    }
+    
+    const sendHesapDuzenleRequest = () => {
+      const { manifest } = Constants;
+      const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+    
+      axios
+        .post(`${apiAddress}/users/hesapduzenle`, {
+          tcno,
+          dovizKontrol: parseInt(dovizKontrol),
+          dovizSecim,
+          hesapTur,
+          sube,
+        })
+        .then((response) => {
+          Alert.alert(
+            `${t('Notification1')}`,
+            `${t('Alright')}`,
+            [
+              {
+                text: 'Tamam',
+                onPress: () => {
+                  navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
+                },
+              },
+            ]
+          );
+        })
+        .catch((error) => {
+          console.error('API veri alınırken bir hata oluştu:', error);
+        });
+    };
+    
 
     const handleNextStep = () => {
         if (//eklenecek şeyler var 
@@ -139,7 +117,7 @@ export default function Hesapduzenle({navigation}) {
               
                 <ComboBox onChangeHesap={setHesapTur} label="sube"/>
                 <View style={styles.buttonContainer}>
-                  <Buttonx label={`${t('Next')}`}  OnChangeButton={OnChangeButton} onPress={handleNextStep} />
+                  <Buttonx label={`${t('Next')}`}  OnChangeButton={handleNextStep} onPress={handleNextStep} />
                 </View>
               </View>
               </View>
@@ -155,12 +133,12 @@ export default function Hesapduzenle({navigation}) {
                 <View style={styles.buttonContainer}>
                  
     
-                  <Buttonx label={`${t('ButtonName5')}`} OnChangeButton={OnChangeButton} navigation={navigation}/>
-                 <Buttonx label={`${t('EditAccount')}`} OnChangeButton={OnChangeButton} navigation={navigation}/>
+                  <Buttonx label={`${t('ButtonName5')}`} OnChangeButton={hesapSilmeRequest} navigation={navigation}/>
+                 <Buttonx label={`${t('EditAccount')}`} OnChangeButton={sendHesapDuzenleRequest} navigation={navigation}/>
                  
                 </View>
                 <View style={styles.buttonContainer}>
-                 <Buttonx  label={`${t('ButtonName4')}`} OnChangeButton={OnChangeButton}  onPress={handlePrevStep} />
+                 <Buttonx  label={`${t('ButtonName4')}`} OnChangeButton={handlePrevStep}  onPress={handlePrevStep} />
                  </View>
               </View>
               </View>
