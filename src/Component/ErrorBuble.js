@@ -3,6 +3,10 @@ import { View, Text, StyleSheet } from 'react-native';
 import { MyContext } from '../Context/Context';
 
 const ErrorBubble = ({ message }) => {
+
+  const context = useContext(MyContext)
+    const {errortext,
+        updatesetErrorText,} = context;
   useEffect(() => {
     const timer = setTimeout(() => {
       updatesetErrorText(''); // Zamanlayıcı süresi sonunda hata mesajını temizle
@@ -11,9 +15,7 @@ const ErrorBubble = ({ message }) => {
     return () => clearTimeout(timer); // Bileşenin unmount edildiğinde zamanlayıcıyı temizle
   }, [errortext, updatesetErrorText]);
 
-    const context = useContext(MyContext)
-    const {errortext,
-        updatesetErrorText,} = context;
+    
   if (!errortext) {
     return null; // Mesaj yoksa bileşen null döndürerek hiçbir şey göstermeyecek
   }

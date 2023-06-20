@@ -126,6 +126,10 @@ const HesapEkle = ({ navigation }) => {
   
 
   useEffect(() => {
+    if(sayfa==='HesapEkle')
+    {
+
+    
     const fetchData = async () =>{
       const { manifest } = Constants;
       const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
@@ -164,7 +168,8 @@ const HesapEkle = ({ navigation }) => {
         });
     }
     fetchData();
-  }, []);
+  }
+  }, [sayfa]);
   
 
 
@@ -175,11 +180,9 @@ const HesapEkle = ({ navigation }) => {
           <View style={[styles.container,{backgroundColor:theme === 'dark'? "#1e1e1e" :'rgb(218, 231, 237)'}]}>
           <View style={[styles.stepContainer]}>
             
-            <ComboBox   label="doviztipi"/>
-            
-            <ComboBox label="HesapTUR"/>
-            
-            <ComboBox label="sube"/>
+            <ComboBox     label="doviztipi"/>
+            <ComboBox     label="HesapTUR"/>
+            <ComboBox     label="sube"/>
             <View style={styles.buttonContainer}>
               <Buttonx label={`${t('Next')}`}  OnChangeButton={OnChangeButton} onPress={handleNextStep} />
             </View>

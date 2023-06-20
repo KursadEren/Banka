@@ -18,9 +18,29 @@ export default function Hesapduzenle({navigation}) {
          tcno,
          theme,
          updateTcno,
+         updateSelectedOptionhesap,
+         updateSelectedOptiondoviz,
+         updateSelectedOptionsube ,
+         updatesetChechdoviz,
          updatePassword} = context
 
+         useEffect(()=>{
+          //  selectedOptionhesap  updateSelectedOptionhesap   selectedOptiondoviz updateSelectedOptiondoviz      selectedOptionsube updateSelectedOptionsube        chechdoviz updatesetChechdoviz
+          updateSelectedOptionhesap('')
+          updateSelectedOptiondoviz('')
+          updateSelectedOptionsube ('')
+          updatesetChechdoviz     ('')
+          console.log(selectedOptionhesap,
+            selectedOptiondoviz,
+            selectedOptionsube ,
+            chechdoviz     )
 
+        },[])
+
+const handlegonder = async () =>{
+  updateSayfa('HomeScreen')
+  navigation.navigate('DraverNavigator', { screen: 'HomeScreen' })
+}
     const OnChangeButton = async (text)=>{
         const { manifest } = Constants;
         const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
@@ -59,19 +79,28 @@ export default function Hesapduzenle({navigation}) {
               
               Alert.alert(
                 `${t('Notification1')}`,
+                `${t('FirstLine')}\n${t('SecondLine')}`,
                 [
                   {
                     text: `${t('Alright')}`,
-                    onPress: () => {
-                      navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
-                    },
+                    onPress: handlegonder
                   },
                 ]
               );
+              
              })
              .catch((error) => {
                 
-               console.error('API veri alınırken bir hata oluştu:', error);
+              Alert.alert(
+                `${t('Notification1')}`,
+                `${t('FirstLine')}\n${t('SecondLine')}`,
+                [
+                  {
+                    text: `${t('Alright')}`,
+                    onPress: handlegonder
+                  },
+                ]
+              );
              });
             
 
@@ -98,6 +127,7 @@ export default function Hesapduzenle({navigation}) {
 
       useEffect(() => {
         const fetchData = async () =>{
+          
           const { manifest } = Constants;
           const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
       
@@ -138,7 +168,7 @@ export default function Hesapduzenle({navigation}) {
       }, []);
 
     useEffect(() => {
-
+      updateSayfa('Hesapduzenle');
         const backAction = () => {
           updateSayfa("HomeScreen");
           navigation.navigate('HomeScreen');
@@ -175,7 +205,7 @@ export default function Hesapduzenle({navigation}) {
                 
                 <TextInputC label="TC No"onChangeText={updateTcno}  style={styles.input} />
                 
-                <TextInputC   label={t('Password')} onChangeText={updatePassword} style={styles.input}/>
+               
                 <View style={styles.buttonContainer}>
                  
     

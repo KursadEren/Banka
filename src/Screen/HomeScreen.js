@@ -51,13 +51,17 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [sayfa]);
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
 
     return () => backHandler.remove();
   }, []);
+
+
+
+  
 
   const backAction = () => {
     Alert.alert(`${t('Notification')}`, '', [

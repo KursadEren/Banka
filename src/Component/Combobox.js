@@ -99,7 +99,7 @@ const ComboBox = ({ label, navigation, onChangeBox }) => {
           </Picker>
         </View>
       </View>
-    );
+    ); 
   } else if (label === 'sube') {
     content = (
       <View style={styles.container}>

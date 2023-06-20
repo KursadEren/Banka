@@ -189,22 +189,25 @@ export const MyContextProvider = ({ children }) => {
       updateTheme,
       renk1,
       renk2,
-
+      updateSayfa,
+      Language,
+      updatsetLanguage,
+      sayfa,
+      tcno,
+      updateTcno,
 
       fullname,
       updateFullname,
       email,
       updateEmail, 
-      sayfa,
-      updateSayfa,
+     
+      
       password,
       updatePassword,
-      Language,
-      updatsetLanguage,
+      
       userinfo,
       updateUserinfo,
-      tcno,
-      updateTcno,
+     
       //combodoviz
       selectedOptiondoviz,
       updateSelectedOptiondoviz,

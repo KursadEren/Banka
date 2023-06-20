@@ -39,14 +39,15 @@ await axios
           }
         })
         .catch((error) => {
-          
-            Alert.alert(
-              `${t('Notification')}`,
-              `${t('AccountAdditionRequired')}`,
-              [
-                { text: `${t('AddAccount')}`, onPress: handleAddAccount },
-              ]
-            );
+           if(sayfa ==='HomeScreen')
+           {Alert.alert(
+            `${t('Message')}`,
+            `${t('AddAccount')}`,
+            [
+              { text: `${t('AddAccount')}`, onPress: handleAddAccount },
+            ]
+          );}
+            
             
           
          

@@ -55,7 +55,9 @@
     "Alright":"Alright",
     "CurrencyName":"Currency Name",
     "Unchecked":"Unchecked",
-    "Checked":"Checked"
+    "Checked":"Checked",
+    "SelectOption":"Select",
+    "Message":"Message"
     
 }
   
