@@ -602,7 +602,7 @@ router.post('/hesapduzenle', async (req, res) => {
       * from users u 
       INNER JOIN usershesap h on  u.userid = h.usersid
       where u.tcno = $1  AND h.doviztipiid = $2 `
-      const values = [req.body.tcno, req.body.chechdoviz];
+      const values = [req.body.tcno, req.body.dovizKontrol];
       const result = await postgresClient.query( Text1 , values)
       
 
@@ -619,7 +619,7 @@ router.post('/hesapduzenle', async (req, res) => {
        WHERE usersid = (SELECT userid FROM users WHERE tcno = $1) AND doviztipiid = (select doviztipiid from usershesap where doviztipiid = $2 )
 `
       
-      const updateValues =  [req.body.tcno, req.body.chechdoviz,req.body.selectedOptiondoviz,req.body.selectedOptionhesap,req.body.selectedOptionsube];
+      const updateValues =  [req.body.tcno, req.body.dovizKontrol,req.body.dovizSecim,req.body.hesapTur,req.body.sube];
       await postgresClient.query(text, updateValues)
       
        
