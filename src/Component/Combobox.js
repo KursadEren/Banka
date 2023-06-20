@@ -35,19 +35,19 @@ const ComboBox = ({ label, navigation, onChangeBox,onChangeHesap }) => {
 
   const SecilenSubeChange = (itemValue) => {
     
-    onChangeHesap(itemValue)
+    onChangeHesap(itemValue,label)
   };
 
   const SecilenKontrolChange = (itemValue) => {
-    onChangeHesap(itemValue)
+    onChangeHesap(itemValue,label)
   };
 
   const SecilenHesapChange = (itemValue) => {
-    onChangeHesap(itemValue)
+    onChangeHesap(itemValue,label)
   };
 
   const SecilenDovizChange = (itemValue) => {
-    onChangeHesap(itemValue)
+    onChangeHesap(itemValue,label)
   };
 
   const handleOptionChangealis = async (itemValue, selectedIndex) => {
@@ -68,7 +68,7 @@ const ComboBox = ({ label, navigation, onChangeBox,onChangeHesap }) => {
             selectedValue={secilenDoviz}
             onValueChange={(itemValue) => {
               if (itemValue !== null) {
-                setSecilen(itemValue);
+                setSecilenDoviz(itemValue);
                 SecilenDovizChange(itemValue); // Seçilen değeri fonksiyona gönder
               }
             }}
@@ -96,7 +96,7 @@ const ComboBox = ({ label, navigation, onChangeBox,onChangeHesap }) => {
            selectedValue={secilenHesap}
            onValueChange={(itemValue) => {
              if (itemValue !== null) {
-               setSecilen(itemValue);
+               setSecilenHesap(itemValue);
                SecilenHesapChange(itemValue); // Seçilen değeri fonksiyona gönder
              }
            }}
@@ -124,7 +124,7 @@ const ComboBox = ({ label, navigation, onChangeBox,onChangeHesap }) => {
             selectedValue={secilenSube}
             onValueChange={(itemValue) => {
               if (itemValue !== null) {
-                setSecilen(itemValue);
+                setSecilenSube(itemValue);
                 SecilenSubeChange(itemValue); // Seçilen değeri fonksiyona gönder
               }
             }}
@@ -148,7 +148,7 @@ const ComboBox = ({ label, navigation, onChangeBox,onChangeHesap }) => {
             selectedValue={secilenKontol}
             onValueChange={(itemValue) => {
               if (itemValue !== null) {
-                setSecilen(itemValue);
+                setSecilenKontol(itemValue);
                 SecilenKontrolChange(itemValue); // Seçilen değeri fonksiyona gönder
               }
             }}
