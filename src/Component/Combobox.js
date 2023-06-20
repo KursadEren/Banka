@@ -37,19 +37,19 @@ const ComboBox = ({ label, navigation, onChangeBox,onChangeHesap }) => {
 
   const SecilenSubeChange = (itemValue) => {
     
-    onChangeHesap(itemValue,label)
+    onChangeHesap(itemValue)
   };
 
   const SecilenKontrolChange = (itemValue) => {
-    onChangeHesap(itemValue,label)
+    onChangeHesap(itemValue)
   };
 
   const SecilenHesapChange = (itemValue) => {
-    onChangeHesap(itemValue,label)
+    onChangeHesap(itemValue)
   };
 
   const SecilenDovizChange = (itemValue) => {
-    onChangeHesap(itemValue,label)
+    onChangeHesap(itemValue)
   };
 
   const handleOptionChangealis = async (itemValue, selectedIndex) => {
@@ -57,7 +57,7 @@ const ComboBox = ({ label, navigation, onChangeBox,onChangeHesap }) => {
     updatesetcevirilecekdovizadi(optiondoviz[selectedIndex].dovizadi);
   };
   const setSecilenDovizFullChange = (itemValue) =>{
-    onChangeHesap(itemValue,label)
+    onChangeHesap(itemValue)
   }
 
   let content;
