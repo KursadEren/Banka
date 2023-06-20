@@ -13,7 +13,7 @@ export default function Hesapduzenle({navigation}) {
     const [step, setStep] = useState(1);
     const context = useContext(MyContext);
     const {updateSayfa,updatesetOptions3,
-         updatesetOptions2 ,updatesetOptions, 
+         
          theme,
          } = context
 
@@ -23,6 +23,7 @@ export default function Hesapduzenle({navigation}) {
          const[hesapTur   ,setHesapTur]= useState();
 
          const[tcno,setTcno]=useState()
+         
          
 
 
@@ -110,46 +111,7 @@ export default function Hesapduzenle({navigation}) {
         setStep(step - 1);
       };
 
-      useEffect(() => {
-        const fetchData = async () =>{
-          const { manifest } = Constants;
-          const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
       
-          axios
-            .get(`${apiAddress}/users/doviztipiF`)
-            .then((response) => {
-              // API'den alınan verileri options state'ine ata
-              updatesetOptions(response.data);
-             
-            })
-            .catch((error) => {
-              console.error('API veri alınırken bir hata oluştu:', error);
-            });
-      
-            axios
-            .get(`${apiAddress}/users/hesaptur`)
-            .then((response) => {
-              // API'den alınan verileri options state'ine ata
-              updatesetOptions2(response.data);
-             
-            })
-            .catch((error) => {
-              console.error('API veri alınırken bir hata oluştu:', error);
-            });
-      
-            axios
-            .get(`${apiAddress}/users/sube`)
-            .then((response) => {
-              // API'den alınan verileri options state'ine ata
-              updatesetOptions3(response.data);
-             
-            })
-            .catch((error) => {
-              console.error('API veri alınırken bir hata oluştu:', error);
-            });
-        }
-        fetchData()
-      }, []);
 
     useEffect(() => {
 
@@ -171,7 +133,7 @@ export default function Hesapduzenle({navigation}) {
                 
                 <ComboBox onChangeHesap={setDovizKontrol} label="doviztipicheck"/>
                
-                <ComboBox onChangeHesap={setDovizSecim} label="doviztipi"/>
+                <ComboBox onChangeHesap={setDovizSecim} label="dovizFull"/>
                
                 <ComboBox onChangeHesap={setSube} label="HesapTUR"/>
               
