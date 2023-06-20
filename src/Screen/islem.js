@@ -73,7 +73,7 @@ const Islem = ({ navigation }) => {
     const backAction = () => {
       updatesetHesaplananParaDegeri('0');
       updateSayfa("HomeScreen");
-      navigation.navigate('HomeScreen');
+      navigation.goBack();
       return true;
     };
 

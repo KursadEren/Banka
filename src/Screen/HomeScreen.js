@@ -21,9 +21,14 @@ const HomeScreen = ({ navigation }) => {
     Language,
     updatsetsetuserid,
     usersid,
+    updatesetOptions,
+    updatesetOptions2,
+    updatesetOptions3,
+    sayfa,
     theme
   } = context;
-
+    
+  // Satış aLş işlemleri
   const fetchData = async () => {
     i18n.changeLanguage(Language);
     try {
@@ -41,17 +46,21 @@ const HomeScreen = ({ navigation }) => {
           console.error('API veri alınırken bir hata oluştu:', error);
         });
 
-      const response = await axios.get(`${apiAddress}/users/dovizsatis/${tcno}`);
+        const response = await axios.get(`${apiAddress}/users/dovizsatis/${tcno}`);
 
-      updatesetoptiondoviz(response.data);
-    } catch (error) {
-      console.error('API veri alınırken bir hata oluştu:', error);
-    }
+        updatesetoptiondoviz(response.data);
+      } catch (error) {
+        console.error('API veri alınırken bir hata oluştu:', error);
+      }  
+    
   };
+  //Hesap Ekleme İşlemleri
 
   useEffect(() => {
     fetchData();
   }, [sayfa]);
+
+  
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -59,7 +68,45 @@ const HomeScreen = ({ navigation }) => {
     return () => backHandler.remove();
   }, []);
 
-
+    //
+    useEffect(() => {
+      if (sayfa === 'HesapEkle') {
+        const fetchData = async () => {
+          const { manifest } = Constants;
+          const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+          
+          axios
+            .get(`${apiAddress}/users/doviztipi/${tcno}`)
+            .then((response) => {
+              updatesetOptions(response.data);
+              console.log(response.data);
+            })
+            .catch((error) => {
+              console.error('API veri alınırken bir hata oluştu:', error);
+            });
+  
+          axios
+            .get(`${apiAddress}/users/hesaptur`)
+            .then((response) => {
+              updatesetOptions2(response.data);
+            })
+            .catch((error) => {
+              console.error('API veri alınırken bir hata oluştu:', error);
+            });
+  
+          axios
+            .get(`${apiAddress}/users/sube`)
+            .then((response) => {
+              updatesetOptions3(response.data);
+            })
+            .catch((error) => {
+              console.error('API veri alınırken bir hata oluştu:', error);
+            });
+        };
+  
+        fetchData();
+      }
+    }, [sayfa]);
 
   
 

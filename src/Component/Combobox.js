@@ -6,8 +6,9 @@ import axios from 'axios';
 import { MyContext } from '../Context/Context';
 import { useTranslation } from 'react-i18next';
 
-const ComboBox = ({ label, navigation, onChangeBox }) => {
+const ComboBox = ({ label, navigation, onChangeBox,onChangeComboBox }) => {
   const { t } = useTranslation();
+  const [secilen,setSecilen] = useState()
   const context = useContext(MyContext);
   const {
     selectedOptiondoviz,
@@ -33,14 +34,17 @@ const ComboBox = ({ label, navigation, onChangeBox }) => {
 
   const handleOptionChange = (itemValue) => {
     updateSelectedOptiondoviz(itemValue);
+    onChangeComboBox(itemValue, label);
   };
-
+  
   const handleOptionChange2 = (itemValue) => {
     updateSelectedOptionhesap(itemValue);
+    onChangeComboBox(itemValue, label);
   };
-
+  
   const handleOptionChange3 = (itemValue) => {
     updateSelectedOptionsube(itemValue);
+    onChangeComboBox(itemValue, label);
   };
 
   const handleOptionChangesatis = (itemValue) => {
@@ -62,11 +66,20 @@ const ComboBox = ({ label, navigation, onChangeBox }) => {
         </Text>
         <View style={styles.pickerContainer}>
           <Picker
-            selectedValue={selectedOptiondoviz}
-            onValueChange={handleOptionChange}
+            selectedValue={secilen}
+            onValueChange={(itemValue) => {
+              if (itemValue !== null) {
+                setSecilen(itemValue);
+                handleOptionChange(itemValue); // Seçilen değeri fonksiyona gönder
+              }
+            }}
             style={styles.picker}
           >
-            {options.map((option) => (
+            <Picker.Item
+                label="Seçiniz"
+                value={null}
+              />
+           {options.map((option) => (
               <Picker.Item
                 key={option.doviztipiid}
                 label={option.dovizadi}
@@ -85,10 +98,19 @@ const ComboBox = ({ label, navigation, onChangeBox }) => {
         </Text>
         <View style={styles.pickerContainer}>
           <Picker
-            selectedValue={selectedOptionhesap}
-            onValueChange={handleOptionChange2}
+            selectedValue={secilen}
+            onValueChange={(itemValue) => {
+              if (itemValue !== null) {
+                setSecilen(itemValue);
+                handleOptionChange2(itemValue); // Seçilen değeri fonksiyona gönder
+              }
+            }}
             style={styles.picker}
           >
+            <Picker.Item
+                label="Seçiniz"
+                value={null}
+              />
             {options2.map((option) => (
               <Picker.Item
                 key={option.hesapturid}
@@ -108,10 +130,19 @@ const ComboBox = ({ label, navigation, onChangeBox }) => {
         </Text>
         <View style={styles.pickerContainer}>
           <Picker
-            selectedValue={selectedOptionsube} // selectedOption3 doğru şekilde ayarlandı
-            onValueChange={handleOptionChange3}
+            selectedValue={secilen} // selectedOption3 doğru şekilde ayarlandı
+            onValueChange={(itemValue) => {
+              if (itemValue !== null) {
+                setSecilen(itemValue);
+                handleOptionChange3(itemValue); // Seçilen değeri fonksiyona gönder
+              }
+            }}
             style={styles.picker}
           >
+            <Picker.Item
+                label="Seçiniz"
+                value={null}
+              />
             {options3.map((option) => (
               <Picker.Item key={option.subeid} label={option.subeadi} value={option.subeid} />
             ))}
@@ -127,10 +158,19 @@ const ComboBox = ({ label, navigation, onChangeBox }) => {
         </Text>
         <View style={styles.pickerContainer}>
           <Picker
-            selectedValue={chechdoviz}
-            onValueChange={handleOptionChangesatis}
+            selectedValue={secilen}
+            onValueChange={(itemValue) => {
+              if (itemValue !== null) {
+                setSecilen(itemValue);
+                handleOptionChangesatis(itemValue); // Seçilen değeri fonksiyona gönder
+              }
+            }}
             style={styles.picker}
           >
+            <Picker.Item
+                label="Seçiniz"
+                value={null}
+              />
             {optiondoviz.map((option) => (
               <Picker.Item
                 key={option.doviztipiid}
@@ -150,10 +190,19 @@ const ComboBox = ({ label, navigation, onChangeBox }) => {
         </Text>
         <View style={[styles.pickerContainer]}>
           <Picker
-            selectedValue={chechdoviz2}
-            onValueChange={handleOptionChangealis}
+            selectedValue={secilen}
+            onValueChange={(itemValue) => {
+              if (itemValue !== null) {
+                setSecilen(itemValue);
+                handleOptionChangealis(itemValue); // Seçilen değeri fonksiyona gönder
+              }
+            }}
             style={[styles.picker]}
           >
+            <Picker.Item
+                label="Seçiniz"
+                value={null}
+              />
             {optiondoviz.map((option, index) => (
               <Picker.Item
                 key={option.doviztipiid}

@@ -16,7 +16,7 @@ const TextInputC = ({ label, onChangeText, error, errorPassword,errorEmail }) =>
 
   const handleTextChange = (text) => {
     setText(text);
-    onChangeText(text);
+    onChangeText(text,label);
   };
 
   return (
