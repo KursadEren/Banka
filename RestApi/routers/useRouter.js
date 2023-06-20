@@ -348,7 +348,7 @@ router.post('/silme', async (req,res) =>{
         AND doviztipiid = $2
         AND hesapbakiye = 0;
       `
-      const values = [req.body.tcno,req.body.chechdoviz]
+      const values = [req.body.tcno,req.body.dovizKontrol]
       const {rows} = await postgresClient.query(text,values)
       console.log(rows)
       
