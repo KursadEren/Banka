@@ -12,18 +12,18 @@ export default function Hesapduzenle({navigation}) {
     const {t} = useTranslation()
     const [step, setStep] = useState(1);
     const context = useContext(MyContext);
-    const {chechdoviz,updateSayfa,updatesetOptions3,
+    const {updateSayfa,updatesetOptions3,
          updatesetOptions2 ,updatesetOptions, 
-         selectedOptionsube , selectedOptiondoviz, selectedOptionhesap,
-         tcno,
          theme,
-         updateTcno,
-         updatePassword} = context
+         } = context
 
          const[dovizKontrol ,setDovizKontrol]= useState();
          const[dovizSecim   ,setDovizSecim]= useState();
          const[sube         ,setSube]= useState();
          const[hesapTur   ,setHesapTur]= useState();
+
+         const[tcno,setTcno]=useState()
+         
 
 
     const OnChangeButton = async (text)=>{
@@ -42,13 +42,13 @@ export default function Hesapduzenle({navigation}) {
 
           /// HESAP SİL
           {
-            console.log(chechdoviz,tcno,selectedOptiondoviz,selectedOptionhesap,selectedOptionsube)
+            
             const { manifest } = Constants;
             const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
             // hesabın silinmesi için tcno ve seçilen dözvivi kontrol eder eğer hesabın bakiyesi 0 a eşitse silme gerçekleşir
 
             axios
-            .post(`${apiAddress}/users/silme`,{tcno,chechdoviz})
+            .post(`${apiAddress}/users/silme`,{tcno,dovizKontrol})
             .then((response) => {
               
              })
@@ -64,7 +64,7 @@ export default function Hesapduzenle({navigation}) {
           {  // bu kısımda bir tane kontrol yap ve içinde para olan hesaplar doviztipi değiştirilemez
             const { manifest } = Constants;
             const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-            console.log( chechdoviz, tcno, selectedOptiondoviz, selectedOptionhesap, selectedOptionsube)
+            
             axios.post(`${apiAddress}/users/hesapduzenle`   ,{tcno,dovizKontrol:parseInt(dovizKontrol),dovizSecim,hesapTur,sube})
             .then((response) => {
               
@@ -95,10 +95,11 @@ export default function Hesapduzenle({navigation}) {
     }
 
     const handleNextStep = () => {
-        if (
-           selectedOptionsube !== null &&
-           selectedOptiondoviz  !== null &&
-           selectedOptionhesap !== null
+        if (//eklenecek şeyler var 
+         
+          dovizSecim !== null &&
+          hesapTur  !== null &&
+          sube !== null
         ) {
           setStep(step + 1);
         } else {
@@ -186,9 +187,9 @@ export default function Hesapduzenle({navigation}) {
               <View style={[styles.container,{backgroundColor: theme ==='dark' ? "#1e1e1e":'rgb(218, 231, 237)'}]}>
               <View style={styles.stepContainer}>
                 
-                <TextInputC label="TC No"onChangeText={updateTcno}  style={styles.input} />
+                <TextInputC label="TC No"onChangeText={setTcno}  style={styles.input} />
                 
-                <TextInputC   label={t('Password')} onChangeText={updatePassword} style={styles.input}/>
+                
                 <View style={styles.buttonContainer}>
                  
     
