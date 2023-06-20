@@ -65,7 +65,7 @@ export default function Hesapduzenle({navigation}) {
             const { manifest } = Constants;
             const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
             console.log( chechdoviz, tcno, selectedOptiondoviz, selectedOptionhesap, selectedOptionsube)
-            axios.post(`${apiAddress}/users/hesapduzenle`   ,{tcno,chechdoviz:parseInt(chechdoviz),selectedOptiondoviz,selectedOptionhesap,selectedOptionsube})
+            axios.post(`${apiAddress}/users/hesapduzenle`   ,{tcno,dovizKontrol:parseInt(dovizKontrol),dovizSecim,hesapTur,sube})
             .then((response) => {
               
               Alert.alert(
