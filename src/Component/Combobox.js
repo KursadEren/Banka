@@ -6,7 +6,7 @@ import axios from 'axios';
 import { MyContext } from '../Context/Context';
 import { useTranslation } from 'react-i18next';
 
-const ComboBox = ({ label, navigation, onChangeBox }) => {
+const ComboBox = ({ label, navigation, onChangeBox,onChangeHesap }) => {
   const { t } = useTranslation();
 
   const[secilenKontol,setSecilenKontol] = useState()
@@ -16,41 +16,38 @@ const ComboBox = ({ label, navigation, onChangeBox }) => {
 
   const context = useContext(MyContext);
   const {
-    selectedOptiondoviz,
+    
     theme,
     updateSelectedOptiondoviz,
-    selectedOptionhesap,
     updateSelectedOptionhesap,
-    selectedOptionsube,
     updateSelectedOptionsube,
     options,
     options2,
     options3,
     updatesetChechdoviz,
     updatesetChechdoviz2,
-    chechdoviz,
     chechdoviz2,
     optiondoviz,
-    updatesetoptiondoviz,
     updatesetcevirilecekdovizadi,
   } = context;
 
  
 
   const SecilenSubeChange = (itemValue) => {
-    updateSelectedOptiondoviz(itemValue);
+    
+    onChangeHesap(itemValue)
   };
 
   const SecilenKontrolChange = (itemValue) => {
-    updateSelectedOptionhesap(itemValue);
+    onChangeHesap(itemValue)
   };
 
   const SecilenHesapChange = (itemValue) => {
-    updateSelectedOptionsube(itemValue);
+    onChangeHesap(itemValue)
   };
 
   const SecilenDovizChange = (itemValue) => {
-    updatesetChechdoviz(itemValue);
+    onChangeHesap(itemValue)
   };
 
   const handleOptionChangealis = async (itemValue, selectedIndex) => {
