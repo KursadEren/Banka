@@ -14,6 +14,10 @@ export default function Hesapduzenle({navigation}) {
     const context = useContext(MyContext);
     const {updateSayfa,
          theme,
+         dovizFull,
+         optiondoviz,
+         options2,
+         options3
          } = context
 
          const[dovizKontrol ,setDovizKontrol]= useState(0);
@@ -90,7 +94,8 @@ export default function Hesapduzenle({navigation}) {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
         return () => backHandler.remove();
     }, []);
-
+    console.log(options2)
+    console.log(options3)
     const renderStep = () => {
         switch (step) {
           case 1:
@@ -98,13 +103,13 @@ export default function Hesapduzenle({navigation}) {
               <View style={[styles.container,{backgroundColor: theme ==='dark' ? "#1e1e1e":'rgb(218, 231, 237)'}]}>
               <View style={styles.stepContainer}>
                 
-                <ComboBox onChangeHesap={setDovizKontrol} label="doviztipicheck"/>
+                <ComboBox  data={optiondoviz} onChangeHesap={setDovizKontrol} label="doviztipicheck"/>
                
-                <ComboBox onChangeHesap={setDovizSecim} label="dovizFull"/>
+                <ComboBox data={dovizFull} onChangeHesap={setDovizSecim} label="dovizFull"/>
                
-                <ComboBox onChangeHesap={setHesapTur} label="HesapTUR"/>
+                <ComboBox  data={options2} onChangeHesap={setHesapTur} label="HesapTUR"/>
               
-                <ComboBox onChangeHesap={setSube} label="sube"/>
+                <ComboBox data={options3} onChangeHesap={setSube} label="sube"/>
                 <View style={styles.buttonContainer}>
                   <Buttonx label={`${t('Next')}`}  OnChangeButton={handleNextStep} onPress={handleNextStep} />
                 </View>

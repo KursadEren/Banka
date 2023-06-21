@@ -37,7 +37,7 @@ router.get('/users/:tcno',async (req,res) =>{
 router.get('/doviztipi/:tcno',async (req,res) =>{
     try{
         const { tcno } = req.params;
-        const text = `SELECT d.dovizadi, d.doviztipiid
+        const text = `SELECT d.dovizadi as adi , d.doviztipiid as id
         FROM doviz d
         WHERE d.doviztipiid NOT IN (
           SELECT h.doviztipiid
@@ -62,7 +62,7 @@ router.get('/doviztipi/:tcno',async (req,res) =>{
 
 router.get('/doviztipiF',async (req,res) =>{
   try{
-      const text = "SELECT * from doviz "
+      const text = "SELECT doviztipiid AS id , dovizadi AS adi from doviz "
       
       
       const {rows} = await postgresClient.query(text)
@@ -80,7 +80,7 @@ router.get('/doviztipiF',async (req,res) =>{
 router.get('/dovizsatis/:tcno',async (req,res) =>{
     try{
         const { tcno } = req.params;
-        const text = "select h.doviztipiid,d.dovizadi from users u INNER JOIN usershesap h on u.userid = h.usersid INNER JOIN doviz d on d.doviztipiid = h.doviztipiid where tcno = $1"
+        const text = "select h.doviztipiid as id ,d.dovizadi as adi from users u INNER JOIN usershesap h on u.userid = h.usersid INNER JOIN doviz d on d.doviztipiid = h.doviztipiid where tcno = $1"
         const value = [tcno]
         
         const {rows} = await postgresClient.query(text,value)
@@ -94,7 +94,7 @@ router.get('/dovizsatis/:tcno',async (req,res) =>{
 //şube combobox
 router.get('/sube',async (req,res) =>{
     try{
-        const text = "select subeid, subeadi from sube"
+        const text = "select  subeid AS id, subeadi AS adi from sube"
          const {rows} = await postgresClient.query(text)
         return res.status(200).json(rows)
         
@@ -106,7 +106,7 @@ router.get('/sube',async (req,res) =>{
 //hesaptur combobox
 router.get('/hesaptur',async (req,res) =>{
     try{
-        const text = "SELECT * FROM hesaptur "
+        const text = "SELECT hesapturadi AS adi , hesapturid as id FROM hesaptur "
         
         const {rows} = await postgresClient.query(text)
         return res.status(200).json(rows)

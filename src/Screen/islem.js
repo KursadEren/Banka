@@ -18,6 +18,7 @@ const Islem = ({ navigation }) => {
     updateSayfa,
     theme,
     sayfa,
+    optiondoviz,
     updatesetoptiondoviz,
     chechdoviz,
     chechdoviz2,
@@ -439,7 +440,7 @@ const Islem = ({ navigation }) => {
         <View style={styles.formContainer}>
           <BilgiKarti />
           <View style={styles.comboboxContainer}>
-            <ComboBox label="doviztipialis" />
+            <ComboBox data={optiondoviz} label="doviztipialis" />
             {errorMessage && (
               <View style={styles.errorContainer}>
                 <Text style={styles.errorText}>{errorMessage}</Text>
