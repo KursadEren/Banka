@@ -9,6 +9,7 @@ import axios from 'axios';
 import i18n from '../i18n';
 import { useTranslation } from 'react-i18next';
 
+
 const { width, height } = Dimensions.get('window');
 
 const SignIn = ({ navigation }) => {
@@ -151,6 +152,7 @@ const SignIn = ({ navigation }) => {
         <View style={style.ButtonContainer}></View>
       </View>
       <View>
+        
         <Button title="tıkla" onPress={handeldeneme}/>
       </View>
     </View>

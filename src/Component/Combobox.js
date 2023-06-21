@@ -6,7 +6,7 @@ import axios from 'axios';
 import { MyContext } from '../Context/Context';
 import { useTranslation } from 'react-i18next';
 
-const ComboBox = ({ label, navigation, onChangeBox,onChangeHesap }) => {
+const ComboBox = ({ label, navigation, onChangeBox,onChangeHesap,data }) => {
   const { t } = useTranslation();
 
   const[secilenKontol,setSecilenKontol] = useState()
@@ -35,204 +35,51 @@ const ComboBox = ({ label, navigation, onChangeBox,onChangeHesap }) => {
 
  
 
-  const SecilenSubeChange = (itemValue) => {
+  
+  const handleOptionChangealis = async (itemValue, index) => {
     
-    onChangeHesap(itemValue)
-  };
-
-  const SecilenKontrolChange = (itemValue) => {
-    onChangeHesap(itemValue)
-  };
-
-  const SecilenHesapChange = (itemValue) => {
-    onChangeHesap(itemValue)
-  };
-
-  const SecilenDovizChange = (itemValue) => {
-    onChangeHesap(itemValue)
-  };
-
-  const handleOptionChangealis = async (itemValue, selectedIndex) => {
+    
     updatesetChechdoviz2(itemValue);
-    updatesetcevirilecekdovizadi(optiondoviz[selectedIndex].dovizadi);
-  };
-  const setSecilenDovizFullChange = (itemValue) =>{
-    onChangeHesap(itemValue)
-  }
+    onChangeHesap(itemValue);
 
-  let content;
-
-  if (label === 'doviztipi') {
-    content = (
-      <View style={styles.container}>
-        <Text style={[styles.label, { color: theme === 'dark' ? 'white' : 'black' }]}>
-          {t('CurrencyType')}
-        </Text>
-        <View style={styles.pickerContainer}>
-          <Picker
-            selectedValue={secilenDoviz}
-            onValueChange={(itemValue) => {
-              if (itemValue !== null) {
-                setSecilenDoviz(itemValue);
-                SecilenDovizChange(itemValue); // Seçilen değeri fonksiyona gönder
-              }
-            }}
-            style={styles.picker}
-          >
-            {options.map((option) => (
-              <Picker.Item
-                key={option.doviztipiid}
-                label={option.dovizadi}
-                value={option.doviztipiid}
-              />
-            ))}
-          </Picker>
-        </View>
-      </View>
-    );
-  }else if(label==='dovizFull'){
-    content = (
-      <View style={styles.container}>
-        <Text style={[styles.label, { color: theme === 'dark' ? 'white' : 'black' }]}>
-          {t('CurrencyType')}
-        </Text>
-        <View style={styles.pickerContainer}>
-          <Picker
-            selectedValue={secilenDovizFull}
-            onValueChange={(itemValue) => {
-              if (itemValue !== null) {
-                setSecilenDovizFull(itemValue);
-                setSecilenDovizFullChange(itemValue); // Seçilen değeri fonksiyona gönder
-              }
-            }}
-            style={styles.picker}
-          >
-            {dovizFull.map((option) => (
-              <Picker.Item
-                key={option.doviztipiid}
-                label={option.dovizadi}
-                value={option.doviztipiid}
-              />
-            ))}
-          </Picker>
-        </View>
-      </View>
-    );
+    if(label==='doviztipialis'){
+    const selectedOption = data.find((option) => option.id === itemValue);
+    updatesetcevirilecekdovizadi(selectedOption.adi);}
     
-  } else if (label === 'HesapTUR') {
-    content = (
-      <View style={styles.container}>
-        <Text style={[styles.label, { color: theme === 'dark' ? 'white' : 'black' }]}>
-          {t('AccountType')}
-        </Text>
-        <View style={styles.pickerContainer}>
-          <Picker
-           selectedValue={secilenHesap}
+  };
+  
+
+  
+
+  return (
+    <View style={[styles.container]}>
+      <Text style={[styles.label, { color: theme === 'dark' ? 'white' : 'rgb(218, 231, 237)' }]}>
+        {t('ConvertType')}
+      </Text>
+      <View style={[styles.pickerContainer]}>
+        <Picker
+           selectedValue={secilenDoviz}
            onValueChange={(itemValue) => {
              if (itemValue !== null) {
-               setSecilenHesap(itemValue);
-               SecilenHesapChange(itemValue); // Seçilen değeri fonksiyona gönder
+               setSecilenDoviz(itemValue);
+               handleOptionChangealis(itemValue); // Seçilen değeri fonksiyona gönder
              }
            }}
-            style={styles.picker}
-          >
-            {options2.map((option) => (
-              <Picker.Item
-                key={option.hesapturid}
-                label={option.hesapturadi}
-                value={option.hesapturid}
-              />
-            ))}
-          </Picker>
-        </View>
+          style={[styles.picker]}
+        >
+          <Picker.Item label={t('Selectoptions')} value="A" />
+
+          {data.map((option, index) => (
+            <Picker.Item
+              key={option.id}
+              label={option.adi}
+              value={option.id}
+            />
+          ))}
+        </Picker>
       </View>
-    );
-  } else if (label === 'sube') {
-    content = (
-      <View style={styles.container}>
-        <Text style={[styles.label, { color: theme === 'dark' ? 'white' : 'black' }]}>
-          {t('Branches')}
-        </Text>
-        <View style={styles.pickerContainer}>
-          <Picker
-            selectedValue={secilenSube}
-            onValueChange={(itemValue) => {
-              if (itemValue !== null) {
-                setSecilenSube(itemValue);
-                SecilenSubeChange(itemValue); // Seçilen değeri fonksiyona gönder
-              }
-            }}
-            style={styles.picker}
-          >
-            {options3.map((option) => (
-              <Picker.Item key={option.subeid} label={option.subeadi} value={option.subeid} />
-            ))}
-          </Picker>
-        </View>
-      </View>
-    );
-  } else if (label === 'doviztipicheck') {
-    content = (
-      <View style={styles.container}>
-        <Text style={[styles.label, { color: theme === 'dark' ? 'white' : 'black' }]}>
-          {t('Selectoptions')}
-        </Text>
-        <View style={styles.pickerContainer}>
-          <Picker
-            selectedValue={secilenKontol}
-            onValueChange={(itemValue) => {
-              if (itemValue !== null) {
-                setSecilenKontol(itemValue);
-                SecilenKontrolChange(itemValue); // Seçilen değeri fonksiyona gönder
-              }
-            }}
-            style={styles.picker}
-          >
-            {optiondoviz.map((option) => (
-              <Picker.Item
-                key={option.doviztipiid}
-                label={option.dovizadi}
-                value={option.doviztipiid}
-              />
-            ))}
-          </Picker>
-        </View>
-      </View>
-    );
-
-
-
-
-
-
-
-
-  } else if (label === 'doviztipialis') {
-    content = (
-      <View style={[styles.container]}>
-        <Text style={[styles.label, { color: theme === 'dark' ? 'white' : 'rgb(218, 231, 237)' }]}>
-          {t('ConvertType')}
-        </Text>
-        <View style={[styles.pickerContainer]}>
-          <Picker
-            selectedValue={chechdoviz2}
-            onValueChange={handleOptionChangealis}
-            style={[styles.picker]}
-          >
-            {optiondoviz.map((option, index) => (
-              <Picker.Item
-                key={option.doviztipiid}
-                label={option.dovizadi}
-                value={option.doviztipiid}
-              />
-            ))}
-          </Picker>
-        </View>
-      </View>
-    );
-  }
-
-  return content;
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

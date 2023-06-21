@@ -20,6 +20,7 @@ const HomeScreen = ({ navigation }) => {
     updatesetoptiondoviz,
     updatesetOptions2,updatesetOptions3,
     Language,
+    options2,
     updatsetsetuserid,
     usersid,
     updatesetOptions,
@@ -31,7 +32,7 @@ const HomeScreen = ({ navigation }) => {
 
   const fetchData = async () => {
     i18n.changeLanguage(Language);
-    try {
+    
       const { manifest } = Constants;
       const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
 
@@ -61,47 +62,42 @@ const HomeScreen = ({ navigation }) => {
 
 
 
+        try {
+          const response1 = await axios.get(`${apiAddress}/users/doviztipiF`);
+          await new Promise(resolve => setTimeout(resolve, 1000)); // İsteğin tamamlanması için 1 saniye bekleyin (isteğe bağlı)
+          updatsetDovizFull(response1.data);
+        } catch (error) {
+          console.error('API veri alınırken bir hata oluştu:', error);
+        }
+        
+        try {
+          const response2 = await axios.get(`${apiAddress}/users/hesaptur`);
+          await new Promise(resolve => setTimeout(resolve, 1000)); // İsteğin tamamlanması için 1 saniye bekleyin (isteğe bağlı)
+          updatesetOptions2(response2.data);
+          console.log(response2.data);
+        } catch (error) {
+          console.error('API veri alınırken bir hata oluştu:', error);
+        }
+        
+        try {
+          const response3 = await axios.get(`${apiAddress}/users/sube`);
+          await new Promise(resolve => setTimeout(resolve, 1000)); // İsteğin tamamlanması için 1 saniye bekleyin (isteğe bağlı)
+          updatesetOptions3(response3.data);
+          console.log(response3.data);
+        } catch (error) {
+          console.error('API veri alınırken bir hata oluştu:', error);
+        }
+        try {
+          const response = await axios.get(`${apiAddress}/users/dovizsatis/${tcno}`);
+          await new Promise(resolve => setTimeout(resolve, 1000)); // İsteğin tamamlanması için 1 saniye bekleyin (isteğe bağlı)
+          updatesetoptiondoviz(response.data);
+        } catch (error) {
+          console.error('API veri alınırken bir hata oluştu:', error);
+        }
+        
+            
 
-        const response = await axios.get(`${apiAddress}/users/dovizsatis/${tcno}`);
-
-            updatesetoptiondoviz(response.data);
-          axios
-            .get(`${apiAddress}/users/doviztipiF`)
-            .then((response) => {
-              // API'den alınan verileri options state'ine ata
-              updatsetDovizFull(response.data);
-             
-            })
-            .catch((error) => {
-              console.error('API veri alınırken bir hata oluştu:', error);
-            });
-      
-            axios
-            .get(`${apiAddress}/users/hesaptur`)
-            .then((response) => {
-              // API'den alınan verileri options state'ine ata
-              updatesetOptions2(response.data);
-             
-            })
-            .catch((error) => {
-              console.error('API veri alınırken bir hata oluştu:', error);
-            });
-      
-            axios
-            .get(`${apiAddress}/users/sube`)
-            .then((response) => {
-              // API'den alınan verileri options state'ine ata
-              updatesetOptions3(response.data);
-             
-            })
-            .catch((error) => {
-              console.error('API veri alınırken bir hata oluştu:', error);
-            });
-
-      
-    } catch (error) {
-      console.error('API veri alınırken bir hata oluştu:', error);
-    }
+  
   };
 
   useEffect(() => {
