@@ -18,12 +18,12 @@ const HesapEkle = ({ navigation }) => {
   }
  
   const context = useContext(MyContext);
-  const {theme,selectedIBAN,usersid,tcno,password,updateTcno,updatePassword,selectedOptiondoviz,  selectedOptionhesap, selectedOptionsube, sayfa, updateSayfa,updateSelectedIBAN,updatesetOptions,updatesetOptions2,updatesetOptions3 } = context;
+  const {theme,selectedIBAN,options,options2,options3,usersid,tcno,password,updateTcno,updatePassword,sayfa, updateSayfa,updateSelectedIBAN,updatesetOptions,updatesetOptions2,updatesetOptions3 } = context;
  
-  
-  
-
-  useEffect(() => {
+   const [selectedOptionhesap, setselectedOptionhesap ]  = useState()
+   const [selectedOptionsube,  setselectedOptionsube  ]  = useState()
+   const [selectedOptiondoviz ,setselectedOptiondoviz ]   = useState()
+  useEffect(() => { 
       console.log(usersid)
     const backAction = () => {
       updateSayfa("HomeScreen");
@@ -62,13 +62,17 @@ const HesapEkle = ({ navigation }) => {
               
               
               
-              console.log(usersid,
+              console.log(
+                usersid,
                 selectedOptionhesap,
                 hesapbakiye,
                 selectedOptionsube,
                 selectedOptiondoviz,
                 selectedIBAN,)
-              // ekleme yapma
+              // ekleme yapma  
+               /*selectedOptionhesap
+                 selectedOptionsube
+                 selectedOptiondoviz  */
        axios
           .post(`${apiAddress}/users/dovizhesap`, {
             usersid,
@@ -136,11 +140,9 @@ const HesapEkle = ({ navigation }) => {
           <View style={[styles.container,{backgroundColor:theme === 'dark'? "#1e1e1e" :'rgb(218, 231, 237)'}]}>
           <View style={[styles.stepContainer]}>
             
-            <ComboBox   label="doviztipi"/>
-            
-            <ComboBox label="HesapTUR"/>
-            
-            <ComboBox label="sube"/>
+            <ComboBox data={options }   onChangeHesap={ setselectedOptiondoviz }    label="doviztipi"/>  
+            <ComboBox data={options2}   onChangeHesap={ setselectedOptionhesap }    label="HesapTUR"/>
+            <ComboBox data={options3}   onChangeHesap={ setselectedOptionsube  }    label="sube"/>
             <View style={styles.buttonContainer}>
               <Buttonx label={`${t('Next')}`}  OnChangeButton={OnChangeButton} onPress={handleNextStep} />
             </View>
