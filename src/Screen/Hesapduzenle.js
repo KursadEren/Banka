@@ -105,9 +105,9 @@ export default function Hesapduzenle({navigation}) {
                 
                 <ComboBox  data={optiondoviz} onChangeHesap={setDovizKontrol} label="doviztipicheck"/>
                
-                <ComboBox data={dovizFull} onChangeHesap={setDovizSecim} label="dovizFull"/>
-               
-                <ComboBox  data={options2} onChangeHesap={setHesapTur} label="HesapTUR"/>
+                <ComboBox data={dovizFull}       onChangeHesap={setDovizSecim} label="dovizFull"/>
+                  
+                <ComboBox  data={options2}       onChangeHesap={setHesapTur}   label="HesapTUR"/>
               
                 <ComboBox data={options3} onChangeHesap={setSube} label="sube"/>
                 <View style={styles.buttonContainer}>
