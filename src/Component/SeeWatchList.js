@@ -85,10 +85,10 @@ const SeeWatchList = ({ navigation }) => {
 
   const handleAlis = (currency) => {
 
-    const bulunanVeri = optiondoviz.find(veri => veri.dovizadi === currency);
+    const bulunanVeri = optiondoviz.find(veri => veri.adi === currency);
 
     if (bulunanVeri) {
-      console.log("Doviz Tipi ID:", bulunanVeri.doviztipiid);
+      console.log("Doviz Tipi ID:", bulunanVeri.id);
       updatesetErrorText("")
     } else {
       updatesetErrorText("Belirtilen döviz hesabı bulunamadı.");
@@ -138,10 +138,10 @@ const SeeWatchList = ({ navigation }) => {
   };
 
   const handleSatis = (currency) => {
-    const bulunanVeri = optiondoviz.find(veri => veri.dovizadi === currency);
+    const bulunanVeri = optiondoviz.find(veri => veri.adi === currency);
       
     if (bulunanVeri) {
-      console.log("Doviz Tipi ID:", bulunanVeri.doviztipiid);
+      console.log("Doviz Tipi ID:", bulunanVeri.id);
       updatesetErrorText("")
     } else {
       updatesetErrorText("Belirtilen döviz hesabı bulunamadı.");

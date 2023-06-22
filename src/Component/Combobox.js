@@ -67,7 +67,7 @@ const ComboBox = ({ label, navigation, onChangeBox,onChangeHesap,data }) => {
            }}
           style={[styles.picker]}
         >
-          <Picker.Item label={t('Selectoptions')} value="A" />
+          <Picker.Item label={t('Selectoptions')} value="" />
 
           {data.map((option, index) => (
             <Picker.Item
