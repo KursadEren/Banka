@@ -8,6 +8,7 @@ import Buttonx from '../Component/Button';
 import Constants from 'expo-constants'
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import ErrorBubble from '../Component/ErrorBuble';
 const HesapEkle = ({ navigation }) => {
     const {t} = useTranslation()
   function generateRandomNumber() {
@@ -20,9 +21,9 @@ const HesapEkle = ({ navigation }) => {
   const context = useContext(MyContext);
   const {theme,selectedIBAN,options,options2,options3,usersid,tcno,password,updateTcno,updatePassword,sayfa, updateSayfa,updateSelectedIBAN,updatesetOptions,updatesetOptions2,updatesetOptions3 } = context;
  
-   const [selectedOptionhesap, setselectedOptionhesap ]  = useState()
-   const [selectedOptionsube,  setselectedOptionsube  ]  = useState()
-   const [selectedOptiondoviz ,setselectedOptiondoviz ]   = useState()
+   const [selectedOptionhesap, setselectedOptionhesap ]  = useState(null)
+   const [selectedOptionsube,  setselectedOptionsube  ]  = useState(null)
+   const [selectedOptiondoviz ,setselectedOptiondoviz ]   = useState(null)
   useEffect(() => { 
       console.log(usersid)
     const backAction = () => {
@@ -113,6 +114,8 @@ const HesapEkle = ({ navigation }) => {
   }
 
   const handleNextStep = () => {
+
+    console.log(selectedOptiondoviz , selectedOptionhesap  ,selectedOptionsube )
     if (
       selectedOptiondoviz !== null &&
       selectedOptionhesap !== null &&
@@ -144,9 +147,12 @@ const HesapEkle = ({ navigation }) => {
             <ComboBox data={options2}   onChangeHesap={ setselectedOptionhesap }    label="HesapTUR"/>
             <ComboBox data={options3}   onChangeHesap={ setselectedOptionsube  }    label="sube"/>
             <View style={styles.buttonContainer}>
-              <Buttonx label={`${t('Next')}`}  OnChangeButton={OnChangeButton} onPress={handleNextStep} />
+              <ErrorBubble/>
+              <Buttonx label={`${t('Next')}`}  OnChangeButton={handleNextStep} />
+              
             </View>
           </View>
+          
           </View>
         );
       case 2:

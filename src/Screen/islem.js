@@ -48,6 +48,8 @@ const Islem = ({ navigation }) => {
   const [userbilgi, setUserbilgi] = useState([]);
   const [doviztipi,setDovizTipi] = useState(0);
   const [doviztipi2,setDovizTipi2] = useState(0);
+  const [deger,setDeger] = useState(0);
+
   
   const updatesetDovizTipi =  (itemvalue) =>{
     setDovizTipi(itemvalue);
@@ -161,101 +163,7 @@ const Islem = ({ navigation }) => {
     // sayfadaki bütün butonların bulunduğu fonksiyon
 
   const OnChangeButton = async (label) => {
-    
-    if(label ===`${t('ButtonName2')}`){
-      
-      if(cevirilecekdovizadi===secilendovizAdi){
-        setShowConfirmation(false);
-        setErrorMessage(`${t('Error4')}`);
-        return;
-      }
-      if(dolarmiktar === '')
-      {
-        setShowConfirmation(false);
-        setErrorMessage(`${t('Error5')}`);
-        return;
-      }
-        if(islemtipi === `${t('Sell')}`)
-        {
-          const doviztipiid=chechdoviz;
-          //satış kısmındaki ana sayfdan seçilen hesap varmı yada hesap bakiyesi yeterli mi diye kontol edilir
-
-          const { manifest } = Constants;
-          const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-      
-          axios
-            .post(`${apiAddress}/users/dovizkontrol`, {
-              tcno,
-              doviztipiid,
-              dolarmiktar,
-            })
-            .then((response) => {
-              if (response.status === 200) {
-                // kullanıcın bütün bilgilerini getirir
-                axios
-                  .get(`${apiAddress}/users/ozetbilgi/${tcno}`)
-                  .then((response) => {
-                    setUserbilgi(response.data.rows[0]);
-                    setShowConfirmation(true);
-                  })
-                  .catch((error) => {
-                    console.error('API veri alınırken bir hata oluştu:', error);
-                  });
-                  
-              } else {
-               
-                console.error(response.data.message);
-              }
-            })
-            .catch((error) => {
-              setShowConfirmation(false);
-              setErrorMessage(`${t('Error1')}`);
-              return;
-            });
-        }
-        else  if(islemtipi ===`${t('Buy')}` )
-        {
-          
-          const doviztipiid=chechdoviz2;
-          // DOVİZ KONTROL ALIM KISMINDAKİ SEÇİLEN HESABIN BAKİYESİ VEYA HESAP VARMI DİYE KONTOL EDER
-
-          const { manifest } = Constants;
-          const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-      
-          axios
-            .post(`${apiAddress}/users/dovizkontrol`, {
-              tcno,
-              doviztipiid,
-              dolarmiktar,
-            })
-            .then((response) => {
-              if (response.status === 200) {
-                axios
-                  .get(`${apiAddress}/users/ozetbilgi/${tcno}`)
-                  .then((response) => {
-                    setUserbilgi(response.data.rows[0]);
-                   
-                    setShowConfirmation(true);
-                  })
-                  .catch((error) => {
-                    console.error('API veri alınırken bir hata oluştu:', error);
-                  });
-              } else {
-                
-                console.error(response.data.message);
-              }
-            })
-            .catch((error) => {
-              setShowConfirmation(false);
-              setErrorMessage(`${t('Error1')}`);
-              return;
-            });
-        }
-    
    
-    }else if(label===`${t('ButtonName3')}`)
-    {
-
           // kontrol için
         if(islemtipi === `${t('Buy')}`)
         {
@@ -426,9 +334,110 @@ const Islem = ({ navigation }) => {
                 });
         }
 
-    }
+    
   };
+  const onChangeHesap = (itemValue) =>{
+    setDeger(itemValue)
+  }
   
+  const onCevirChange = () =>{
+    
+      if(deger === 0)
+      {
+        setErrorMessage(`${t('Selectoptions')}`);
+        return
+      }
+      if(cevirilecekdovizadi===secilendovizAdi){
+        setShowConfirmation(false);
+        setErrorMessage(`${t('Error4')}`);
+        return;
+      }
+      if(dolarmiktar === '')
+      {
+        setShowConfirmation(false);
+        setErrorMessage(`${t('Error5')}`);
+        return;
+      }
+        if(islemtipi === `${t('Sell')}`)
+        {
+          const doviztipiid=chechdoviz;
+          //satış kısmındaki ana sayfdan seçilen hesap varmı yada hesap bakiyesi yeterli mi diye kontol edilir
+
+          const { manifest } = Constants;
+          const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+      
+          axios
+            .post(`${apiAddress}/users/dovizkontrol`, {
+              tcno,
+              doviztipiid,
+              dolarmiktar,
+            })
+            .then((response) => {
+              if (response.status === 200) {
+                // kullanıcın bütün bilgilerini getirir
+                axios
+                  .get(`${apiAddress}/users/ozetbilgi/${tcno}`)
+                  .then((response) => {
+                    setUserbilgi(response.data.rows[0]);
+                    setShowConfirmation(true);
+                  })
+                  .catch((error) => {
+                    console.error('API veri alınırken bir hata oluştu:', error);
+                  });
+                  
+              } else {
+               
+                console.error(response.data.message);
+              }
+            })
+            .catch((error) => {
+              setShowConfirmation(false);
+              setErrorMessage(`${t('Error1')}`);
+              return;
+            });
+        }
+        else  if(islemtipi ===`${t('Buy')}` )
+        {
+          
+          const doviztipiid=chechdoviz2;
+          // DOVİZ KONTROL ALIM KISMINDAKİ SEÇİLEN HESABIN BAKİYESİ VEYA HESAP VARMI DİYE KONTOL EDER
+
+          const { manifest } = Constants;
+          const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+      
+          axios
+            .post(`${apiAddress}/users/dovizkontrol`, {
+              tcno,
+              doviztipiid,
+              dolarmiktar,
+            })
+            .then((response) => {
+              if (response.status === 200) {
+                axios
+                  .get(`${apiAddress}/users/ozetbilgi/${tcno}`)
+                  .then((response) => {
+                    setUserbilgi(response.data.rows[0]);
+                   
+                    setShowConfirmation(true);
+                  })
+                  .catch((error) => {
+                    console.error('API veri alınırken bir hata oluştu:', error);
+                  });
+              } else {
+                
+                console.error(response.data.message);
+              }
+            })
+            .catch((error) => {
+              setShowConfirmation(false);
+              setErrorMessage(`${t('Error1')}`);
+              return;
+            });
+        }
+    
+  
+  
+  }
 
   return (
     <View style={[styles.container,{backgroundColor: theme === 'dark'? `#1e1e1e`: `rgb(218, 231, 237)`}]}>
@@ -440,7 +449,7 @@ const Islem = ({ navigation }) => {
         <View style={styles.formContainer}>
           <BilgiKarti />
           <View style={styles.comboboxContainer}>
-            <ComboBox data={optiondoviz} label="doviztipialis" />
+            <ComboBox data={optiondoviz} onChangeHesap={onChangeHesap} label="doviztipialis" />
             {errorMessage && (
               <View style={styles.errorContainer}>
                 <Text style={styles.errorText}>{errorMessage}</Text>
@@ -454,7 +463,7 @@ const Islem = ({ navigation }) => {
         <Text style={[{color: theme ==='dark' ? 'white': 'black'}]}>{t('Information3')}</Text>
         <Text style={[{color: theme ==='dark' ? 'white': 'black'}]}>{hesaplananpara}</Text>
         <View style={styles.buttonContainer}>
-          <Buttonx label={`${t('ButtonName2')}`} OnChangeButton={OnChangeButton} navigation={navigation} />
+          <Buttonx label={`${t('ButtonName2')}`} OnChangeButton={onCevirChange} navigation={navigation} />
         </View>
         {showConfirmation && (
           <View style={styles.overlay}>
