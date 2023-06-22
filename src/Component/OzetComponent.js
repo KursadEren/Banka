@@ -5,12 +5,12 @@ import { MyContext } from '../Context/Context';
 import Constants from 'expo-constants';
 import { useTranslation } from 'react-i18next';
 const Ozet = ({title}) => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const context = useContext(MyContext);
-  const { tcno,theme } = context;
+  const { tcno, theme } = context;
   const perPage = 10; // Sayfa başına gösterilecek veri sayısı
   const [transactions, setTransactions] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(-1);
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [visible, setVisible] = useState(false);
@@ -30,9 +30,10 @@ const Ozet = ({title}) => {
       });
 
       const { data } = response;
-      const { transactions: newTransactions, totalPages: newTotalPages } = data;
-      
-      setTransactions((prevTransactions) => [...newTransactions, ...prevTransactions]); // Verilerin başına ekleme yaparak yeni verileri en üstte göster
+      const { transactions: prevTransactions, totalPages: newTotalPages } = data;
+
+      setTransactions((newTransactions) => [...newTransactions, ...prevTransactions]);
+      // Verilerin başına ekleme yaparak yeni verileri en üstte göster
       setTotalPages(newTotalPages);
       setIsLoading(false);
     } catch (error) {
@@ -42,8 +43,11 @@ const Ozet = ({title}) => {
   };
 
   useEffect(() => {
-    getUserTransactions(tcno, currentPage, sortOrder); // İlk yükleme işlemi
-  }, []);
+    if (currentPage === -1) {
+      getUserTransactions(tcno, 1, sortOrder); // İlk yükleme işlemi
+      setCurrentPage(1);
+    }
+  }, [currentPage]);
 
   const handleLoadMore = () => {
     if (currentPage < totalPages) {
@@ -61,10 +65,10 @@ const Ozet = ({title}) => {
     const formattedTarih = `${day}/${month}/${year} `;
 
     return (
-      <View style={[styles.transactionItem,{backgroundColor: theme === 'dark' ? '#323232':"white",borderWidth:1,borderColor: theme ==='dark'? "white" :"black"}]}>
-        <Text style={[styles.transactionText,{color: theme === 'dark' ? "white":"black"}]}>{formattedTarih}</Text>
-        <Text style={[styles.transactionText,{color: theme === 'dark' ? "white":"black"}]}> -{item.satilanparatutari}  </Text>
-        <Text style={[styles.transactionText,{color: theme === 'dark' ? "white":"black"}]}>{item.alinacakparatutari}</Text>
+      <View style={[styles.transactionItem, { backgroundColor: theme === 'dark' ? '#323232' : 'white', borderWidth: 1, borderColor: theme === 'dark' ? 'white' : 'black' }]}>
+        <Text style={[styles.transactionText, { color: theme === 'dark' ? 'white' : 'black' }]}>{formattedTarih}</Text>
+        <Text style={[styles.transactionText, { color: theme === 'dark' ? 'white' : 'black' }]}> -{item.satilanparatutari}  </Text>
+        <Text style={[styles.transactionText, { color: theme === 'dark' ? 'white' : 'black' }]}>{item.alinacakparatutari}</Text>
       </View>
     );
   };
@@ -92,7 +96,7 @@ const Ozet = ({title}) => {
     const newSortOrder = sortOrder === 'ascending' ? 'descending' : 'ascending';
     setSortOrder(newSortOrder);
     setCurrentPage(1);
-    setTransactions([]);
+    setTransactions([]); // FlatList'in içini temizle
     setIsLoading(true);
     await getUserTransactions(tcno, 1, newSortOrder);
   };

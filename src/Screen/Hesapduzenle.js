@@ -94,8 +94,7 @@ export default function Hesapduzenle({navigation}) {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
         return () => backHandler.remove();
     }, []);
-    console.log(options2)
-    console.log(options3)
+   
     const renderStep = () => {
         switch (step) {
           case 1:
