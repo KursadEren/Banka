@@ -8,22 +8,42 @@ import Buttonx from '../Component/Button';
 import Constants from 'expo-constants'
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
-import ErrorBubble from '../Component/ErrorBuble';
+
 const HesapEkle = ({ navigation }) => {
     const {t} = useTranslation()
+    const [errorMessage, setErrorMessage] = useState();
+    const [step, setStep] = useState(1);
+    const [tcno,setTcno] = useState('');
+    const [password,setpassword] = useState('')
+     const [selectedOptionhesap, setselectedOptionhesap ]  = useState(null)
+   const [selectedOptionsube,  setselectedOptionsube  ]  = useState(null)
+   const [selectedOptiondoviz ,setselectedOptiondoviz ]   = useState(null)
   function generateRandomNumber() {
     const min = Math.pow(10, 15); // Minimum değer: 10^15
     const max = Math.pow(10, 16) - 1; // Maksimum değer: 10^16 - 1
   
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+
+
+  const clearErrorMessage = () => {
+    setErrorMessage(null);
+  };
+  
+  useEffect(()=>{
+   
+    if (errorMessage) {
+      const timer = setTimeout(clearErrorMessage, 3000); // 3000 milisaniye = 3 saniye
+  
+      // useEffect içerisindeki işlevden dönen temizleme işlevi
+      return () => clearTimeout(timer);
+    }
+
+  },[errorMessage])
  
   const context = useContext(MyContext);
-  const {theme,selectedIBAN,options,options2,options3,usersid,tcno,password,updateTcno,updatePassword,sayfa, updateSayfa,updateSelectedIBAN,updatesetOptions,updatesetOptions2,updatesetOptions3 } = context;
- 
-   const [selectedOptionhesap, setselectedOptionhesap ]  = useState(null)
-   const [selectedOptionsube,  setselectedOptionsube  ]  = useState(null)
-   const [selectedOptiondoviz ,setselectedOptiondoviz ]   = useState(null)
+  const {theme,selectedIBAN,options,options2,options3,usersid,sayfa, updateSayfa,updateSelectedIBAN,updatesetOptions,updatesetOptions2,updatesetOptions3 } = context;
+  
   useEffect(() => { 
       console.log(usersid)
     const backAction = () => {
@@ -45,7 +65,7 @@ const HesapEkle = ({ navigation }) => {
   
 
 
-  const [step, setStep] = useState(1);
+  
   
   //                                                              bu kısımda check boxları kontrol et
 
@@ -124,7 +144,7 @@ const HesapEkle = ({ navigation }) => {
     ) {
       setStep(step + 1);
     } else {
-      console.log("Hata: Geçerli değerleri seçiniz.");
+      setErrorMessage("Hata: Geçerli değerleri seçiniz.");
     }
   };
   const handlePrevStep = () => {
@@ -147,8 +167,14 @@ const HesapEkle = ({ navigation }) => {
             <ComboBox data={options }   onChangeHesap={ setselectedOptiondoviz }    label="doviztipi"/>  
             <ComboBox data={options2}   onChangeHesap={ setselectedOptionhesap }    label="HesapTUR"/>
             <ComboBox data={options3}   onChangeHesap={ setselectedOptionsube  }    label="sube"/>
+            <View style={{height:50,marginTop:'3%'}}>
+            {errorMessage && (
+             <View style={styles.errorBubble}>
+             <Text style={styles.errorMessage}>{errorMessage}</Text>
+             </View>)}
+             </View>
             <View style={styles.buttonContainer}>
-              <ErrorBubble/>
+            
               <Buttonx label={`${t('Next')}`}  OnChangeButton={handleNextStep} />
               
             </View>
@@ -161,11 +187,11 @@ const HesapEkle = ({ navigation }) => {
           <View style={[styles.container,{backgroundColor:theme === 'dark'? "#1e1e1e" :'rgb(218, 231, 237)'}]}>
           <View style={styles.stepContainer}>
             
-            <TextInputC onChangeText={updateTcno} label="TC No"  style={styles.input} />
+            <TextInputC onChangeText={setTcno} label="TC No"  style={styles.input} />
             
-            <TextInputC onChangeText={updatePassword}  label="password" style={styles.input}/>
+            <TextInputC onChangeText={setpassword}  label="password" style={styles.input}/>
             <View style={styles.buttonContainer}>
-
+              
                <Buttonx  label={`${t('ButtonName4')}`} OnChangeButton={OnChangeButton}  onPress={handlePrevStep} />
                <Buttonx label={`${t('AddAccount')}`} OnChangeButton={OnChangeButton} navigation={navigation}/>
             </View>
@@ -212,6 +238,20 @@ const styles = StyleSheet.create({
     marginTop:"10%",
     flexDirection: 'row',
     justifyContent: 'space-around',
+  },
+  errorBubble: {
+    flex:1,
+    backgroundColor: 'red',
+    borderRadius: 10,
+    padding: 10,
+    alignSelf: 'center',
+    marginBottom: 10,
+    position:"relative",
+    marginHorizontal:"15%"
+  },
+  errorMessage: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
 

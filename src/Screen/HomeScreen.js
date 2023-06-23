@@ -6,7 +6,6 @@ import ExpandableScreen from '../Component/ExpandableScreen';
 import MyFlatList from '../Component/FlatList';
 import Constants from 'expo-constants';
 import axios from 'axios';
-import ErrorBubble from '../Component/ErrorBuble';
 import { useTranslation } from 'react-i18next';
 import i18n from '../i18n';
 
