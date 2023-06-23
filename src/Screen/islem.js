@@ -64,7 +64,7 @@ const Islem = ({ navigation }) => {
       clearInterval(sayaç);
       updatesetHesaplananParaDegeri('0');
       updateSayfa('HomeScreen')
-      navigation.navigate('HomeScreen');
+      navigation.goBack()
     }
 
     return () => {
@@ -228,7 +228,7 @@ const Islem = ({ navigation }) => {
                   
                   if (response.status === 201) {
                    
-                            navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
+                            navigation.goBack()
                         
                   } else {
                     // İstek başarısız oldu, hata mesajını gösterin
@@ -319,7 +319,7 @@ const Islem = ({ navigation }) => {
                   
                   if (response.status === 201) {
                    
-                            navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
+                            navigation.goBack()
                           
                   } else {
                     // İstek başarısız oldu, hata mesajını gösterin

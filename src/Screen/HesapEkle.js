@@ -28,9 +28,10 @@ const HesapEkle = ({ navigation }) => {
       console.log(usersid)
     const backAction = () => {
       updateSayfa("HomeScreen");
-      navigation.navigate('HomeScreen');
+      navigation.goBack()
       return true;
     };
+    updateSayfa("Hesapekle");
     const kartnumarasi = generateRandomNumber();
     const ulkekodu = "TR";
     const bankakodu = "1232";
@@ -85,10 +86,10 @@ const HesapEkle = ({ navigation }) => {
           })   .then((response) => {
             
             if (response.status === 201) {
-              updateSayfa("Hesapekle");
+              
               updateSayfa("HomeScreen");
   
-              navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
+              navigation.goBack()
               
             } 
           })

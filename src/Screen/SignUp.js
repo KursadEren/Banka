@@ -41,7 +41,7 @@ const SignUp = ( {navigation} ) => {
       if (response.status === 201) {
         
         
-        navigation.navigate('Sign In')
+        navigation.goBack()
         
       } else {
         // İstek başarısız oldu, hata mesajını gösterin

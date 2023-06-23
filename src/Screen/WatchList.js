@@ -19,7 +19,7 @@ const WatchList = ({ navigation }) => {
  const {t} = useTranslation()
   useEffect(() => {
     const backAction = () => {
-      navigation.navigate('HomeScreen');
+      navigation.goBack()
       return true;
     };
 
