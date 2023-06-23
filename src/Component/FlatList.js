@@ -20,13 +20,6 @@ const MyFlatList = ({navigation,OnChangeButton}) => {
     navigation.navigate('HesapEkle');
   };
   
-  useEffect(() => {
-    if(sayfa === 'HomeScreen')
-  {
-  fetchData()
-  }
-    
-  }, [sayfa]);
 
   const fetchData = async () =>{
     updateSayfa('HomeScreen');
@@ -37,7 +30,7 @@ const MyFlatList = ({navigation,OnChangeButton}) => {
 
 
 
-await axios .get(`${apiAddress}/users/hesap/${tcno}`)
+     await axios .get(`${apiAddress}/users/hesap/${tcno}`)
       .then((response) => {
         if (response.status === 200) {
          
@@ -62,6 +55,15 @@ await axios .get(`${apiAddress}/users/hesap/${tcno}`)
        
       });
   }
+  
+  
+  useEffect(() => {
+   
+  if(sayfa ==='HomeScreen')
+  fetchData()
+  }, [sayfa]);
+
+ 
 
   const Item = ({ title, iban,subeadi,hesapbakiye,dovizad}) => {
     

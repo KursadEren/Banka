@@ -13,6 +13,7 @@ const Islem = ({ navigation }) => {
   const {t} = useTranslation()
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
+  
   const context = useContext(MyContext);
   const {
     updateSayfa,
@@ -54,6 +55,21 @@ const Islem = ({ navigation }) => {
   const updatesetDovizTipi =  (itemvalue) =>{
     setDovizTipi(itemvalue);
   }
+
+  const clearErrorMessage = () => {
+    setErrorMessage(null);
+  };
+  
+  useEffect(()=>{
+   
+    if (errorMessage) {
+      const timer = setTimeout(clearErrorMessage, 3000); // 3000 milisaniye = 3 saniye
+  
+      // useEffect içerisindeki işlevden dönen temizleme işlevi
+      return () => clearTimeout(timer);
+    }
+
+  },[errorMessage])
  
   useEffect(() => {
     const sayaç = setInterval(() => {
