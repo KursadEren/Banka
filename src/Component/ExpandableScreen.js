@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, Dimensions, Animated, PanResponder, TouchableOpacity, ScrollView } from 'react-native';
 import SeeWatchList from './SeeWatchList';
-import Ozet from './OzetComponent';
+
 import { MyContext } from '../Context/Context';
 
 const ExpandableScreen = ({ onExpand, onCollapse, navigation,setErrorMessage }) => {
