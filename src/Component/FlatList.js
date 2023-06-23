@@ -21,41 +21,47 @@ const MyFlatList = ({navigation,OnChangeButton}) => {
   };
   
   useEffect(() => {
-    const fetchData = async () =>{
-      updateSayfa('HomeScreen');
-      const { manifest } = Constants;
-      const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-  
-await axios
-        .get(`${apiAddress}/users/hesap/${tcno}`)
-        .then((response) => {
-          if (response.status === 200) {
-           
-            setName(response.data[0].fullname);
-            setUserInfo(response.data);
-            
-          } else {
-            console.error(response.data.message);
-          }
-        })
-        .catch((error) => {
-          
-            Alert.alert(
-              `${t('Notification')}`,
-              `${t('AccountAdditionRequired')}`,
-              [
-                { text: `${t('AddAccount')}`, onPress: handleAddAccount },
-              ]
-            );
-            
-          
-         
-        });
-    }
-    fetchData()
+    if(sayfa === 'HomeScreen')
+  {
+  fetchData()
+  }
+    
   }, [sayfa]);
 
-  
+  const fetchData = async () =>{
+    updateSayfa('HomeScreen');
+    const { manifest } = Constants;
+    const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+
+
+
+
+
+await axios .get(`${apiAddress}/users/hesap/${tcno}`)
+      .then((response) => {
+        if (response.status === 200) {
+         
+          setName(response.data[0].fullname);
+          setUserInfo(response.data);
+          
+        } else {
+          console.error(response.data.message);
+        }
+      })
+      .catch((error) => {
+        
+          Alert.alert(
+            `${t('Notification')}`,
+            `${t('AccountAdditionRequired')}`,
+            [
+              { text: `${t('AddAccount')}`, onPress: handleAddAccount },
+            ]
+          );
+          
+        
+       
+      });
+  }
 
   const Item = ({ title, iban,subeadi,hesapbakiye,dovizad}) => {
     

@@ -140,7 +140,7 @@ const HomeScreen = ({ navigation }) => {
   };
 
   const handleExit = () => {
-    BackHandler.removeEventListener('hardwareBackPress', backAction); // Geri tuşu olayını kaldır
+   
     updateTcno('')
     updateSayfa('Sign In');
     navigation.goBack();

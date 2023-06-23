@@ -88,7 +88,7 @@ export default function Hesapduzenle({navigation}) {
 
         const backAction = () => {
           updateSayfa("HomeScreen");
-          navigation.navigate('HomeScreen');
+          navigation.goBack()
           return true;
         };
         const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
