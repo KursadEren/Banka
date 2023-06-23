@@ -4,7 +4,7 @@ import SeeWatchList from './SeeWatchList';
 import Ozet from './OzetComponent';
 import { MyContext } from '../Context/Context';
 
-const ExpandableScreen = ({ onExpand, onCollapse, navigation }) => {
+const ExpandableScreen = ({ onExpand, onCollapse, navigation,setErrorMessage }) => {
 
   const context = useContext(MyContext)
   const {theme} = context
@@ -73,7 +73,7 @@ const ExpandableScreen = ({ onExpand, onCollapse, navigation }) => {
 
       <View style={styles.expandedContent}>
         <View style={{ height: expanded ? '100%' : '100%', width: '100%',backgroundColor:theme === 'dark'? `#1e1e1e`: `rgb(218, 231, 237)` }}>
-          <SeeWatchList navigation={navigation} />
+           <SeeWatchList  setErrorMessage={setErrorMessage} navigation={navigation} />
         </View>
        
       </View>

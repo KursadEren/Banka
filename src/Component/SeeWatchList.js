@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 const { width } = Dimensions.get('window');
 
-const SeeWatchList = ({ navigation }) => {
+const SeeWatchList = ({ navigation,setErrorMessage }) => {
   const {t} = useTranslation()
   const [exchangeRates, setExchangeRates] = useState({});
   const [selectedCurrencies, setSelectedCurrencies] = useState([]);
@@ -89,9 +89,9 @@ const SeeWatchList = ({ navigation }) => {
 
     if (bulunanVeri) {
       console.log("Doviz Tipi ID:", bulunanVeri.id);
-      updatesetErrorText("")
+      setErrorMessage("")
     } else {
-      updatesetErrorText("Belirtilen döviz hesabı bulunamadı.");
+      setErrorMessage("Belirtilen döviz hesabı bulunamadı.");
       return
     }
     updatesetIslemtipi(`${t('Buy')}`)//
@@ -142,9 +142,9 @@ const SeeWatchList = ({ navigation }) => {
       
     if (bulunanVeri) {
       console.log("Doviz Tipi ID:", bulunanVeri.id);
-      updatesetErrorText("")
+      setErrorMessage("")
     } else {
-      updatesetErrorText("Belirtilen döviz hesabı bulunamadı.");
+      setErrorMessage("Belirtilen döviz hesabı bulunamadı.");
       return
     }
   
