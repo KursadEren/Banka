@@ -12,7 +12,7 @@ import i18n from '../i18n';
 
 const HomeScreen = ({ navigation }) => {
   const { t, i18n } = useTranslation();
-  
+  const [errorMessage, setErrorMessage] = useState();
   const context = useContext(MyContext);
   const {
     tcno,
@@ -31,6 +31,21 @@ const HomeScreen = ({ navigation }) => {
     dovizFull
   } = context;
   
+
+  const clearErrorMessage = () => {
+    setErrorMessage(null);
+  };
+  
+  useEffect(()=>{
+   
+    if (errorMessage) {
+      const timer = setTimeout(clearErrorMessage, 3000); // 3000 milisaniye = 3 saniye
+  
+      // useEffect içerisindeki işlevden dönen temizleme işlevi
+      return () => clearTimeout(timer);
+    }
+
+  },[errorMessage])
 
   const fetchData = async () => {
     i18n.changeLanguage(Language);
@@ -168,9 +183,13 @@ const HomeScreen = ({ navigation }) => {
           <MyFlatList OnChangeButton={OnChangeButton} navigation={navigation} />
         </View>
         <View style={{flex:1.5}}>
-        <ErrorBubble />
+          {errorMessage && (
+          <View style={styles.errorBubble}>
+          <Text style={styles.errorMessage}>{errorMessage}</Text>
+          </View>)}
+        
         </View>
-        <ExpandableScreen navigation={navigation} onExpand={handleExpand} onCollapse={handleCollapse} />  
+        <ExpandableScreen navigation={navigation} setErrorMessage={setErrorMessage} onExpand={handleExpand} onCollapse={handleCollapse} />  
         </ScrollView>
     </View>
   );
@@ -205,6 +224,19 @@ const styles = StyleSheet.create({
   ExpanScreen: {
     flex: 1,
   },
+    errorBubble: {
+      backgroundColor: 'red',
+      borderRadius: 10,
+      padding: 10,
+      alignSelf: 'flex-start',
+      marginBottom: 10,
+      position:"relative",
+      marginHorizontal:"17%"
+    },
+    errorMessage: {
+      color: 'white',
+      fontWeight: 'bold',
+    },
 });
 
 export default HomeScreen;
