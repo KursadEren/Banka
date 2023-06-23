@@ -12,10 +12,11 @@ import i18n from '../i18n';
 
 const HomeScreen = ({ navigation }) => {
   const { t, i18n } = useTranslation();
-
+  
   const context = useContext(MyContext);
   const {
     tcno,
+    sayfa,
     updateTcno,
     updateSayfa,
     updatesetoptiondoviz,
@@ -102,10 +103,12 @@ const HomeScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
+    if(sayfa ==='HomeScreen')
     fetchData();
-  }, []);
+  }, [sayfa]);
 
   useEffect(() => {
+    updateSayfa('HomeScreen')
     const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
 
     return () => backHandler.remove();
@@ -167,7 +170,7 @@ const HomeScreen = ({ navigation }) => {
         <View style={{flex:1.5}}>
         <ErrorBubble />
         </View>
-        <ExpandableScreen navigation={navigation} onExpand={handleExpand} onCollapse={handleCollapse} />
+        <ExpandableScreen navigation={navigation} onExpand={handleExpand} onCollapse={handleCollapse} />  
         </ScrollView>
     </View>
   );

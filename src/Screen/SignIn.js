@@ -30,12 +30,13 @@ const SignIn = ({ navigation }) => {
     updatsetLanguage,
     updatsetsetuserid,
     theme,
+    sayfa,
       updateTheme,
   } = context;
 
   useEffect(() => {
-    // Sayfa açıldığında bir kez çalışacak işlemler
-    updateSayfa('Sign In'); // Örnek olarak sayfa değerini güncelliyoruz
+   
+    updateSayfa('Sign In'); 
   }, []);
 
  
@@ -143,18 +144,11 @@ const SignIn = ({ navigation }) => {
             <Buttonx  label="Sign In" OnChangeButton={OnChangeButton} navigation={navigation} />
             <Buttonx label="Sign Up" OnChangeButton={OnChangeButton} navigation={navigation} />
           </View>
-          <View style={style.or}>
-            <View style={{ borderBottomWidth: 1, flex: 1, position: 'relative', top: -height * 0.015 }} />
-            <Text style={{ marginHorizontal: width * 0.02 }}>Or</Text>
-            <View style={{ borderBottomWidth: 1, flex: 1, position: 'relative', top: -height * 0.015 }} />
-          </View>
+         
         </View>
         <View style={style.ButtonContainer}></View>
       </View>
-      <View>
-        
-        <Button title="tıkla" onPress={handeldeneme}/>
-      </View>
+      
     </View>
   );
 };
