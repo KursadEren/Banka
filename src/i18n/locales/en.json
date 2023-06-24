@@ -44,6 +44,7 @@
     "Error9": "Please enter only numbers",
     "Error10":"TC ID or password missing or incorrect",
     "Error":"Error",
+    "Error11":"Select the accounts to be deleted",
     "TelephoneNumber":"Telephone Number",
     "fullname":"FullName",
     "lighttheme":"Light theme",
@@ -56,6 +57,7 @@
     "CurrencyName":"Currency Name",
     "Unchecked":"Unchecked",
     "Checked":"Checked"
+   
     
 }
   
