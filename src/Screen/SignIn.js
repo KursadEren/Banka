@@ -10,6 +10,7 @@ import i18n from '../i18n';
 import { useTranslation } from 'react-i18next';
 
 
+
 const { width, height } = Dimensions.get('window');
 
 const SignIn = ({ navigation }) => {
@@ -132,6 +133,9 @@ const SignIn = ({ navigation }) => {
         <View style={style.appBarr}>
           <AppBar title={t('SignIn')} />
           <Text style={{ textAlign: 'center', marginTop: height * 0.05, fontSize: 20, color: theme === 'dark'? `white`: `#1e1e1e`  }}>{t('welcome')}</Text>
+        </View>
+        <View>
+          
         </View>
         <View style={style.Body}>
           <View style={style.TextInput}>

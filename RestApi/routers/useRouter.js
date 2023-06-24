@@ -351,7 +351,9 @@ router.post('/silme', async (req,res) =>{
       const values = [req.body.tcno,req.body.dovizKontrol]
       const {rows} = await postgresClient.query(text,values)
       console.log(rows)
-      
+      if (rows.length === 0) {
+        throw new Error('Silme işlemi gerçekleştirilemedi.');
+      }
       
       return res.status(200).json({ message:'silme işlemi başarılı'})
   } catch (error) {
