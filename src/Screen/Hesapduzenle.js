@@ -14,7 +14,7 @@ export default function Hesapduzenle({ navigation }) {
   const [step, setStep] = useState(1);
   const [errorMessage, setErrorMessage] = useState();
   const context = useContext(MyContext);
-  const { updateSayfa, theme, dovizFull, optiondoviz, options2, options3 } = context;
+  const { updateSayfa, theme, dovizFull,sayfa, optiondoviz, options2, options3 } = context;
 
   const [dovizKontrol, setDovizKontrol] = useState(0);
   const [dovizSecim, setDovizSecim] = useState(0);
@@ -69,6 +69,7 @@ export default function Hesapduzenle({ navigation }) {
     axios
       .post(`${apiAddress}/users/silme`, { tcno, dovizKontrol })
       .then((response) => {
+        updateSayfa("HomeScreen");
         navigation.goBack()
       })
       .catch((error) => {
@@ -120,7 +121,8 @@ export default function Hesapduzenle({ navigation }) {
         sube,
       })
       .then((response) => {
-        console.log(response.data)
+        updateSayfa("HomeScreen");
+        navigation.goBack()
       })
       .catch((error) => {
         setErrorMessage(`${t('Error2')}`)
@@ -138,8 +140,9 @@ export default function Hesapduzenle({ navigation }) {
   const handlePrevStep = () => {
     setStep(step - 1);
   };
-
+  console.log(sayfa)
   useEffect(() => {
+    updateSayfa('Hesapduzenle')
     const backAction = () => {
       updateSayfa("HomeScreen");
       navigation.goBack()
