@@ -18,8 +18,8 @@ export default function Hesapduzenle({ navigation }) {
 
   const [dovizKontrol, setDovizKontrol] = useState(0);
   const [dovizSecim, setDovizSecim] = useState(0);
-  const [sube, setSube] = useState(0);
-  const [hesapTur, setHesapTur] = useState(0);
+  const [sube      , setSube] = useState(0);
+  const [hesapTur  ,   setHesapTur] = useState(0);
   const [tcno, setTcno] = useState('');
 
   const clearErrorMessage = () => {
@@ -60,6 +60,7 @@ export default function Hesapduzenle({ navigation }) {
     if(dovizKontrol === 0){
        setErrorMessage(`${t('Error11')}`); return
       }
+      
    
 
     const { manifest } = Constants;
@@ -71,7 +72,7 @@ export default function Hesapduzenle({ navigation }) {
         navigation.goBack()
       })
       .catch((error) => {
-        setErrorMessage("Hesab'ın varlığını ve Bakiyesini Kontrol edin")
+        setErrorMessage(`${t('Error14')}`)
       });
   };
 
@@ -100,8 +101,13 @@ export default function Hesapduzenle({ navigation }) {
       }
       
     if(dovizKontrol === 0){
-       setErrorMessage(`${t('Error11')}`); return
+       setErrorMessage(`${t('Error11')}`);
+        return
       }
+      if(dovizSecim=== 0 && sube === 0 && hesapTur === 0 ){
+        setErrorMessage(`${t('Error12')}`);
+      }
+
     const { manifest } = Constants;
     const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
     console.log(tcno, dovizKontrol, dovizSecim, hesapTur, sube);
@@ -117,8 +123,7 @@ export default function Hesapduzenle({ navigation }) {
         console.log(response.data)
       })
       .catch((error) => {
-        console.error('API veri alınırken bir hata oluştu:', error);
-        console.log('API yanıtı:', error.response.data);
+        setErrorMessage(`${t('Error2')}`)
       });
   };
 
@@ -126,7 +131,7 @@ export default function Hesapduzenle({ navigation }) {
     if (dovizKontrol !== 0) {
       setStep(step + 1);
     } else {
-      setErrorMessage("Hata: Geçerli değerleri seçiniz.");
+      setErrorMessage(`${t('Error13')}`);
     }
   };
 

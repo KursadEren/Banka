@@ -45,7 +45,9 @@
     "Error10":"TC no veya parola eksik veya yanlış",
     "Error":"Hata",
     "Error11":"Silinecek hesapları seçin",
-
+    "Error12":"Değiştirilecek değerleri seçin",
+    "Error13":"Hata: Geçerli değerleri seçiniz.",
+    "Error14":"Hesab'ın varlığını ve Bakiyesini Kontrol edin ",
     "TelephoneNumber":"Telefon Numarası",
     "fullname":"Adınız Soyadınız",
     "lighttheme":"Açık Tema",

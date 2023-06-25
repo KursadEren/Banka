@@ -70,8 +70,7 @@ const HesapEkle = ({ navigation }) => {
   //                                                              bu kısımda check boxları kontrol et
 
   const OnChangeButton = async (text) =>{
-      if(text === `${t('AddAccount')}`)
-      {
+    
         const { manifest } = Constants;
         const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
         // kontrol
@@ -126,12 +125,7 @@ const HesapEkle = ({ navigation }) => {
             // HTTP isteği hata verdi, hata mesajını gösterin
             console.error(error);
           });
-      }else if(text ===`${t('ButtonName4')}`){
-        handlePrevStep();
-      }
-      else if(text ===`${t('Next')}`){
-        handleNextStep();
-      }
+      
   }
 
   const handleNextStep = () => {
@@ -144,7 +138,7 @@ const HesapEkle = ({ navigation }) => {
     ) {
       setStep(step + 1);
     } else {
-      setErrorMessage("Hata: Geçerli değerleri seçiniz.");
+      setErrorMessage(`${t('Error13')}`);
     }
   };
   const handlePrevStep = () => {
