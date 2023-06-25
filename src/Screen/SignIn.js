@@ -146,7 +146,7 @@ const SignIn = ({ navigation }) => {
           </View>
           <View style={style.ButtonContainer}>
             <Buttonx  label="Sign In" OnChangeButton={OnChangeButton} navigation={navigation} />
-            <Buttonx label="Sign Up" OnChangeButton={OnChangeButton} navigation={navigation} />
+            <Buttonx label="Sign Up"  OnChangeButton={OnChangeButton} navigation={navigation} />
           </View>
          
         </View>
@@ -163,7 +163,7 @@ const style = StyleSheet.create({
   Body: { marginVertical: height * 0.05, marginHorizontal: width * 0.1 },
   ButtonContainer: { flexDirection: 'row', justifyContent: 'space-around', marginTop: height * 0.01 },
   TextInput: { marginVertical: height * 0.03 },
-  or: { flexDirection: 'row', marginTop: height * 0.05 },
+  or: { flexDirection: 'row', marginTop: height * 0.05, },
 });
 
 export default SignIn;

@@ -1,11 +1,13 @@
 import React, { useContext } from "react";
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
-import { Text } from "react-native";
+import { Text,StyleSheet } from "react-native";
 import { MyContext } from "../Context/Context";
 import { useTranslation } from "react-i18next";
 import HomeScreen from '../Screen/HomeScreen'
 import WatchList from '../Screen/WatchList'
 import { View } from "react-native";
+import Profile from '../Screen/Profile'
+import SifreDegistirme from "../Screen/SifreDegistirme";
 const Drawer = createDrawerNavigator();
 
 function CustomDrawerContent(props) {
@@ -36,7 +38,7 @@ const DrawerNavigator = () => {
         options={{
           drawerLabel: ({ focused }) => (
             <View>
-            <Text style={{ color: focused ? 'black' : theme === 'dark' ? 'white' : 'black',fontSize: 20 }}>
+            <Text style={{ color : theme === 'dark' ? 'white' : 'black',fontSize: 20 }}>
               {t('HomeScreen')}
               
             </Text>
@@ -49,14 +51,28 @@ const DrawerNavigator = () => {
         component={WatchList}
         options={{
           drawerLabel: ({ focused }) => (
-            <View>
-            <Text style={{ color: focused ? 'black' : theme === 'dark' ? 'white' : 'black',fontSize: 20 }}>
+            <View style={style.container}>
+            <Text style={{ color : theme === 'dark' ? 'white' : 'black',fontSize: 20 }}>
               {t('Watchlist')}
               
             </Text>
-            <Text style={{marginLeft:'5%',marginTop:'4%'}}>
-              {t('DrawerNoti')}
+            <Text style={{marginLeft:'5%',marginTop:'4%',color : theme === 'dark' ? 'white' : 'black',}}>
+             - {t('DrawerNoti')}
             </Text>
+            </View>
+          ),
+        }}
+      />
+
+<Drawer.Screen
+        name="Şifre Değiştirme"
+        component={SifreDegistirme}
+        options={{
+          drawerLabel: ({ focused }) => (
+            <View>
+            <Text style={{ color: focused ? 'black' : theme === 'dark' ? 'white' : 'black',fontSize: 20 }}>
+              {t('SifreDegistirme')}
+            </Text>           
             </View>
           ),
         }}
@@ -64,5 +80,9 @@ const DrawerNavigator = () => {
     </Drawer.Navigator>
   );
 };
+
+const style = StyleSheet.create({
+  container:{borderBottomWidth:1,borderTopWidth:1}
+})
 
 export default DrawerNavigator;
