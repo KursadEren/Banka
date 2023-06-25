@@ -60,7 +60,8 @@
     "CurrencyName":"Currency Name",
     "Unchecked":"Unchecked",
     "Checked":"Checked",
-    "DrawerNoti":"The currencies to be added to favorites"
+    "DrawerNoti":"The currencies to be added to favorites",
+    "SifreDegistirme":"Change Password"
    
     
 }

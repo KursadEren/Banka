@@ -57,6 +57,7 @@ const HesapEkle = ({ navigation }) => {
     const bankakodu = "1232";
     const IBAN = ulkekodu + bankakodu + kartnumarasi;
     updateSelectedIBAN(IBAN);
+    
     const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
 
     return () => backHandler.remove();

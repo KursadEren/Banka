@@ -237,6 +237,20 @@ router.get('/doviz', (req, res) => {
     return rate.toFixed(2);
   }
   
+  router.put('/SifreDegistir', async (req,res) =>{
+    try {
+        const text = `UPDATE users
+        SET password = $2
+        WHERE tcno = $1 `
+        const values = [req.body.tcno, req.body.Password]
+        const {rows} = await postgresClient.query(text,values)
+        
+        return res.status(200).json({ message:' authentication succesfull'})
+    } catch (error) {
+        console.log('error occured', error.message)
+        return res.status(400).json({message:error.message})
+    }
+})
 
 //Authenticate user
 
