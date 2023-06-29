@@ -630,9 +630,12 @@ router.post('/hesapduzenle', async (req, res) => {
       }
       const text = `UPDATE usershesap
       SET doviztipiid = $3,
-      subeid = $5,
-      hesapturid = $4
-      WHERE usersid = (SELECT userid FROM users WHERE tcno = $1) AND doviztipiid = (select doviztipiid from usershesap where doviztipiid = $2 )`
+          subeid = $5,
+          hesapturid = $4
+      WHERE usersid = (SELECT userid FROM users WHERE tcno = $1)
+          AND doviztipiid = (SELECT doviztipiid FROM usershesap WHERE doviztipiid = $2)
+          AND (SELECT doviztipiid FROM usershesap WHERE doviztipiid = $3) IS NOT NULL;
+      `
 
       
       const updateValues =  [req.body.tcno, req.body.dovizKontrol,req.body.dovizSecim,req.body.hesapTur,req.body.sube];
