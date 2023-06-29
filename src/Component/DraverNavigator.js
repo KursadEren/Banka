@@ -37,7 +37,7 @@ const DrawerNavigator = () => {
         component={HomeScreen}
         options={{
           drawerLabel: ({ focused }) => (
-            <View>
+            <View style={[style.container,{borderColor: theme === 'dark' ? 'white':'black' }]}>
             <Text style={{ color : theme === 'dark' ? 'white' : 'black',fontSize: 20 }}>
               {t('HomeScreen')}
               
@@ -51,7 +51,7 @@ const DrawerNavigator = () => {
         component={WatchList}
         options={{
           drawerLabel: ({ focused }) => (
-            <View style={style.container}>
+            <View style={[style.container,{borderColor: theme === 'dark' ? 'white':'black' }]}>
             <Text style={{ color : theme === 'dark' ? 'white' : 'black',fontSize: 20 }}>
               {t('Watchlist')}
               
@@ -69,7 +69,7 @@ const DrawerNavigator = () => {
         component={SifreDegistirme}
         options={{
           drawerLabel: ({ focused }) => (
-            <View>
+            <View style={[style.container,{borderColor: theme === 'dark' ? 'white':'black' }]}>
             <Text style={{ color: focused ? 'black' : theme === 'dark' ? 'white' : 'black',fontSize: 20 }}>
               {t('SifreDegistirme')}
             </Text>           
@@ -82,7 +82,7 @@ const DrawerNavigator = () => {
 };
 
 const style = StyleSheet.create({
-  container:{borderBottomWidth:1,borderTopWidth:1}
+  container:{paddingBottom:'5%',borderBottomWidth:1}
 })
 
 export default DrawerNavigator;
