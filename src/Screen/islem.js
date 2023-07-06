@@ -108,6 +108,7 @@ const Islem = ({ navigation }) => {
 
     // Combobox ın içini dolduran axios isteği
   useEffect(() => {
+    updateSayfa('islem')
     const { manifest } = Constants;
     const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
     
@@ -243,7 +244,7 @@ const Islem = ({ navigation }) => {
                 .then((response) => {
                   
                   if (response.status === 201) {
-                   
+                            updateSayfa('HomeScreen')
                             navigation.goBack()
                         
                   } else {

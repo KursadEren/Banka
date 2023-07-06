@@ -95,46 +95,26 @@ const SeeWatchList = ({ navigation,setErrorMessage }) => {
       return
     }
     updatesetIslemtipi(`${t('Buy')}`)//
+     updatesetalisSatisddolar(exchangeRates.usd_try);
+      updatesetalisSatisEuro(exchangeRates.euro_try);
+      updatesetalisSatisSterlin(exchangeRates.gbp_try);
+      updatesetalisSatisfrang(exchangeRates.chf_try);
+      request({currency});
+      updatesetsecilendovizAdi(currency);
 
-    if (currency === 'Amerikan Doları') {
-      
-      updatesetsecilendovizAdi(currency);
-      updatesetSecilenDoviz(exchangeRates.usd_try);
-      updatesetalisSatisEuro(exchangeRates.euro_try);
-      updatesetalisSatisSterlin(exchangeRates.gbp_try);
-      updatesetalisSatisfrang(exchangeRates.chf_try);
-      request({currency});
-      navigation.navigate('islem')
-      
-    } else if (currency === 'İsviçre Frangı') {
-      
-      updatesetsecilendovizAdi(currency);
-      updatesetalisSatisddolar(exchangeRates.usd_try);
-      updatesetalisSatisEuro(exchangeRates.euro_try);
-      updatesetalisSatisSterlin(exchangeRates.gbp_try);
-      updatesetSecilenDoviz(exchangeRates.chf_try);
-      request({currency});
-      navigation.navigate('islem')
-      
-    } else if (currency === 'İngiliz Sterlini') {
-      
-      updatesetsecilendovizAdi(currency);
-      updatesetalisSatisddolar(exchangeRates.usd_try);
-      updatesetalisSatisEuro(exchangeRates.euro_try);
-      updatesetSecilenDoviz(exchangeRates.gbp_try);
-      updatesetalisSatisfrang(exchangeRates.chf_try);
-      request({currency});
-      navigation.navigate('islem')
-    }
-    else if (currency === 'Euro') {
-      updatesetsecilendovizAdi(currency);
-      updatesetalisSatisddolar(exchangeRates.usd_try);
-      updatesetSecilenDoviz(exchangeRates.euro_try);
-      updatesetalisSatisSterlin(exchangeRates.gbp_try);
-      updatesetalisSatisfrang(exchangeRates.chf_try);
-      request({currency});
-      navigation.navigate('islem')
-    }
+      const selectedRate = currency === 'Amerikan Doları' ? exchangeRates.usd_try
+  : currency === 'İngiliz Sterlini' ? exchangeRates.gbp_try
+  : currency === 'İsviçre Frangı' ? exchangeRates.chf_try
+  : currency === 'Euro' ? exchangeRates.euro_try
+  : null;
+
+if (selectedRate !== null) {
+  updatesetSecilenDoviz(selectedRate);
+  navigation.navigate('islem')
+} else {
+ 
+}
+    
   };
 
   const handleSatis = (currency) => {
@@ -149,49 +129,28 @@ const SeeWatchList = ({ navigation,setErrorMessage }) => {
     }
   
     updatesetIslemtipi(`${t('Sell')}`)
-    if (currency === 'Amerikan Doları') {
-      console.log(currency)
-      updatesetsecilendovizAdi(currency);
-      updatesetSecilenDoviz(exchangeRates.usd_try);
-      updatesetalisSatisEuro(exchangeRates.euro_try);
-      updatesetalisSatisSterlin(exchangeRates.gbp_try);
-      updatesetalisSatisfrang(exchangeRates.chf_try);
-      request({currency});
-     
-      navigation.navigate('islem')
-      
-    } else if (currency === 'İngiliz Sterlini') {
-      
-      updatesetsecilendovizAdi(currency);
-      updatesetalisSatisddolar(exchangeRates.usd_try);
-      updatesetalisSatisEuro(exchangeRates.euro_try);
-      updatesetSecilenDoviz(exchangeRates.gbp_try);
-      updatesetalisSatisfrang(exchangeRates.chf_try);
-      request({currency});
-      navigation.navigate('islem')
-      
-    } else if (currency === 'İsviçre Frangı') {
-      
-      updatesetsecilendovizAdi(currency);
-      updatesetalisSatisddolar(exchangeRates.usd_try);
-      updatesetalisSatisEuro(exchangeRates.euro_try);
-      updatesetalisSatisSterlin(exchangeRates.gbp_try);
-      updatesetSecilenDoviz(exchangeRates.chf_try);
-      request({currency});
-      
-      navigation.navigate('islem')
-    }
-    else if (currency === 'Euro') {
-      
-      updatesetsecilendovizAdi(currency);
-      updatesetalisSatisddolar(exchangeRates.usd_try);
-      updatesetSecilenDoviz(exchangeRates.euro_try);
-      updatesetalisSatisSterlin(exchangeRates.gbp_try);
-      updatesetalisSatisfrang(exchangeRates.chf_try);
-      request({currency});
-      
-      navigation.navigate('islem')
-    }
+    updatesetalisSatisddolar(exchangeRates.usd_try);
+    updatesetalisSatisEuro(exchangeRates.euro_try);
+    updatesetalisSatisSterlin(exchangeRates.gbp_try);
+    updatesetalisSatisfrang(exchangeRates.chf_try);
+    updatesetsecilendovizAdi(currency);
+    request({currency});
+
+    
+    const selectedRate = currency === 'Amerikan Doları' ? exchangeRates.usd_try
+  : currency === 'İngiliz Sterlini' ? exchangeRates.gbp_try
+  : currency === 'İsviçre Frangı' ? exchangeRates.chf_try
+  : currency === 'Euro' ? exchangeRates.euro_try
+  : null;
+
+if (selectedRate !== null) {
+  updatesetSecilenDoviz(selectedRate);
+  navigation.navigate('islem')
+} else {
+ 
+}
+
+
   };
 
   return (
