@@ -146,7 +146,7 @@ const SignIn = ({ navigation }) => {
           </View>
           <View style={style.ButtonContainer}>
             <Buttonx  label="Sign In" OnChangeButton={OnChangeButton} navigation={navigation} />
-            <Buttonx label="Sign Up"  OnChangeButton={OnChangeButton} navigation={navigation} />
+            <Buttonx  label="Sign Up"  OnChangeButton={OnChangeButton} navigation={navigation} />
           </View>
          
         </View>

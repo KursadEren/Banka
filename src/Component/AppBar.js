@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 const AppBar = ({ navigation, title }) => {
   const { t, i18n } = useTranslation();
   const context = useContext(MyContext);
-  const { sayfa,theme, updatsetLanguage, Language,updateTheme } = context;
+  const { sayfa,theme, updatsetLanguage, Language,updateTheme,fullname } = context;
 
   const [switchValue, setSwitchValue] = useState(false);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
@@ -49,7 +49,7 @@ const AppBar = ({ navigation, title }) => {
             <Appbar.Action icon={() => <Icon name="globe" size={24} color="white" />} onPress={changeLanguage} />
             <Appbar.Content title={title} titleStyle={{ flex: 1, textAlign: 'center', marginHorizontal: '10%', color: 'white' }} />
             <Switch color="white" value={switchValue} onValueChange={handleSwitchToggle} />
-            <Appbar.Action icon={() => <Avatar.Image size={24} label="" />} />
+            <Appbar.Action icon={() => <Avatar.Text size={30} label={fullname} />} />
           </>
         )}
       </Appbar.Header>

@@ -61,7 +61,8 @@
     "Unchecked":"Unchecked",
     "Checked":"Checked",
     "DrawerNoti":"The currencies to be added to favorites",
-    "SifreDegistirme":"Change Password"
+    "SifreDegistirme":"Change Password",
+    "Balance":"Balance"
    
     
 }
