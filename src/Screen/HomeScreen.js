@@ -15,6 +15,7 @@ const HomeScreen = ({ navigation }) => {
   const context = useContext(MyContext);
   const {
     tcno,
+    updateFullname,
     sayfa,
     updateTcno,
     updateSayfa,
@@ -55,7 +56,7 @@ const HomeScreen = ({ navigation }) => {
       axios
         .get(`${apiAddress}/users/users/${tcno}`)
         .then((response) => {
-          
+          updateFullname(response.data[0].fullname)
           updatsetsetuserid(response.data[0].userid);
           
         })

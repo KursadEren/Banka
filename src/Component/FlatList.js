@@ -78,8 +78,8 @@ const MyFlatList = ({navigation,OnChangeButton}) => {
       <Text style={styles.itemTitle}>{title}</Text>
 
       <View style={{alignItems:"flex-start",flex:1,width:"100%",justifyContent:"flex-end",marginBottom:'2%'}}>
-      <Text style={styles.itemSubtitle}>  Bakiye </Text>
-      <Text style={styles.itemSubtitle}>  {hesapbakiye}  {dovizad}</Text>
+      <Text style={styles.itemSubtitle}>  {t('Balance')} </Text>
+      <Text style={styles.itemSubtitle}>  {hesapbakiye} <Text style={{fontSize:20}}>{dovizad}</Text> </Text>
       </View>
     </View>
     );
@@ -95,6 +95,9 @@ const MyFlatList = ({navigation,OnChangeButton}) => {
   const handleScrollEnd = () => {
     flatListRef.current.scrollToIndex({ animated: true, index: currentIndex });
   };
+
+
+  
 
   return (
     <View style={styles.container}>

@@ -19,6 +19,11 @@ const TextInputC = ({ label, onChangeText, error, errorPassword,errorEmail }) =>
     onChangeText(text);
   };
 
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
   return (
     <View style={styles.container}>
       <TextInput
@@ -30,6 +35,16 @@ const TextInputC = ({ label, onChangeText, error, errorPassword,errorEmail }) =>
         style={{backgroundColor:'rgb(218, 231, 237)'}}
         theme={{colors: {primary: '#064682'}}}
         onChangeText={handleTextChange}
+        secureTextEntry={label === t('Password') && !showPassword}
+        right={
+          label === t('Password') ? (
+          <TextInput.Icon
+            icon={showPassword ? "eye-off" : 'eye'}
+            onPress={toggleShowPassword}
+            size={24}
+          />
+          ) : null
+        }
       />
       {error && <HelperText type="error" visible={true}>{error}</HelperText>}
       {errorPassword && <HelperText type="error" visible={true}>{errorPassword}</HelperText>}
