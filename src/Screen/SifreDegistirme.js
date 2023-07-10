@@ -5,6 +5,7 @@ import TextInputC from '../Component/TextInput';
 import Buttonx from '../Component/Button';
 import Constants from 'expo-constants'
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 export default function SifreDegistirme({navigation}) {
     const [Password      , setPassword      ] = useState();
     const [ChangePassword, setChangePassword] = useState();
@@ -12,6 +13,7 @@ export default function SifreDegistirme({navigation}) {
     const [error ,setError] = useState('')
     const [errorPassword,setErrorPassword] = useState('')
     const context = useContext(MyContext);
+    const { t,i18n } = useTranslation();
     const { sayfa,theme,updateSayfa, } = context; 
     useEffect(()=>{
        updateSayfa('SifreDegistirme')
@@ -91,9 +93,9 @@ export default function SifreDegistirme({navigation}) {
   return (
     <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor: theme === 'dark' ? '#1e1e1e': 'rgb(218, 231, 237)' }}>
       <TextInputC onChangeText={setTcno} error={error} label="TC No" />
-      <TextInputC label="Password"        onChangeText={setPassword      } errorPassword={errorPassword} />
-      <TextInputC label="Repeat Password" onChangeText={setChangePassword} errorPassword={errorPassword} />
-      <Buttonx navigation={navigation}   OnChangeButton={ButtonDegistir} label="Değiştir"/> 
+      <TextInputC label={t('Password')}        onChangeText={setPassword} errorPassword={errorPassword} />
+      <TextInputC label={t('Password2')} onChangeText={setChangePassword} errorPassword={errorPassword} />
+      <Buttonx whatbut=" " icon="arrow-left-right" navigation={navigation}   OnChangeButton={ButtonDegistir} label="Değiştir"/> 
     </View>
   )
 }

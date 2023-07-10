@@ -35,9 +35,9 @@ const TextInputC = ({ label, onChangeText, error, errorPassword,errorEmail }) =>
         style={{backgroundColor:'rgb(218, 231, 237)'}}
         theme={{colors: {primary: '#064682'}}}
         onChangeText={handleTextChange}
-        secureTextEntry={label === t('Password') && !showPassword}
+         secureTextEntry={(label === t('Password') || label === t('Password2')) && !showPassword}
         right={
-          label === t('Password') ? (
+          label === t('Password') ||label === t('Password2')  ? (
           <TextInput.Icon
             icon={showPassword ? "eye-off" : 'eye'}
             onPress={toggleShowPassword}

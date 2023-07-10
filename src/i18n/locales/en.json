@@ -62,7 +62,8 @@
     "Checked":"Checked",
     "DrawerNoti":"The currencies to be added to favorites",
     "SifreDegistirme":"Change Password",
-    "Balance":"Balance"
+    "Balance":"Balance",
+    "Password2":"Repeat Password"
    
     
 }

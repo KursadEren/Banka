@@ -480,14 +480,16 @@ const Islem = ({ navigation }) => {
         <Text style={[{color: theme ==='dark' ? 'white': 'black'}]}>{t('Information3')}</Text>
         <Text style={[{color: theme ==='dark' ? 'white': 'black'}]}>{hesaplananpara}</Text>
         <View style={styles.buttonContainer}>
-          <Buttonx label={`${t('ButtonName2')}`} OnChangeButton={onCevirChange} navigation={navigation} />
+          <Buttonx whatbut=" " icon="cog-transfer"  label={`${t('ButtonName2')}`} OnChangeButton={onCevirChange} navigation={navigation} />
         </View>
         {showConfirmation && (
           <View style={styles.overlay}>
             <View style={styles.confirmationContainer}>
+            <View style={[styles.confirmationButtonContainer,{}]}>
               <Text style={[styles.confirmationText,{color: theme ==='dark' ? 'black': 'black'}]}>{t('Information2')}</Text>
+             </View>
               <View style={styles.confirmationButtonContainer}>
-                <Buttonx label={`${t('ButtonName3')}`} OnChangeButton={OnChangeButton} />
+                <Buttonx whatbut=" " icon="check" label={`${t('ButtonName3')}`} OnChangeButton={OnChangeButton} />
               </View>
             </View>
           </View>
@@ -546,21 +548,33 @@ const styles = StyleSheet.create({
   },
   confirmationContainer: {
     backgroundColor: 'white',
-    padding: 20,
+    flexDirection:'column',
+    height:"43%",
+    width:"60%",
     borderRadius: 10,
-    borderWidth: 1,
     borderColor: 'gray',
     alignItems: 'center',
+    justifyContent:'space-between',
+
+    
   },
   confirmationText: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+    alignItems:"center",
+    flex:1,
+    textAlign: "center",
+    justifyContent:"center"
   },
   confirmationButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '60%',
+    width: '100%',
+    justifyContent:"center",
+    alignItems:"center",
+    flex:1,
+    
   },
   errorContainer: {
     backgroundColor: 'red',
