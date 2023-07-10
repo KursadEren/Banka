@@ -39,87 +39,84 @@ const SignIn = ({ navigation }) => {
    
     updateSayfa('Sign In'); 
   }, []);
+  const ButtonGiris = async () =>{
+    const textLength = tcno.length;
+    if (tcno !== '') {
+      setError('');
+
+      
+    } else {
+      setError(`${t('Error6')}`);
+      return;
+    }
+    
+    if (!/^\d+$/.test(tcno)) {
+      setError(`${t('Error7')}`);
+      return; // Exit the function if password validation fails
+    }
+
+    if (textLength === 11) {
+      setError('');
+
+    } else {
+      setError(`${t('Error8')}`);
+      return;
+    }
+    if (password !== '') {
+      setErrorPassword('');
+
+    } else {
+      setErrorPassword(`${t('Error6')}`);
+      return;
+    }
+
+    if (!/^\d+$/.test(password)) {
+      setErrorPassword(`${t('Error9')}`);
+      return; // Exit the function if password validation fails
+    }else{
+      setErrorPassword("");
+    }
+        const { manifest } = Constants;
+        const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+        axios
+          .post(`${apiAddress}/users/login`, { tcno, password })
+          .then((response) => {
+            if (response.status === 200) {
+              
+              axios
+              .get(`${apiAddress}/users/hesap/${tcno}`)
+              .then((response) => {
+                if (response.status === 200) {
+                  updateUserinfo(response.data);
+                  
+                  
+                } else {
+                  console.error(response.data.message);
+                }
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+     
+  
+                  navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
+                } else {
+                  
+                  console.error(response.data.message);
+                }
+              })
+              .catch((error) => {
+                  
+                
+                Alert.alert(`${t('Error')}`,  `${t('Error10')}`
+                );  // kayıt kısmınada eklemen gerek 
+              });
+  }
 
  
-  const OnChangeButton = async (text) => {
-    if (text === 'Sign In') {
-      const textLength = tcno.length;
-      if (tcno !== '') {
-        setError('');
-
-        
-      } else {
-        setError(`${t('Error6')}`);
-        return;
-      }
-      
-      if (!/^\d+$/.test(tcno)) {
-        setError(`${t('Error7')}`);
-        return; // Exit the function if password validation fails
-      }
-
-      if (textLength === 11) {
-        setError('');
-
-      } else {
-        setError(`${t('Error8')}`);
-        return;
-      }
-      if (password !== '') {
-        setErrorPassword('');
-
-      } else {
-        setErrorPassword(`${t('Error6')}`);
-        return;
-      }
-
-      if (!/^\d+$/.test(password)) {
-        setErrorPassword(`${t('Error9')}`);
-        return; // Exit the function if password validation fails
-      }else{
-        setErrorPassword("");
-      }
-          const { manifest } = Constants;
-          const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-          axios
-            .post(`${apiAddress}/users/login`, { tcno, password })
-            .then((response) => {
-              if (response.status === 200) {
-                
-                axios
-                .get(`${apiAddress}/users/hesap/${tcno}`)
-                .then((response) => {
-                  if (response.status === 200) {
-                    updateUserinfo(response.data);
-                    
-                    
-                  } else {
-                    console.error(response.data.message);
-                  }
-                })
-                .catch((error) => {
-                  console.error(error);
-                });
-       
-    
-                    navigation.navigate('DraverNavigator', { screen: 'HomeScreen' });
-                  } else {
-                    
-                    console.error(response.data.message);
-                  }
-                })
-                .catch((error) => {
-                    
-                  
-                  Alert.alert(`${t('Error')}`,  `${t('Error10')}`
-                  );  // kayıt kısmınada eklemen gerek 
-                });
-           
-        } else if (text === 'Sign Up') {
+  const ButtonKayıt = async () => {
           navigation.navigate('Sign Up');
-        } else {
-          Alert.alert('hata');
-        }
+        
       };
       const handeldeneme = async () =>{
         console.log(theme)
@@ -145,8 +142,8 @@ const SignIn = ({ navigation }) => {
             <TextInputC onChangeText={updatePassword} errorPassword={errorPassword} label={t('Password')} />
           </View>
           <View style={style.ButtonContainer}>
-            <Buttonx  label="Sign In" OnChangeButton={OnChangeButton} navigation={navigation} />
-            <Buttonx  label="Sign Up"  OnChangeButton={OnChangeButton} navigation={navigation} />
+            <Buttonx whatbut=" " icon="send"  label={t('SignIn')} OnChangeButton={ButtonGiris} navigation={navigation} />
+            <Buttonx whatbut=" " icon="account-plus"  label={t('SignUp')}  OnChangeButton={ButtonKayıt} navigation={navigation} />
           </View>
          
         </View>

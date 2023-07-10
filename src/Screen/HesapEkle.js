@@ -70,7 +70,7 @@ const HesapEkle = ({ navigation }) => {
   
   //                                                              bu kısımda check boxları kontrol et
 
-  const OnChangeButton = async (text) =>{
+  const OnChangeButton = async () =>{
     
         const { manifest } = Constants;
         const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
@@ -170,7 +170,7 @@ const HesapEkle = ({ navigation }) => {
              </View>
             <View style={styles.buttonContainer}>
             
-              <Buttonx label={`${t('Next')}`}  OnChangeButton={handleNextStep} />
+              <Buttonx whatbut=" " icon="arrow-right" label={`${t('Next')}`}  OnChangeButton={handleNextStep} />
               
             </View>
           </View>
@@ -187,8 +187,8 @@ const HesapEkle = ({ navigation }) => {
             <TextInputC onChangeText={setpassword}  label="password" style={styles.input}/>
             <View style={styles.buttonContainer}>
               
-               <Buttonx  label={`${t('ButtonName4')}`} OnChangeButton={OnChangeButton}  onPress={handlePrevStep} />
-               <Buttonx label={`${t('AddAccount')}`} OnChangeButton={OnChangeButton} navigation={navigation}/>
+               <Buttonx whatbut=" " icon="arrow-left"  label={`${t('ButtonName4')}`} OnChangeButton={handlePrevStep}  onPress={handlePrevStep} />
+               <Buttonx whatbut=" " icon="clipboard-plus-outline" label={`${t('AddAccount')}`} OnChangeButton={OnChangeButton} navigation={navigation}/>
             </View>
             <View  style={styles.buttonContainer}>
             

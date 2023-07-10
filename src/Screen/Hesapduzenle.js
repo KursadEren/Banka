@@ -172,7 +172,7 @@ export default function Hesapduzenle({ navigation }) {
               </View>
 
               <View style={styles.buttonContainer}>
-                <Buttonx label={`${t('Next')}`} OnChangeButton={handleNextStep} onPress={handleNextStep} />
+                <Buttonx whatbut=" " label={`${t('Next')}`} icon="arrow-right" OnChangeButton={handleNextStep} onPress={handleNextStep} />
 
               </View>
               <View style={{height:50,marginTop:'3%'}}>
@@ -198,12 +198,12 @@ export default function Hesapduzenle({ navigation }) {
 
               <View style={styles.buttonContainer}>
 
-                <Buttonx label={`${t('ButtonName5')}`} OnChangeButton={hesapSilmeRequest} navigation={navigation} />
-                <Buttonx label={`${t('EditAccount')}`} OnChangeButton={sendHesapDuzenleRequest} navigation={navigation} />
+                <Buttonx whatbut=" " icon="minus-circle-outline" label={`${t('ButtonName5')}`} OnChangeButton={hesapSilmeRequest} navigation={navigation} />
+                <Buttonx whatbut=" " icon="card-plus-outline" label={`${t('EditAccount')}`} OnChangeButton={sendHesapDuzenleRequest} navigation={navigation} />
 
               </View>
               <View style={styles.buttonContainer}>
-                <Buttonx label={`${t('ButtonName4')}`} OnChangeButton={handlePrevStep} onPress={handlePrevStep} />
+                <Buttonx whatbut=" " icon="arrow-left"label={`${t('ButtonName4')}`} OnChangeButton={handlePrevStep} onPress={handlePrevStep} />
               </View>
               <View style={{height:50,marginTop:'3%'}}>
               {errorMessage && (

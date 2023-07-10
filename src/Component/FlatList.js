@@ -140,7 +140,7 @@ const MyFlatList = ({navigation,OnChangeButton}) => {
                <Text style={{textAlign:"center",color: theme === 'dark' ? 'white':"black"}}>{t('EditAccount')} </Text>
             </View>
             <View>
-                <Buttonx label="-" OnChangeButton={OnChangeButton} navigation={navigation}/>
+                <Buttonx label="-" icon="create-outline" OnChangeButton={OnChangeButton} navigation={navigation}/>
             </View>
             </View>
       <View style={{flex:1,flexDirection:"column",justifyContent:"center"}}>
@@ -148,7 +148,7 @@ const MyFlatList = ({navigation,OnChangeButton}) => {
               <Text style={{textAlign:"center",color: theme === 'dark' ? 'white':"black"}}>{t('AddAccount')} </Text>
             </View>
             <View>
-              <Buttonx label="+" OnChangeButton={OnChangeButton} navigation={navigation}/>
+              <Buttonx label="+" icon="add-circle" OnChangeButton={OnChangeButton} navigation={navigation}/>
             </View>
       </View>
       <View  style={{flex:1,flexDirection:"column",justifyContent:"center"}}>
@@ -156,7 +156,7 @@ const MyFlatList = ({navigation,OnChangeButton}) => {
               <Text style={{textAlign:"center",color: theme === 'dark' ? 'white':"black"}}>{t('Transactions')}</Text>
            </View>
            <View>
-              <Buttonx label="islemler" OnChangeButton={OnChangeButton} navigation={navigation}/>
+              <Buttonx label="islemler" icon="cog" OnChangeButton={OnChangeButton} navigation={navigation}/>
            </View>
            </View>
       </View>
