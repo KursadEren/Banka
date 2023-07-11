@@ -551,6 +551,7 @@ router.get('/user-transactions', async (req, res) => {
          i.alinanparatipi,
          i.satilanparatipi,
          i.satildigikur,
+         i.alimsatim,
          (SELECT dovizadi FROM doviz WHERE doviztipiid = i.alinanparatipi::integer) AS alinanparatipi_adi,
          (SELECT dovizadi FROM doviz WHERE doviztipiid = i.satilanparatipi::integer) AS satilanparatipi_adi
        FROM
