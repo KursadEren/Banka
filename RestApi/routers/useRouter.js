@@ -628,6 +628,18 @@ router.post('/hesapduzenle', async (req, res) => {
        
         return res.status(404).json({ message:  "Kaynak bulunamadı" })
       }
+      const Text2 = `select 
+      * from users u 
+      INNER JOIN usershesap h on  u.userid = h.usersid
+      where u.tcno = $1  AND h.doviztipiid = $2 `
+      const values2 = [req.body.tcno, req.body.dovizSecim];
+      const result2 = await postgresClient.query( Text2 , values2)
+      
+      if (!result2.rows.length) {
+       
+        return res.status(404).json({ message:  "Kaynak bulunamadı" })
+      }
+
       const text = `UPDATE usershesap
       SET doviztipiid = $3,
           subeid = $5,
