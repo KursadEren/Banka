@@ -63,12 +63,22 @@ const Ozet = ({title}) => {
     const month = tarih.getMonth() + 1;
     const year = tarih.getFullYear();
     const formattedTarih = `${day}/${month}/${year} `;
-
+    console.log(item)
     return (
-      <View style={[styles.transactionItem, { backgroundColor: theme === 'dark' ? '#323232' : 'white', borderWidth: 1, borderColor: theme === 'dark' ? 'white' : 'black' }]}>
-        <Text style={[styles.transactionText, { color: theme === 'dark' ? 'white' : 'black' }]}>{formattedTarih}</Text>
-        <Text style={[styles.transactionText, { color: theme === 'dark' ? 'white' : 'black' }]}> -{item.satilanparatutari}  </Text>
-        <Text style={[styles.transactionText, { color: theme === 'dark' ? 'white' : 'black' }]}>{item.alinacakparatutari}</Text>
+      <View style={[styles.transactionItem, { justifyContent:"center", backgroundColor: theme === 'dark' ? '#323232' : 'white', borderWidth: 1, borderColor: theme === 'dark' ? 'white' : 'black' }]}>
+        <View style={{flexDirection:"row",justifyContent:"space-around"}}>
+        <Text style={[styles.transactionText, { color: theme === 'dark' ? 'white' : 'black' ,alignSelf:"flex-end"}]}>{item.alimsatim}</Text>
+        <Text style={[styles.transactionText, { color: theme === 'dark' ? 'white' : 'black' ,alignSelf:"flex-end"}]}>{formattedTarih}</Text>
+        </View>
+        <View style={{flexDirection:"row",justifyContent:"space-around"}}>
+        <Text style={[styles.transactionText, {alignSelf:"center", color: theme === 'dark' ? 'white' : 'black' }]}>-{item.satilanparatutari}</Text>
+        <Text style={[styles.transactionText, {alignSelf:"center", color: theme === 'dark' ? 'white' : 'black' }]}>{item.satilanparatipi_adi}</Text>
+        </View>
+        <View style={{flexDirection:"row",justifyContent:"space-around"}}>
+        <Text style={[styles.transactionText, {alignSelf:"center", color: theme === 'dark' ? 'white' : 'black' }]}>{item.alinacakparatutari}</Text>
+        <Text style={[styles.transactionText, {alignSelf:"center", color: theme === 'dark' ? 'white' : 'black' }]}>{item.alinanparatipi_adi}</Text>
+        </View>
+          
       </View>
     );
   };
