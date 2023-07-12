@@ -119,9 +119,9 @@ const SignIn = ({ navigation }) => {
         
       };
       const handeldeneme = async () =>{
-        console.log(theme)
+        
         await  theme === 'light' ?updateTheme('dark') : updateTheme('light')
-        console.log(theme)
+       
       }
  
   return (

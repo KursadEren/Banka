@@ -63,7 +63,7 @@ const Ozet = ({title}) => {
     const month = tarih.getMonth() + 1;
     const year = tarih.getFullYear();
     const formattedTarih = `${day}/${month}/${year} `;
-    console.log(item)
+   
     return (
       <View style={[styles.transactionItem, { justifyContent:"center", backgroundColor: theme === 'dark' ? '#323232' : 'white', borderWidth: 1, borderColor: theme === 'dark' ? 'white' : 'black' }]}>
         <View style={{flexDirection:"row",justifyContent:"space-around"}}>

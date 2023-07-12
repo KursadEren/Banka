@@ -350,31 +350,32 @@ router.post('/dovizozet', async (req,res) =>{
 /*
 /
 */
-router.post('/silme', async (req,res) =>{
+router.post('/silme', async (req, res) => {
   try {
-   
-      const text = `DELETE FROM usershesap
+    const text = `
+      DELETE FROM usershesap
       WHERE usersid = (
         SELECT userid
         FROM users
         WHERE tcno = $1
       )
-        AND doviztipiid = $2
-        AND hesapbakiye = 0;
-      `
-      const values = [req.body.tcno,req.body.dovizKontrol]
-      const {rows} = await postgresClient.query(text,values)
-      console.log(rows)
-      if (rows.length === 0) {
-        throw new Error('Silme işlemi gerçekleştirilemedi.');
-      }
-      
-      return res.status(200).json({ message:'silme işlemi başarılı'})
+      AND doviztipiid = $2
+      AND hesapbakiye < 1;
+    `;
+    const values = [req.body.tcno, req.body.dovizKontrol];
+    const result = await postgresClient.query(text, values);
+    console.log(result.rowCount);
+    
+    if (result.rowCount === 0) {
+      throw new Error('Silme işlemi gerçekleştirilemedi.');
+    }
+    
+    return res.status(200).json({ message: 'Silme işlemi başarılı' });
   } catch (error) {
-     
-      return res.status(400).json({message:error.message})
+    return res.status(400).json({ message: error.message });
   }
-})
+});
+
 
 
 
@@ -629,17 +630,7 @@ router.post('/hesapduzenle', async (req, res) => {
        
         return res.status(404).json({ message:  "Kaynak bulunamadı" })
       }
-      const Text2 = `select 
-      * from users u 
-      INNER JOIN usershesap h on  u.userid = h.usersid
-      where u.tcno = $1  AND h.doviztipiid = $2 `
-      const values2 = [req.body.tcno, req.body.dovizSecim];
-      const result2 = await postgresClient.query( Text2 , values2)
-      
-      if (!result2.rows.length) {
-       
-        return res.status(404).json({ message:  "Kaynak bulunamadı" })
-      }
+     
 
       const text = `UPDATE usershesap
       SET doviztipiid = $3,
@@ -647,7 +638,7 @@ router.post('/hesapduzenle', async (req, res) => {
           hesapturid = $4
       WHERE usersid = (SELECT userid FROM users WHERE tcno = $1)
           AND doviztipiid = (SELECT doviztipiid FROM usershesap WHERE doviztipiid = $2)
-          AND (SELECT doviztipiid FROM usershesap WHERE doviztipiid = $3) IS NOT NULL;
+          AND (SELECT doviztipiid FROM usershesap WHERE doviztipiid = $3) IS NULL;
       `
 
       

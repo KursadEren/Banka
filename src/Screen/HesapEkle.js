@@ -45,7 +45,7 @@ const HesapEkle = ({ navigation }) => {
   const {theme,selectedIBAN,options,options2,options3,usersid,sayfa, updateSayfa,updateSelectedIBAN,updatesetOptions,updatesetOptions2,updatesetOptions3 } = context;
   
   useEffect(() => { 
-      console.log(usersid)
+      
     const backAction = () => {
       updateSayfa("HomeScreen");
       navigation.goBack()
@@ -84,13 +84,7 @@ const HesapEkle = ({ navigation }) => {
               
               
               
-              console.log(
-                usersid,
-                selectedOptionhesap,
-                hesapbakiye,
-                selectedOptionsube,
-                selectedOptiondoviz,
-                selectedIBAN,)
+             
               // ekleme yapma  
                /*selectedOptionhesap
                  selectedOptionsube
@@ -122,7 +116,7 @@ const HesapEkle = ({ navigation }) => {
             } 
           })
           .catch((error) => {
-            console.log('hey')
+            
             // HTTP isteği hata verdi, hata mesajını gösterin
             console.error(error);
           });
@@ -131,7 +125,6 @@ const HesapEkle = ({ navigation }) => {
 
   const handleNextStep = () => {
 
-    console.log(selectedOptiondoviz , selectedOptionhesap  ,selectedOptionsube )
     if (
       selectedOptiondoviz !== null &&
       selectedOptionhesap !== null &&
@@ -184,7 +177,7 @@ const HesapEkle = ({ navigation }) => {
             
             <TextInputC onChangeText={setTcno} label="TC No"  style={styles.input} />
             
-            <TextInputC onChangeText={setpassword}  label="password" style={styles.input}/>
+            <TextInputC onChangeText={setpassword}  label={t('Password')} style={styles.input}/>
             <View style={styles.buttonContainer}>
               
                <Buttonx whatbut=" " icon="arrow-left"  label={`${t('ButtonName4')}`} OnChangeButton={handlePrevStep}  onPress={handlePrevStep} />
