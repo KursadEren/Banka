@@ -44,6 +44,7 @@ const Islem = ({ navigation }) => {
     selectedOptionsube,
 
   } = context;
+ 
   const [dolarmiktar, setdolarmiktar] = useState('');
   const [sure, setSure] = useState(60);
   const [userbilgi, setUserbilgi] = useState([]);
@@ -89,6 +90,7 @@ const Islem = ({ navigation }) => {
   }, [navigation, sure]);
  // geri tuşuna basıldığında alğılanacak yer 
   useEffect(() => {
+    
     const backAction = () => {
       updatesetHesaplananParaDegeri('0');
       updateSayfa("HomeScreen");
@@ -108,7 +110,7 @@ const Islem = ({ navigation }) => {
 
     // Combobox ın içini dolduran axios isteği
   useEffect(() => {
-    updateSayfa('islem')
+    
     const { manifest } = Constants;
     const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
     
@@ -244,6 +246,7 @@ const Islem = ({ navigation }) => {
                 .then((response) => {
                   
                   if (response.status === 201) {
+                    
                             updateSayfa('HomeScreen')
                             navigation.goBack()
                         
@@ -273,14 +276,14 @@ const Islem = ({ navigation }) => {
           const userid=userinfo[0].userid
           const tarih = new Date();
           updatesetDovizTipi(chechdoviz);
-          console.log(doviztipi)
+          
           
 
          const { manifest } = Constants;
           const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
 
             // para eklenecek hesap 
-               console.log(hesaplananpara,userid,chechdoviz2)
+               
           axios
            .post(`${apiAddress}/users/hesapekleSatis`, {hesaplananpara,userid,chechdoviz2})
            .then((response) => {
@@ -335,7 +338,7 @@ const Islem = ({ navigation }) => {
                 .then((response) => {
                   
                   if (response.status === 201) {
-                   
+                            updateSayfa('HomeScreen')
                             navigation.goBack()
                           
                   } else {

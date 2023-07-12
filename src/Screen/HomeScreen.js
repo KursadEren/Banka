@@ -70,7 +70,7 @@ const HomeScreen = ({ navigation }) => {
         .then((response) => {
           // API'den alınan verileri options state'ine ata
           updatesetOptions(response.data);
-          console.log(response.data)
+          
         })
         .catch((error) => {
           console.error('API veri alınırken bir hata oluştu:', error);
@@ -91,7 +91,7 @@ const HomeScreen = ({ navigation }) => {
           const response2 = await axios.get(`${apiAddress}/users/hesaptur`);
           await new Promise(resolve => setTimeout(resolve, 1000)); // İsteğin tamamlanması için 1 saniye bekleyin (isteğe bağlı)
           updatesetOptions2(response2.data);
-          console.log(response2.data);
+         
         } catch (error) {
           console.error('API veri alınırken bir hata oluştu:', error);
         }
@@ -100,7 +100,7 @@ const HomeScreen = ({ navigation }) => {
           const response3 = await axios.get(`${apiAddress}/users/sube`);
           await new Promise(resolve => setTimeout(resolve, 1000)); // İsteğin tamamlanması için 1 saniye bekleyin (isteğe bağlı)
           updatesetOptions3(response3.data);
-          console.log(response3.data);
+          
         } catch (error) {
           console.error('API veri alınırken bir hata oluştu:', error);
         }

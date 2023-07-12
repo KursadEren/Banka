@@ -23,7 +23,7 @@ const SeeWatchList = ({ navigation,setErrorMessage }) => {
         setSelectedCurrencies(JSON.parse(savedSelectedCurrencies));
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
 
@@ -58,7 +58,7 @@ const SeeWatchList = ({ navigation,setErrorMessage }) => {
   }, []);
 
   const request = ({ currency }) => {
-    console.log('currency',currency)
+    
     const dovizadi = currency;
     const { manifest } = Constants;
     const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
@@ -88,7 +88,7 @@ const SeeWatchList = ({ navigation,setErrorMessage }) => {
     const bulunanVeri = optiondoviz.find(veri => veri.adi === currency);
 
     if (bulunanVeri) {
-      console.log("Doviz Tipi ID:", bulunanVeri.id);
+      
       setErrorMessage("")
     } else {
       setErrorMessage("Belirtilen döviz hesabı bulunamadı.");
@@ -121,7 +121,7 @@ if (selectedRate !== null) {
     const bulunanVeri = optiondoviz.find(veri => veri.adi === currency);
       
     if (bulunanVeri) {
-      console.log("Doviz Tipi ID:", bulunanVeri.id);
+    
       setErrorMessage("")
     } else {
       setErrorMessage("Belirtilen döviz hesabı bulunamadı.");

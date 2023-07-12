@@ -37,7 +37,7 @@ const WatchList = ({ navigation }) => {
           setSelectedCurrencies(JSON.parse(savedSelectedCurrencies));
         }
       } catch (error) {
-        console.log(error);
+       
       }
     };
 
@@ -50,7 +50,7 @@ const WatchList = ({ navigation }) => {
       try {
         await AsyncStorage.setItem('selectedCurrencies', JSON.stringify(selectedCurrencies));
       } catch (error) {
-        console.log(error);
+        
       }
     };
 

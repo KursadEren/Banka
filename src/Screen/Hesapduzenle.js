@@ -69,10 +69,12 @@ export default function Hesapduzenle({ navigation }) {
     axios
       .post(`${apiAddress}/users/silme`, { tcno, dovizKontrol })
       .then((response) => {
+       
         updateSayfa("HomeScreen");
         navigation.goBack()
       })
       .catch((error) => {
+      
         setErrorMessage(`${t('Error14')}`)
       });
   };
@@ -111,7 +113,7 @@ export default function Hesapduzenle({ navigation }) {
 
     const { manifest } = Constants;
     const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-    console.log(tcno, dovizKontrol, dovizSecim, hesapTur, sube);
+    
     axios
       .post(`${apiAddress}/users/hesapduzenle`, {
         tcno,
@@ -140,7 +142,7 @@ export default function Hesapduzenle({ navigation }) {
   const handlePrevStep = () => {
     setStep(step - 1);
   };
-  console.log(sayfa)
+  
   useEffect(() => {
     updateSayfa('Hesapduzenle')
     const backAction = () => {
