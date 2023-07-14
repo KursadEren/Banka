@@ -118,7 +118,7 @@ const SignUp = ( {navigation} ) => {
             <TextInputC onChangeText={updatePassword} errorPassword={errorPassword}  label={t('Password')}/>
             
             <TextInputC  onChangeText={updateFullname} label={`${t('fullname')}`} />
-            <Buttonx label={`${t('Next')}`} OnChangeButton={OnChangeButton}  />
+            <Buttonx whatbut=" " label={`${t('Next')}`} OnChangeButton={OnChangeButton}  />
           </View>
         );
       case 2:
@@ -132,8 +132,8 @@ const SignUp = ( {navigation} ) => {
             <TextInputC onChangeText={updatesetDogumtarih}  label="dogumtarih"/>
             <View style={styles.buttonContainer}>
             
-              <Buttonx label={`${t('ButtonName4')}`} OnChangeButton={OnChangeButton} />
-              <Buttonx label="Sign Up2" OnChangeButton={OnChangeButton}  navigation={navigation} />
+              <Buttonx whatbut=" " icon="arrow-left" label={`${t('ButtonName4')}`} OnChangeButton={OnChangeButton} />
+              <Buttonx  whatbut=" "  icon="account-plus"  label={t('SignUp')} OnChangeButton={OnChangeButton}  navigation={navigation} />
             </View>
           </View>
         );
