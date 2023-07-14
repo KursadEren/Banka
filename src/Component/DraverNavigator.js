@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import HomeScreen from '../Screen/HomeScreen'
 import WatchList from '../Screen/WatchList'
 import { View } from "react-native";
-import Profile from '../Screen/Profile'
 import SifreDegistirme from "../Screen/SifreDegistirme";
 const Drawer = createDrawerNavigator();
 
