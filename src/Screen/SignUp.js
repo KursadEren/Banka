@@ -23,86 +23,79 @@ const SignUp = ( {navigation} ) => {
     setStep(step - 1);
   };
 
- const OnChangeButton = (text) =>{
-  if(text ==="Sign Up2")
-  {
+ const onChangeEkle = ()=>{
+  if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+    setErrorEmail('Geçerli bir e-posta adresi giriniz');
+    return;
+  }
+
+  const { manifest } = Constants;
+const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+axios
+  .post(`${apiAddress}/users/users/${tcno}`, { fullname,telno,dogumtarih, tcno, password,email })
+  .then((response) => {
     
-    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
-      setErrorEmail('Geçerli bir e-posta adresi giriniz');
+    if (response.status === 201) {
+      
+      
+      navigation.goBack()
+      
+    } else {
+      // İstek başarısız oldu, hata mesajını gösterin
+      
+      console.error(response.data.message);
+    }
+  })
+  .catch((error) => {
+    // HTTP isteği hata verdi, hata mesajını gösterin
+    console.error(error);
+  });
+ }
+  const ChangeDevam = () =>{
+    const textLength = tcno.length;
+    if (tcno !== '') {
+      setError('');
+
+      
+    } else {
+      setError(`${t('Error6')}`);
+      return;
+    }
+    
+    if (!/^\d+$/.test(tcno)) {
+      setError('Sadece sayı giriniz');
+      return; // Exit the function if password validation fails
+    }
+
+    if (textLength === 11) {
+      setError('');
+
+    } else {
+      setError('11 haneli olmalıdır');
+      return;
+    }
+    if (password !== '') {
+      setErrorPassword('');
+
+    } else {
+      setErrorPassword('Boş bırakamazsınız');
       return;
     }
 
-    const { manifest } = Constants;
-  const apiAddress = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
-  axios
-    .post(`${apiAddress}/users/users/${tcno}`, { fullname,telno,dogumtarih, tcno, password,email })
-    .then((response) => {
-      
-      if (response.status === 201) {
-        
-        
-        navigation.goBack()
-        
-      } else {
-        // İstek başarısız oldu, hata mesajını gösterin
-        
-        console.error(response.data.message);
-      }
-    })
-    .catch((error) => {
-      // HTTP isteği hata verdi, hata mesajını gösterin
-      console.error(error);
-    });
+    if (!/^\d+$/.test(password)) {
+      setErrorPassword('Sadece sayı giriniz');
+      return; // Exit the function if password validation fails
+    }else{
+      setErrorPassword("");
+    }
+  handleNextStep();
   }
-  else if(text === `${t('Next')}`)
-  {
-    const textLength = tcno.length;
-      if (tcno !== '') {
-        setError('');
+   
 
-        
-      } else {
-        setError(`${t('Error6')}`);
-        return;
-      }
-      
-      if (!/^\d+$/.test(tcno)) {
-        setError('Sadece sayı giriniz');
-        return; // Exit the function if password validation fails
-      }
-
-      if (textLength === 11) {
-        setError('');
-
-      } else {
-        setError('11 haneli olmalıdır');
-        return;
-      }
-      if (password !== '') {
-        setErrorPassword('');
-
-      } else {
-        setErrorPassword('Boş bırakamazsınız');
-        return;
-      }
-
-      if (!/^\d+$/.test(password)) {
-        setErrorPassword('Sadece sayı giriniz');
-        return; // Exit the function if password validation fails
-      }else{
-        setErrorPassword("");
-      }
-    handleNextStep();
-
-  }
-  else if(text === `${t('ButtonName4')}`)
-  {
-    handlePrevStep();
-
-  }
   
+   
 
- }
+  
 
 
 
@@ -118,7 +111,7 @@ const SignUp = ( {navigation} ) => {
             <TextInputC onChangeText={updatePassword} errorPassword={errorPassword}  label={t('Password')}/>
             
             <TextInputC  onChangeText={updateFullname} label={`${t('fullname')}`} />
-            <Buttonx whatbut=" " label={`${t('Next')}`} OnChangeButton={OnChangeButton}  />
+            <Buttonx whatbut=" " label={`${t('Next')}`} OnChangeButton={ChangeDevam}  />
           </View>
         );
       case 2:
@@ -132,8 +125,8 @@ const SignUp = ( {navigation} ) => {
             <TextInputC onChangeText={updatesetDogumtarih}  label="dogumtarih"/>
             <View style={styles.buttonContainer}>
             
-              <Buttonx whatbut=" " icon="arrow-left" label={`${t('ButtonName4')}`} OnChangeButton={OnChangeButton} />
-              <Buttonx  whatbut=" "  icon="account-plus"  label={t('SignUp')} OnChangeButton={OnChangeButton}  navigation={navigation} />
+              <Buttonx whatbut=" " icon="arrow-left" label={`${t('ButtonName4')}`} OnChangeButton={handlePrevStep} />
+              <Buttonx  whatbut=" "  icon="account-plus"  label={t('SignUp')} OnChangeButton={onChangeEkle}  navigation={navigation} />
             </View>
           </View>
         );
